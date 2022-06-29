@@ -1,0 +1,185 @@
+{
+	"sheets": [
+		{
+			"name": "Slogans",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "ID"
+				},
+				{
+					"typeStr": "1",
+					"name": "text",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "ideologia",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "XP"
+				},
+				{
+					"typeStr": "3",
+					"name": "power",
+					"display": 1
+				},
+				{
+					"typeStr": "13",
+					"name": "Texture",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"text": "Aiutiamoli a casa loro",
+					"ideologia": "destra",
+					"XP": 20,
+					"power": 0,
+					"Texture": "",
+					"index": 0,
+					"group": 0,
+					"ID": "D1"
+				},
+				{
+					"text": "Ha fatto anche cose buone",
+					"ideologia": "fascismo",
+					"XP": 20,
+					"power": 0,
+					"Texture": "",
+					"index": 1,
+					"group": 0,
+					"ID": "D2"
+				},
+				{
+					"text": "Stalin non era cosí male",
+					"ideologia": "comunismo",
+					"XP": 20,
+					"power": 0,
+					"Texture": "",
+					"index": 2,
+					"group": 1,
+					"ID": "S1"
+				},
+				{
+					"text": "#NeriViteContano",
+					"ideologia": "woke",
+					"XP": 20,
+					"power": 0,
+					"Texture": "",
+					"index": 3,
+					"group": 1,
+					"ID": "S2"
+				},
+				{
+					"text": "Restiamo humani",
+					"ideologia": "sinistra",
+					"XP": 20,
+					"power": 0,
+					"Texture": "",
+					"index": 4,
+					"group": 1,
+					"ID": "S3"
+				},
+				{
+					"ideologia": "centro",
+					"XP": 20,
+					"Texture": "../tPT-2/Res-Publica-testing/Res-Publica-testing/icon.png",
+					"power": 0,
+					"index": 5,
+					"text": "L'articolo 1 dice che...",
+					"group": 2,
+					"ID": "C1"
+				},
+				{
+					"text": "Serve una riforma economica",
+					"ideologia": "centro",
+					"XP": 20,
+					"power": 0,
+					"Texture": "",
+					"index": 6,
+					"group": 2,
+					"ID": "C2"
+				},
+				{
+					"text": "Impero FrancUEse",
+					"ideologia": "europeismo",
+					"XP": 20,
+					"power": 0,
+					"Texture": "",
+					"index": 7,
+					"group": 2,
+					"ID": "C3"
+				}
+			],
+			"separators": [
+				0,
+				2,
+				5,
+				8,
+				8
+			],
+			"props": {
+				"hasIndex": true,
+				"hasGroup": true,
+				"separatorTitles": [
+					"Destra",
+					"Sinistra",
+					"Centro"
+				]
+			}
+		},
+		{
+			"name": "Oggetti",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "ID"
+				},
+				{
+					"typeStr": "1",
+					"name": "Name",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "Type",
+					"display": null
+				},
+				{
+					"typeStr": "13",
+					"name": "Texture",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"Name": "Ciliegie",
+					"Type": "",
+					"Texture": "",
+					"index": 0,
+					"ID": "A"
+				},
+				{
+					"Name": "Vangelo apocrifo",
+					"Type": "",
+					"Texture": "",
+					"index": 1,
+					"ID": "B"
+				}
+			],
+			"separators": [
+				0,
+				1
+			],
+			"props": {
+				"hasGroup": true,
+				"hasIndex": true
+			}
+		}
+	],
+	"customTypes": [],
+	"compress": false
+}

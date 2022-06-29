@@ -1,0 +1,180 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/UI_Objects/SloganNode.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/ShopBox.gd" type="Script" id=3]
+[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=4]
+[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=5]
+[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=6]
+[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=7]
+
+[node name="ShopBox" type="CanvasLayer"]
+script = ExtResource( 3 )
+firstTime = 1
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_left = 0.422
+anchor_top = 0.044
+anchor_right = 0.981
+anchor_bottom = 0.844
+margin_left = -3.04001
+margin_top = 0.0799994
+margin_right = 0.0799866
+margin_bottom = 0.0799866
+color = Color( 0.6, 0.0313726, 0.0313726, 1 )
+
+[node name="Background2" type="ColorRect" parent="Background"]
+anchor_left = 0.038
+anchor_top = 0.042
+anchor_right = 0.951
+anchor_bottom = 0.958
+margin_left = 0.197999
+margin_top = -0.0480003
+margin_right = 0.770996
+margin_bottom = 0.0479889
+color = Color( 0.756863, 0.384314, 0.384314, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Selecter" type="ColorRect" parent="Background/Background2"]
+margin_left = 3.0
+margin_top = 7.0
+margin_right = 35.0
+margin_bottom = 32.0
+
+[node name="Node2D" type="Node2D" parent="Background/Background2"]
+
+[node name="SloganNode1" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 20, 20 )
+slogan_res = ExtResource( 4 )
+
+[node name="SloganNode2" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 52, 20 )
+slogan_res = ExtResource( 5 )
+
+[node name="SloganNode3" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 84, 20 )
+slogan_res = ExtResource( 5 )
+
+[node name="SloganNode4" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 116, 20 )
+slogan_res = ExtResource( 5 )
+
+[node name="SloganNode5" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 148, 20 )
+slogan_res = ExtResource( 5 )
+
+[node name="SloganNode6" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 20, 48 )
+slogan_res = ExtResource( 5 )
+
+[node name="SloganNode7" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 52, 48 )
+slogan_res = ExtResource( 5 )
+
+[node name="SloganNode8" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 84, 48 )
+slogan_res = ExtResource( 5 )
+
+[node name="SloganNode9" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 116, 48 )
+slogan_res = ExtResource( 6 )
+
+[node name="SloganNode10" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 148, 48 )
+slogan_res = ExtResource( 6 )
+
+[node name="SloganNode11" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 20, 76 )
+slogan_res = ExtResource( 6 )
+
+[node name="SloganNode12" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 52, 76 )
+slogan_res = ExtResource( 6 )
+
+[node name="SloganNode13" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 84, 76 )
+slogan_res = ExtResource( 7 )
+
+[node name="SloganNode14" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 116, 76 )
+slogan_res = ExtResource( 7 )
+
+[node name="SloganNode15" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 148, 76 )
+slogan_res = ExtResource( 7 )
+
+[node name="SloganNode16" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 20, 104 )
+slogan_res = ExtResource( 7 )
+
+[node name="SloganNode17" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 52, 104 )
+slogan_res = ExtResource( 7 )
+
+[node name="SloganNode18" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 84, 104 )
+slogan_res = ExtResource( 7 )
+
+[node name="SloganNode19" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 116, 104 )
+slogan_res = ExtResource( 7 )
+
+[node name="SloganNode20" parent="Background/Background2/Node2D" instance=ExtResource( 1 )]
+position = Vector2( 148, 104 )
+slogan_res = ExtResource( 7 )
+
+[node name="PrizeSign" type="ColorRect" parent="."]
+margin_left = 88.0
+margin_top = 8.0
+margin_right = 128.0
+margin_bottom = 48.0
+color = Color( 0.294118, 0.0901961, 0.0901961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Interior" type="ColorRect" parent="PrizeSign"]
+anchor_right = 0.455
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 19.0
+margin_bottom = 37.0
+color = Color( 0.47451, 0.160784, 0.160784, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="PrizeSign/Interior"]
+margin_right = 34.0
+margin_bottom = 34.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PrizeSign/Interior/Control"]
+margin_left = 8.0
+margin_top = 5.0
+margin_right = 42.0
+margin_bottom = 39.0
+rect_scale = Vector2( 0.5, 0.5 )
+meta_underlined = false
+tab_size = 1
+text = "Prize
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PrizeVar" type="RichTextLabel" parent="PrizeSign/Interior/Control"]
+margin_left = 2.0
+margin_top = 18.0
+margin_right = 64.0
+margin_bottom = 52.0
+rect_scale = Vector2( 0.5, 0.5 )
+meta_underlined = false
+tab_size = 1
+text = "text"
+__meta__ = {
+"_edit_use_anchors_": false
+}

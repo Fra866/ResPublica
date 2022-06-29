@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Items/Slogans/slogan_resource.gd" type="Script" id=2]
+
+[resource]
+script = ExtResource( 2 )
+xp = 30
+political_pos = Vector2( -3, -1 )
+name = "L'articolo 1 dice che"
+id = 5
+prize = 50
