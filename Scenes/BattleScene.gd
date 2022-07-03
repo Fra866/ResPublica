@@ -9,6 +9,7 @@ onready var battlemenu = $BattleMenu
 onready var selector = $BattleMenu/Node2D/ColorRect
 onready var margincontainer = $ActionLog/MarginContainer
 onready var action_log = $ActionLog/MarginContainer/Panel/Label
+onready var political_compass = $PoliticalCompass
 
 onready var n_of_slogans = 0
 onready var max_slogans = 8
@@ -16,12 +17,17 @@ onready var priority = true
 onready var enemy_slogans: Array
 var id = 0
 
+onready var p_attack: Vector2
+onready var e_attack: Vector2
+
 onready var attacking = false
 
 enum TURN {PLAYER, ENEMY, ATTACKING}
 onready var turn = TURN.PLAYER
 
 func _ready():
+	political_compass.visibility(true)
+	
 	dialouge_box.connect("npc_slogans", self, "set_npc_slogans")
 	for slogan_res in menu.slogan_list:
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
@@ -53,7 +59,11 @@ func _process(_delta):
 			id -= 1
 
 	selector.rect_position = Vector2(32 * (id % (max_slogans - 1)), 40*(int(id / (max_slogans - 1))))
-
+	
+	var slog = menu.slogan_list[id]
+	political_compass.set_main_pointer(slog.political_pos.x, -slog.political_pos.y)
+	# political_compass.visibility(turn == TURN.PLAYER)
+	
 	if Input.is_action_just_pressed("ui_accept"):
 		attacking = true
 		playerAttack(menu.slogan_list[id])
@@ -84,6 +94,7 @@ func set_npc_slogans(slogan_list):
 func playerAttack(slogan):
 	turn = TURN.ATTACKING
 	action_log.text = "Hai usato " + slogan.name
+	p_attack = slogan.political_pos
 	margincontainer.visible = true
 	yield(get_tree().create_timer(1), "timeout")
 	battlemenu.visible = false
@@ -94,11 +105,15 @@ func playerAttack(slogan):
 func npcAttack(attack_slog):
 	turn = TURN.ENEMY
 	action_log.text = "Il nemico ha usato " + attack_slog.name
+	e_attack = attack_slog.political_pos
+	political_compass.set_next_pointer(e_attack.x, -e_attack.y)
 	yield(get_tree().create_timer(1), "timeout")
 	margincontainer.visible = false
 	battlemenu.visible = true
 	
 	yield(get_tree().create_timer(1), "timeout")
+	
+	print(p_attack, e_attack)
 	
 	turn = TURN.PLAYER
 	
