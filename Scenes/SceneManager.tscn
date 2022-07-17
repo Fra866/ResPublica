@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/SceneManager.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://UI/DialougeBox.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/UI.gd" type="Script" id=7]
 [ext_resource path="res://SaveMenu.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Animation" id=3]
@@ -94,6 +93,5 @@ anims/RESET = SubResource( 2 )
 [node name="ShopBox" parent="." instance=ExtResource( 3 )]
 
 [node name="UI" parent="." instance=ExtResource( 4 )]
-script = ExtResource( 7 )
 
 [node name="Control" parent="." instance=ExtResource( 8 )]

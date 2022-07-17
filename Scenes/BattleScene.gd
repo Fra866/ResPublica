@@ -1,5 +1,7 @@
 extends Node2D
 
+
+onready var scenemanager = get_node(NodePath('/root/SceneManager/'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var pBar = $LifeBars/PlayerBar
@@ -22,6 +24,9 @@ onready var e_attack: Vector2
 
 onready var attacking = false
 
+onready var first_attack_player = true
+onready var first_attack_enemy = true
+
 enum TURN {PLAYER, ENEMY, ATTACKING}
 onready var turn = TURN.PLAYER
 
@@ -29,6 +34,7 @@ func _ready():
 	political_compass.visibility(true)
 	
 	dialouge_box.connect("npc_slogans", self, "set_npc_slogans")
+	dialouge_box.connect("next_scene", self, "set_next_scene")
 	for slogan_res in menu.slogan_list:
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
@@ -49,6 +55,8 @@ func _ready():
 func _process(_delta):
 #	Temporary solution. Visual cue, or selector, to be soon implemented.
 	if turn == TURN.PLAYER:
+		var slog = menu.slogan_list[id]
+		
 		if Input.is_action_just_pressed("ui_right") and id < 10:
 			id += 1
 		if Input.is_action_just_pressed("ui_down") and id < 4:
@@ -57,12 +65,11 @@ func _process(_delta):
 			id -= 7
 		if Input.is_action_just_pressed("ui_left") and id > 0:
 			id -= 1
+		
+		political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
 
 	selector.rect_position = Vector2(32 * (id % (max_slogans - 1)), 40*(int(id / (max_slogans - 1))))
 	
-	var slog = menu.slogan_list[id]
-	political_compass.set_main_pointer(slog.political_pos.x, -slog.political_pos.y)
-	# political_compass.visibility(turn == TURN.PLAYER)
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		attacking = true
@@ -91,7 +98,24 @@ func set_npc_slogans(slogan_list):
 	#enemy_slogans = slogan_list
 
 
+func set_next_scene(next_scene):
+	print(next_scene)
+
+
+func battle_ends():
+	action_log.text = "Battaglia finita"
+	margincontainer.visible = true
+	battlemenu.visible = false
+	
+	# yield(get_tree().create_timer(1), "timeout")
+	
+	# scenemanager.start_transition("scene_path", Vector2(0,0))
+
+
 func playerAttack(slogan):
+	political_compass.set_main_pointer(slogan.political_pos.x, -slogan.political_pos.y)
+	political_compass.hide_line()
+	
 	turn = TURN.ATTACKING
 	action_log.text = "Hai usato " + slogan.name
 	p_attack = slogan.political_pos
@@ -102,18 +126,32 @@ func playerAttack(slogan):
 	npcAttack(enemy_slogans[randi() % len(enemy_slogans) - 1])
 
 
+func damage(p_pos: Vector2, n_pos: Vector2):
+	var d = (5 - abs(p_pos.x - n_pos.x) + 5 - abs(p_pos.y - n_pos.y)) / 2
+	if d < 0:
+		pBar.value -= 8 * abs(d)
+	else:
+		npcBar.value -= 8*d
+
+
 func npcAttack(attack_slog):
 	turn = TURN.ENEMY
 	action_log.text = "Il nemico ha usato " + attack_slog.name
 	e_attack = attack_slog.political_pos
-	political_compass.set_next_pointer(e_attack.x, -e_attack.y)
+	political_compass.set_enemy_pointer(e_attack.x, -e_attack.y)
 	yield(get_tree().create_timer(1), "timeout")
 	margincontainer.visible = false
 	battlemenu.visible = true
 	
-	yield(get_tree().create_timer(1), "timeout")
+	yield(get_tree().create_timer(0.1), "timeout")
 	
-	print(p_attack, e_attack)
+	# print(p_attack, e_attack)
+	
+	damage(p_attack, e_attack)
+	print('Turn Ends')
+	
+	if npcBar.value == 0 or pBar.value == 0:
+		battle_ends()
 	
 	turn = TURN.PLAYER
 	

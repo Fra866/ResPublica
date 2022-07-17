@@ -1,14 +1,15 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=7 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
-[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=2]
+[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=2]
 [ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=4]
+[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=4]
 [ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=5]
+[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=6]
 
 [resource]
 script = ExtResource( 1 )
-array = [ ExtResource( 2 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 5 ) ]
+array = [ ExtResource( 4 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 5 ) ]
 current_scene = ExtResource( 3 )
-player_pos = Vector2( -128, 32 )
-money = 600
+player_pos = Vector2( -48, 48 )
+money = 1000

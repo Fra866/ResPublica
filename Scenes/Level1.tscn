@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://NPC/NPC.tscn" type="PackedScene" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=6]
 [ext_resource path="res://Items/Slogans/cose_buone.tres" type="Resource" id=7]
 [ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=8]
+[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=9]
+[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=10]
 
 [node name="Level1" type="Node2D"]
 
@@ -22,7 +24,7 @@ political_pos = Vector2( -4, -2 )
 [node name="Bruno" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -96, 80 )
 dialouge_list = [ "Ci sono troppe tasse" ]
-slogans_for_battle = [ ExtResource( 3 ) ]
+slogans_for_battle = [ ExtResource( 3 ), ExtResource( 9 ), ExtResource( 6 ), ExtResource( 10 ) ]
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 80, 16 )
@@ -31,3 +33,4 @@ position = Vector2( 80, 16 )
 position = Vector2( 80, 0 )
 
 [node name="Door" parent="YSort/House" instance=ExtResource( 5 )]
+next_player_pos = Vector2( 144, 176 )

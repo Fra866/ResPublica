@@ -20,6 +20,7 @@ var index_element: int = 0
 signal closed
 
 func _ready():
+	prize_sign.visible = false
 	open = false
 	background.visible = false
 
@@ -64,14 +65,16 @@ func _process(_delta):
 
 func brought(i_element):
 	var selected_slogan = get_slogan_instance(i_element)
-	slogans.append(selected_slogan)
+	# slogans.append(selected_slogan)
+	
+	print(selected_slogan.slogan_res in menu.slogan_list)
+	
 	menu.new_slogan(selected_slogan.slogan_res)
-	ui.lost_money(selected_slogan.slogan_res.prize)
 
 func save(path):
 	var file = File.new()
 	file.open(path, File.READ_WRITE)
-	for s in slogans:
+	for s in menu.slogan_list:
 		file.store_line(s.slogan_res.get_path())
 
 func priority_to_player():

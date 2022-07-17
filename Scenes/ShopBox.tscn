@@ -41,6 +41,9 @@ margin_left = 3.0
 margin_top = 7.0
 margin_right = 35.0
 margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Node2D" type="Node2D" parent="Background/Background2"]
 

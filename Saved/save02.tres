@@ -1,11 +1,11 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/InsideHouse.tscn" type="PackedScene" id=6]
 
 [resource]
 script = ExtResource( 1 )
 array = [  ]
-current_scene = ExtResource( 2 )
-player_pos = Vector2( 80, 16 )
-money = 1000
+current_scene = ExtResource( 6 )
+player_pos = Vector2( 64, 128 )
+money = 800
