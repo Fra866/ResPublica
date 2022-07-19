@@ -57,6 +57,7 @@ func _process(_delta):
 					scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 					emit_signal("npc_slogans", s_list)
 					emit_signal("next_scene", current_scene)
+					emit_signal("next_player_pos", player.position)
 				else:
 					emit_signal("priority_to_player")
 

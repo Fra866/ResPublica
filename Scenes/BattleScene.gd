@@ -27,6 +27,9 @@ onready var attacking = false
 onready var first_attack_player = true
 onready var first_attack_enemy = true
 
+onready var path: String
+onready var next_player_pos: Vector2
+
 enum TURN {PLAYER, ENEMY, ATTACKING}
 onready var turn = TURN.PLAYER
 
@@ -35,6 +38,8 @@ func _ready():
 	
 	dialouge_box.connect("npc_slogans", self, "set_npc_slogans")
 	dialouge_box.connect("next_scene", self, "set_next_scene")
+	dialouge_box.connect("next_player_pos", self, "set_next_player_pos")
+	
 	for slogan_res in menu.slogan_list:
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
@@ -99,17 +104,32 @@ func set_npc_slogans(slogan_list):
 
 
 func set_next_scene(next_scene):
-	print(next_scene)
+	var original_name: String
+	if next_scene.name[0] == '@':
+		for i in range(1, len(next_scene.name)):
+			if next_scene.name[i] == '@':
+				break
+			original_name += next_scene.name[i]
+	else:
+		original_name = next_scene.name
+	
+	path = "res://Scenes/" + original_name + ".tscn"
+	# scenemanager.start_transition(path, Vector2(0,0))
 
 
-func battle_ends():
+func set_next_player_pos(player_pos):
+	next_player_pos = player_pos
+	print(player_pos)
+
+
+func battle_ends(battle_won: bool):
 	action_log.text = "Battaglia finita"
 	margincontainer.visible = true
 	battlemenu.visible = false
 	
-	# yield(get_tree().create_timer(1), "timeout")
+	yield(get_tree().create_timer(1), "timeout")
 	
-	# scenemanager.start_transition("scene_path", Vector2(0,0))
+	scenemanager.start_transition(path, Vector2(0,0))
 
 
 func playerAttack(slogan):
@@ -150,8 +170,10 @@ func npcAttack(attack_slog):
 	damage(p_attack, e_attack)
 	print('Turn Ends')
 	
-	if npcBar.value == 0 or pBar.value == 0:
-		battle_ends()
+	if npcBar.value == 0:
+		battle_ends(true)
+	if pBar.value == 0:
+		battle_ends(false)
 	
 	turn = TURN.PLAYER
 	
