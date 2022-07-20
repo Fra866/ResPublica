@@ -22,9 +22,7 @@ func _ready():
 		i.queue_free()
 	
 	scene_container.add_child(save_file.current_scene.instance())
-	
 	current_scene = get_child(0).get_child(0)
-	
 	transition_animation.play("FadeToTransparent")
 
 

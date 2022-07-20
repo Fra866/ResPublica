@@ -2,7 +2,7 @@ extends Control
 export(int) var state = 1
 export(Resource) var game_save_obj
 
-var paths = ["res://save01.tres", "res://save02.tres"]
+#var paths = ["res://save01.tres", "res://save02.tres"]
 
 onready var yes = $Panel/Container/Yes
 onready var no = $Panel/Container/No
@@ -41,10 +41,12 @@ func _process(_delta):
 func save_all():
 	var player = get_node(NodePath("../CurrentScene")).get_children().back().find_node("Player")
 	var current_scene = scene_manager.get_child(0).get_child(0).name
-	var file_save = game_save_obj.new()
+#	var file_save = game_save_obj.new()
+	var file_save = Saved.new()
 	
 	file_save.player_pos = player.position
 	file_save.array = menu.slogan_list
 	file_save.money = ui.get_money()
-	file_save.current_scene = load("res://Scenes/"+current_scene+".tscn")
-	ResourceSaver.save(scene_manager.save_file.get_path(), file_save)
+	file_save.current_scene = load("res://Scenes/" + current_scene + ".tscn")
+	
+	ResourceSaver.save("user://save0" + str(scene_manager.slot) + ".tres", file_save)

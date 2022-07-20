@@ -12,7 +12,6 @@ var started_game: bool = false
 func _ready():
 	b0.grab_focus()
 
-
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_down"):
 		if btn_id != 2 and btn_id != 6:
@@ -40,9 +39,14 @@ func parse_input(id: int):
 		2:
 			get_tree().quit()
 		3, 4, 5:
-			scene.save_file = load("res://Saved/save0" + str(id - 2) + ".tres")
-			if new:
+			scene.slot = id - 2
+			scene.save_file = load("user://save0" + str(id - 2) + ".tres")
+			
+			if !scene.save_file:
+				scene.save_file = load("res://Saved/config.tres")
+			elif new:
 				scene.save_file.initialize()
+			
 			start()
 		6:
 			switch_menu($Panel/Container, $Panel/Container2)
