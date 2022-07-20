@@ -6,7 +6,7 @@ var slogans = []
 
 onready var background = $Background
 onready var selecter = $Background/Background2/Selecter
-onready var player = get_parent().get_child(0).get_child(0).find_node('Player')
+onready var player
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var ui = get_node("/root/SceneManager/UI")
 onready var prize_sign = $PrizeSign
@@ -67,7 +67,7 @@ func brought(i_element):
 	var selected_slogan = get_slogan_instance(i_element)
 	# slogans.append(selected_slogan)
 	
-	print(selected_slogan.slogan_res in menu.slogan_list)
+#	print(selected_slogan.slogan_res in menu.slogan_list)
 	
 	menu.new_slogan(selected_slogan.slogan_res)
 

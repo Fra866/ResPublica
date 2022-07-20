@@ -3,7 +3,7 @@ extends Node2D
 
 onready var scenemanager = get_node(NodePath('/root/SceneManager/'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
-onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
+onready var dialogue_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var pBar = $LifeBars/PlayerBar
 onready var npcBar = $LifeBars/NPCBar
 onready var sloganlist = $BattleMenu/Slogans
@@ -18,6 +18,8 @@ onready var max_slogans = 8
 onready var priority = true
 onready var enemy_slogans: Array
 var id = 0
+var next_scene = ""
+var player_pos = Vector2(0, 0)
 
 onready var p_attack: Vector2
 onready var e_attack: Vector2
@@ -27,19 +29,14 @@ onready var attacking = false
 onready var first_attack_player = true
 onready var first_attack_enemy = true
 
-onready var path: String
-onready var next_player_pos: Vector2
-
 enum TURN {PLAYER, ENEMY, ATTACKING}
 onready var turn = TURN.PLAYER
 
 func _ready():
 	political_compass.visibility(true)
 	
-	dialouge_box.connect("npc_slogans", self, "set_npc_slogans")
-	dialouge_box.connect("next_scene", self, "set_next_scene")
-	dialouge_box.connect("next_player_pos", self, "set_next_player_pos")
-	
+	dialogue_box.connect("npc_slogans", self, "set_npc_slogans")
+	dialogue_box.connect("next_scene", self, "set_next_scene")
 	for slogan_res in menu.slogan_list:
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
@@ -62,9 +59,9 @@ func _process(_delta):
 	if turn == TURN.PLAYER:
 		var slog = menu.slogan_list[id]
 		
-		if Input.is_action_just_pressed("ui_right") and id < 10:
+		if Input.is_action_just_pressed("ui_right") and id < n_of_slogans - 1:
 			id += 1
-		if Input.is_action_just_pressed("ui_down") and id < 4:
+		if Input.is_action_just_pressed("ui_down") and (id + 7) < n_of_slogans - 1:
 			id += 7
 		if Input.is_action_just_pressed("ui_up") and id > 6:
 			id -= 7
@@ -95,41 +92,22 @@ func get_rand():
 
 
 func set_npc_slogans(slogan_list):
-	var tmp = ResourceLoader.load("res://NPC/tmp.tres")
-	print(tmp.slogans_for_battle)
-	enemy_slogans = tmp.slogans_for_battle
-	#for slog in slogan_list:
-	#	print(slog.name)
-	#enemy_slogans = slogan_list
+	enemy_slogans = slogan_list
 
 
-func set_next_scene(next_scene):
-	var original_name: String
-	if next_scene.name[0] == '@':
-		for i in range(1, len(next_scene.name)):
-			if next_scene.name[i] == '@':
-				break
-			original_name += next_scene.name[i]
-	else:
-		original_name = next_scene.name
-	
-	path = "res://Scenes/" + original_name + ".tscn"
-	# scenemanager.start_transition(path, Vector2(0,0))
+func set_next_scene(scene: String, p_pos: Vector2):
+	next_scene = scene
+	player_pos = p_pos
 
 
-func set_next_player_pos(player_pos):
-	next_player_pos = player_pos
-	print(player_pos)
-
-
-func battle_ends(battle_won: bool):
+func battle_ends():
 	action_log.text = "Battaglia finita"
 	margincontainer.visible = true
 	battlemenu.visible = false
+	end(next_scene)
+	# yield(get_tree().create_timer(1), "timeout")
 	
-	yield(get_tree().create_timer(1), "timeout")
-	
-	scenemanager.start_transition(path, Vector2(0,0))
+	# scenemanager.start_transition("scene_path", Vector2(0,0))
 
 
 func playerAttack(slogan):
@@ -146,14 +124,6 @@ func playerAttack(slogan):
 	npcAttack(enemy_slogans[randi() % len(enemy_slogans) - 1])
 
 
-func damage(p_pos: Vector2, n_pos: Vector2):
-	var d = (5 - abs(p_pos.x - n_pos.x) + 5 - abs(p_pos.y - n_pos.y)) / 2
-	if d < 0:
-		pBar.value -= 8 * abs(d)
-	else:
-		npcBar.value -= 8*d
-
-
 func npcAttack(attack_slog):
 	turn = TURN.ENEMY
 	action_log.text = "Il nemico ha usato " + attack_slog.name
@@ -162,19 +132,11 @@ func npcAttack(attack_slog):
 	yield(get_tree().create_timer(1), "timeout")
 	margincontainer.visible = false
 	battlemenu.visible = true
-	
 	yield(get_tree().create_timer(0.1), "timeout")
 	
-	# print(p_attack, e_attack)
-	
 	damage(p_attack, e_attack)
-	print('Turn Ends')
-	
-	if npcBar.value == 0:
-		battle_ends(true)
-	if pBar.value == 0:
-		battle_ends(false)
-	
+	if npcBar.value == 0 or pBar.value == 0:
+		battle_ends()
 	turn = TURN.PLAYER
 	
 #	print(slogan.name)
@@ -184,5 +146,15 @@ func npcAttack(attack_slog):
 #		end()
 
 
-func end():
-	get_parent().get_parent().start_transition("res://Scenes/Level1.tscn", Vector2(0, 0))
+func damage(p_pos: Vector2, n_pos: Vector2):
+#	The sum of distances on both axises must be greater than 10 to hurt the player,
+#	otherwise it successfully hits the enemy.
+	var d = (10 - abs(p_pos.x - n_pos.x) - abs(p_pos.y - n_pos.y)) / 2
+	if d < 0:
+		pBar.value -= 8 * abs(d)
+	else:
+		npcBar.value -= 8*d
+
+
+func end(scene):
+	scenemanager.start_transition("res://Scenes/" + scene + ".tscn", player_pos)

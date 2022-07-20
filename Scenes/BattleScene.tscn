@@ -75,9 +75,6 @@ margin_left = 16.0
 margin_top = 96.0
 margin_right = 304.0
 margin_bottom = 176.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Node2D" type="Node2D" parent="BattleMenu"]
 position = Vector2( 29, 97 )
@@ -86,9 +83,6 @@ position = Vector2( 29, 97 )
 margin_right = 30.0
 margin_bottom = 30.0
 color = Color( 0.992157, 0.0313726, 0.0313726, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Slogans" type="Node2D" parent="BattleMenu"]
 

@@ -30,9 +30,9 @@ func _ready():
 	no_slog_text.visible = false
 	
 	var save_file = screentransition.save_file
-	
 	for slogan_res in save_file.array:
 		new_slogan(slogan_res)
+
 
 func _process(_delta):
 	n_of_slogans = container.get_child_count() - 1
@@ -122,7 +122,7 @@ func new_slogan(slogan):
 		# search_slog(slogan).slogan_res.xp += 20
 	else:
 		slogan_list.append(slogan)
-		print(ui.get_child(0).get_child(0).text)
+#		print(ui.get_child(0).get_child(0).text)
 		ui.add_money(-slogan.prize)
 	
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()

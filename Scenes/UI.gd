@@ -12,11 +12,10 @@ func _ready():
 func add_money(m: int):
 	var liracoin = $Control/RichTextLabel
 	liracoin.text = str(int(liracoin.text) + m)
-	print(liracoin.text)
 
 
 func loadLira(val):
-	print(val)
+#	print(val)
 	liracoin.text = val
 
 func get_money():

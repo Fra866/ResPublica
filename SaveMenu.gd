@@ -13,6 +13,8 @@ onready var scene_manager = get_node(NodePath("/root/SceneManager"))
 
 func _ready():
 	self.visible = false
+	print(scene_manager.save_file.get_path())
+
 
 func priority_to_menu():
 	var player = get_node(NodePath("../CurrentScene")).get_children().back().find_node("Player")

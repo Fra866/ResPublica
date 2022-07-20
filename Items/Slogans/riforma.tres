@@ -8,3 +8,4 @@ xp = 30
 political_pos = Vector2( 0, 0 )
 name = "Serve una riforma economica"
 id = 6
+prize = 50

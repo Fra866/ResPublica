@@ -29,6 +29,9 @@ margin_left = -50.0
 margin_right = 50.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 100, 180 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Button" type="Button" parent="Panel/Container"]
 margin_top = 15.0
@@ -36,7 +39,7 @@ margin_right = 100.0
 margin_bottom = 55.0
 rect_min_size = Vector2( 100, 40 )
 custom_fonts/font = SubResource( 1 )
-text = "Salvataggio 1"
+text = "Nuovo gioco"
 
 [node name="Button2" type="Button" parent="Panel/Container"]
 margin_top = 70.0
@@ -44,7 +47,7 @@ margin_right = 100.0
 margin_bottom = 110.0
 rect_min_size = Vector2( 100, 40 )
 custom_fonts/font = SubResource( 1 )
-text = "Salvataggio 2"
+text = "Carica partita"
 
 [node name="Button3" type="Button" parent="Panel/Container"]
 margin_top = 125.0
@@ -53,3 +56,94 @@ margin_bottom = 165.0
 rect_min_size = Vector2( 100, 40 )
 custom_fonts/font = SubResource( 1 )
 text = "Italexit"
+
+[node name="Container2" type="Container" parent="Panel"]
+visible = false
+margin_left = 110.0
+margin_right = 220.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 110, 180 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save1" type="Button" parent="Panel/Container2"]
+anchor_top = 0.126
+anchor_bottom = 0.126
+margin_top = 15.0
+margin_right = 100.0
+margin_bottom = 55.0
+rect_min_size = Vector2( 100, 40 )
+text = "Salvataggio 1"
+
+[node name="Save2" type="Button" parent="Panel/Container2"]
+anchor_top = 0.086
+anchor_bottom = 0.086
+margin_top = 70.0
+margin_right = 100.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 100, 40 )
+text = "Salvataggio 2"
+
+[node name="Save3" type="Button" parent="Panel/Container2"]
+anchor_top = 0.047
+anchor_bottom = 0.047
+margin_top = 125.0
+margin_right = 100.0
+margin_bottom = 165.0
+rect_min_size = Vector2( 100, 40 )
+text = "Salvataggio 3"
+
+[node name="Exit" type="Button" parent="Panel/Container2"]
+anchor_top = 0.02
+anchor_right = 0.801
+anchor_bottom = 0.08
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Indietro"
+
+[node name="Container3" type="Container" parent="Panel"]
+visible = false
+margin_left = 70.0
+margin_top = -1.0
+margin_right = 242.0
+margin_bottom = 179.0
+rect_min_size = Vector2( 110, 180 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Yes" type="Button" parent="Panel/Container3"]
+anchor_top = 0.318
+anchor_right = 0.338
+anchor_bottom = 0.318
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Yes"
+
+[node name="No" type="Button" parent="Panel/Container3"]
+anchor_left = 0.6
+anchor_top = 0.318
+anchor_right = 0.881
+anchor_bottom = 0.324
+margin_right = 12.0
+margin_bottom = 20.0
+text = "No"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/Container3"]
+anchor_top = 0.51
+anchor_right = 0.935
+anchor_bottom = 0.583
+margin_right = 40.0
+margin_bottom = 40.0
+text = "Tutti i dati di questo file di gioco faranno la fine dei 5 stelle. Vuoi continuare?"
+
+[connection signal="pressed" from="Panel/Container/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Panel/Container/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Panel/Container/Button3" to="." method="_on_Button3_pressed"]
+[connection signal="pressed" from="Panel/Container2/Save1" to="." method="_on_Save1_pressed"]
+[connection signal="pressed" from="Panel/Container2/Save2" to="." method="_on_Save2_pressed"]
+[connection signal="pressed" from="Panel/Container2/Save3" to="." method="_on_Save3_pressed"]
+[connection signal="pressed" from="Panel/Container2/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="Panel/Container3/Yes" to="." method="_on_Yes_pressed"]
+[connection signal="pressed" from="Panel/Container3/No" to="." method="_on_No_pressed"]
