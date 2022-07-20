@@ -44,7 +44,7 @@ func _process(_delta):
 	if player:
 		if Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding():
 			if i<len(d_list):
-				display_text_line(d_list, i)
+				display_text_line(d_list[i])
 				i += 1
 			else:
 				i = 0
@@ -54,19 +54,24 @@ func _process(_delta):
 					open_shop = false
 					shop_box.priority_to_menu()
 				elif len(s_list) > 0:
-					scenemanager.start_transition(battle_scene_path, Vector2(0,0))
-					emit_signal("npc_slogans", s_list)
-					emit_signal("next_scene", current_scene)
-					emit_signal("next_player_pos", player.position)
+					if !len(menu.slogan_list):
+						yield(display_text_line("Non puoi combattere senza slogan."), "completed")
+						$MarginContainer.visible = false
+						emit_signal("priority_to_player")
+					else:
+						scenemanager.start_transition(battle_scene_path, Vector2(0,0))
+						emit_signal("npc_slogans", s_list)
+						emit_signal("next_scene", current_scene)
+						emit_signal("next_player_pos", player.position)
 				else:
 					emit_signal("priority_to_player")
 
 
-func display_text_line(list, id: int):
+func display_text_line(line: String):
 	$MarginContainer.visible = true
-	text_label.set_text(list[id])
+	text_label.set_text(line)
 	text_label.percent_visible = 0.0
-	for counter in len(list[id])+1:
-		text_label.percent_visible += 1.0/len(list[id])
+	for counter in len(line)+1:
+		text_label.percent_visible += 1.0/len(line)
 		yield(get_tree().create_timer(0.01), "timeout")
 	yield(get_tree().create_timer(0.5), "timeout")

@@ -11,3 +11,4 @@ func initialize():
 	array = []
 	current_scene = load("res://Scenes/Level1.tscn")
 	money = 1000
+	player_pos = Vector2(80, 16)

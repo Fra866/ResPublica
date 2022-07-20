@@ -62,9 +62,9 @@ func _process(_delta):
 	if turn == TURN.PLAYER:
 		var slog = menu.slogan_list[id]
 		
-		if Input.is_action_just_pressed("ui_right") and id < 10:
+		if Input.is_action_just_pressed("ui_right") and id < n_of_slogans - 1:
 			id += 1
-		if Input.is_action_just_pressed("ui_down") and id < 4:
+		if Input.is_action_just_pressed("ui_down") and id < n_of_slogans - 8:
 			id += 7
 		if Input.is_action_just_pressed("ui_up") and id > 6:
 			id -= 7
@@ -119,7 +119,6 @@ func set_next_scene(next_scene):
 
 func set_next_player_pos(player_pos):
 	next_player_pos = player_pos
-	print(player_pos)
 
 
 func battle_ends(battle_won: bool):
@@ -162,14 +161,9 @@ func npcAttack(attack_slog):
 	yield(get_tree().create_timer(1), "timeout")
 	margincontainer.visible = false
 	battlemenu.visible = true
-	
 	yield(get_tree().create_timer(0.1), "timeout")
 	
-	# print(p_attack, e_attack)
-	
 	damage(p_attack, e_attack)
-	print('Turn Ends')
-	
 	if npcBar.value == 0:
 		battle_ends(true)
 	if pBar.value == 0:

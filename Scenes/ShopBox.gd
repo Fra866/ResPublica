@@ -1,7 +1,7 @@
 extends CanvasLayer
-export(int) var firstTime
-var file1 = "res://gabibbo.txt"
-var test = "res://gabibbo.tres"
+#export(int) var firstTime
+#var file1 = "res://gabibbo.txt"
+#var test = "res://gabibbo.tres"
 var slogans = []
 
 onready var background = $Background
@@ -67,7 +67,7 @@ func brought(i_element):
 	var selected_slogan = get_slogan_instance(i_element)
 	# slogans.append(selected_slogan)
 	
-	print(selected_slogan.slogan_res in menu.slogan_list)
+#	print(selected_slogan.slogan_res in menu.slogan_list)
 	
 	menu.new_slogan(selected_slogan.slogan_res)
 

@@ -18,9 +18,6 @@ __meta__ = {
 margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 320, 180 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Container" type="Container" parent="Panel"]
 anchor_left = 0.5
@@ -36,7 +33,7 @@ margin_right = 100.0
 margin_bottom = 55.0
 rect_min_size = Vector2( 100, 40 )
 custom_fonts/font = SubResource( 1 )
-text = "Salvataggio 1"
+text = "Inizia"
 
 [node name="Button2" type="Button" parent="Panel/Container"]
 margin_top = 70.0
@@ -44,7 +41,7 @@ margin_right = 100.0
 margin_bottom = 110.0
 rect_min_size = Vector2( 100, 40 )
 custom_fonts/font = SubResource( 1 )
-text = "Salvataggio 2"
+text = "Carica partita"
 
 [node name="Button3" type="Button" parent="Panel/Container"]
 margin_top = 125.0
@@ -53,3 +50,44 @@ margin_bottom = 165.0
 rect_min_size = Vector2( 100, 40 )
 custom_fonts/font = SubResource( 1 )
 text = "Italexit"
+
+[node name="Container2" type="Container" parent="Panel"]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -50.0
+margin_right = 50.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 100, 180 )
+
+[node name="Button" type="Button" parent="Panel/Container2"]
+margin_top = 12.0
+margin_right = 100.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 100, 30 )
+custom_fonts/font = SubResource( 1 )
+text = "Salvataggio 1"
+
+[node name="Button2" type="Button" parent="Panel/Container2"]
+margin_top = 54.0
+margin_right = 100.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 100, 30 )
+custom_fonts/font = SubResource( 1 )
+text = "Salvataggio 2"
+
+[node name="Button3" type="Button" parent="Panel/Container2"]
+margin_top = 96.0
+margin_right = 100.0
+margin_bottom = 126.0
+rect_min_size = Vector2( 100, 30 )
+custom_fonts/font = SubResource( 1 )
+text = "Salvataggio 3"
+
+[node name="Button4" type="Button" parent="Panel/Container2"]
+margin_top = 138.0
+margin_right = 100.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 100, 30 )
+custom_fonts/font = SubResource( 1 )
+text = "Indietro"
