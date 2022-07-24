@@ -17,6 +17,7 @@ onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var saveMenu = get_node(NodePath("/root/SceneManager/Control"))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
 
+
 enum PlayerState { IDLE, RUNNING, TURNING, IN_PAUSE }
 enum FacingDirection { LEFT, UP, RIGHT, DOWN }
 
@@ -31,6 +32,13 @@ var direction = FacingDirection.DOWN
 signal enter_door(door)
 
 func _ready():
+	var current_scene = scenemanager.get_child(0).get_child(0)
+	
+	if not current_scene.name in scenemanager.list_visited_scenes:
+		scenemanager.list_visited_scenes.append(current_scene.name)
+	
+	print(scenemanager.list_visited_scenes)
+	
 	var save_file = scenemanager.save_file
 	visible = true
 	dialouge_box.connect("priority_to_player", self, "get_priority")
@@ -57,6 +65,7 @@ func _physics_process(delta):
 		animstate.travel("Idle")
 		is_moving = false
 
+
 func process_player_input():
 	if not player_state == PlayerState.IN_PAUSE:
 		if input_direction.y == 0:
@@ -80,17 +89,17 @@ func process_player_input():
 			animstate.travel("Idle")
 	
 	else:
-		animstate.travel("Idle")
+		pass
 	
 	if Input.is_action_just_pressed("ui_menu"):
 		openClose(menu)
-			
+	
 	if Input.is_action_just_pressed("ui_save"):
 		open_menu(saveMenu)
 
 
 func openClose(m):
-	if m.get("state") == 0: #MenuState.OPENED:
+	if m.get("state") == 0: # MenuState.OPENED:
 		close_menu(m)
 	elif player_state != PlayerState.IN_PAUSE:
 		open_menu(m)
@@ -101,14 +110,17 @@ func open_menu(m):
 	m.priority_to_menu()
 	m.set("state", 0) #MenuState.OPENED
 
+
 func close_menu(m):
 	cutscene = false
 	player_state = PlayerState.IDLE
 	m.priority_to_player()
-	m.set("state", 1) #MenuState.CLOSED
+	m.set("state", 1) # MenuState.CLOSED
+
 
 func collided_with_npc(npc):
 	npc.interaction(self)
+
 
 func entered_door():
 	cutscene = true
@@ -116,15 +128,18 @@ func entered_door():
 	camera.clear_current()
 	emit_signal("enter_door", position, DoorRayCast.get_collider())
 
+
 func new_scene():
 	visible = true
 	camera.current = true
 	player_state = PlayerState.IDLE
 
+
 func move(delta):
 	calculate_npcraycast(NPCraycast)
 	calculate_npcraycast(DoorRayCast)
 	calculate_npcraycast(ObjectRayCast)
+	
 	percent_to_next_tile += (walk_speed * delta)
 	
 	if not NPCraycast.is_colliding() and not DoorRayCast.is_colliding() and not ObjectRayCast.is_colliding() and player_state != PlayerState.IN_PAUSE:
@@ -146,6 +161,7 @@ func move(delta):
 				if DoorRayCast.is_colliding():
 					entered_door()
 
+
 func need_to_turn():
 	var new_facing_direction
 	if input_direction.x < 0:
@@ -163,8 +179,10 @@ func need_to_turn():
 	direction = new_facing_direction
 	return false
 
+
 func finished_turning():
 	player_state = PlayerState.IDLE
+
 
 func calculate_npcraycast(raycast):
 	match direction:
@@ -177,6 +195,7 @@ func calculate_npcraycast(raycast):
 		3:
 			raycast.cast_to = Vector2(0, 8)
 	raycast.force_raycast_update()
+
 
 func get_priority():
 	if not shop_box.open:

@@ -12,6 +12,8 @@ onready var selector = $BattleMenu/Node2D/ColorRect
 onready var margincontainer = $ActionLog/MarginContainer
 onready var action_log = $ActionLog/MarginContainer/Panel/Label
 onready var political_compass = $PoliticalCompass
+onready var npc
+onready var enemy_sprite = $EnemySprite
 
 onready var n_of_slogans = 0
 onready var max_slogans = 8
@@ -33,10 +35,13 @@ enum TURN {PLAYER, ENEMY, ATTACKING}
 onready var turn = TURN.PLAYER
 
 func _ready():
+	enemy_sprite.texture = load("res://UI/andreotti/battle.png")
 	political_compass.visibility(true)
 	
 	dialogue_box.connect("npc_slogans", self, "set_npc_slogans")
 	dialogue_box.connect("next_scene", self, "set_next_scene")
+	dialogue_box.connect("send_npc", self, "set_npc")
+	
 	for slogan_res in menu.slogan_list:
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
@@ -55,7 +60,7 @@ func _ready():
 
 
 func _process(_delta):
-#	Temporary solution. Visual cue, or selector, to be soon implemented.
+#	Temporary solution. Visual cue, or selector, to be implemented soon.
 	if turn == TURN.PLAYER:
 		var slog = menu.slogan_list[id]
 		
@@ -77,12 +82,11 @@ func _process(_delta):
 		attacking = true
 		playerAttack(menu.slogan_list[id])
 #		print(menu.slogan_list[id].name)
-#
 #		action_log.text = "Hai usato " + used_slog.name
 #		margincontainer.visible = true
 #		yield(get_tree().create_timer(1), "timeout")
 #		battlemenu.visible = false
-	
+
 
 func get_rand():
 	var tmp = ResourceLoader.load("res://NPC/tmp.tres")
@@ -98,6 +102,11 @@ func set_npc_slogans(slogan_list):
 func set_next_scene(scene: String, p_pos: Vector2):
 	next_scene = scene
 	player_pos = p_pos
+
+
+func set_npc(current_npc):
+	enemy_sprite.texture = load(npc.battle_sprite_path)
+	npc = current_npc
 
 
 func battle_ends():
@@ -158,3 +167,4 @@ func damage(p_pos: Vector2, n_pos: Vector2):
 
 func end(scene):
 	scenemanager.start_transition("res://Scenes/" + scene + ".tscn", player_pos)
+	# current_enemy.battle_won = true

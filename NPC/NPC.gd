@@ -1,25 +1,89 @@
 extends StaticBody2D
 
-#onready var player = get_node(NodePath('/root/SceneManager/CurrentScene/Level1/YSort/Player'))
+# onready var player = get_node(NodePath('/root/SceneManager/CurrentScene/Level1/YSort/Player'))
 onready var animplayer = $AnimationPlayer
 onready var animtree = $AnimationTree
+onready var sprite = $Sprite
+
+const TILE_SIZE = 16
+
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
+onready var texture
 
 export(Array, String) var dialouge_list
-export(bool) var is_seller
 export(Array, Resource) var slogans_for_battle
 export(Vector2) var political_pos
+export(bool) var is_seller
+export(bool) var battle_won
+export(int) var votes
+export(String) var battle_sprite_path
+
+export(String) var sprite_path
+
+enum FacingDirection { LEFT, UP, RIGHT, DOWN }
+
+onready var cutscene = false
+var is_moving = false
+var initial_position = Vector2(0, 0)
+var input_direction = Vector2(0, 0)
+var percent_to_next_tile = 0.0
+var walk_speed = 4.0
+
+# var direction = FacingDirection.DOWN
+
+export(int) var hf
+export(int) var vf
+export(int) var f
 
 
 func _ready():
-	animplayer.play("IdleRight")
+	setting_up_sprite()
+	# animplayer.play("IdleRight")
+
+
+func setting_up_sprite():
+	sprite.texture = load(sprite_path)
+	
+	sprite.hframes = hf
+	sprite.vframes = vf
+	sprite.frame = f
+
 
 func interaction(player):
 	animtree.set("parameters/blend_position", (player.position - position) / 16)
-	dialouge_box.display_dialouge(dialouge_list, is_seller, slogans_for_battle)
+	dialouge_box.display_dialouge(self)
 	
 	if len(slogans_for_battle):
 		var tmp = Temp.new()
 		tmp.slogans_for_battle = slogans_for_battle
 		tmp.political_pos = political_pos
 		ResourceSaver.save("res://NPC/tmp.tres", tmp)
+
+func _physics_process(delta):
+	if is_moving == false:
+		process_player_input()
+	elif input_direction != Vector2.ZERO:
+		move(delta)
+	else:
+		# animplayer.play("IdleDown")
+		is_moving = false
+
+
+func process_player_input():
+	if input_direction.y == 0:
+		input_direction.x = 0
+
+	if input_direction.x == 0:
+		input_direction.y = 0
+			
+	if input_direction != Vector2.ZERO:
+		animtree.set("parameters/Idle/blend_position", input_direction)
+		animtree.set("parameters/Run/blend_position", input_direction)
+		animtree.set("parameters/Turn/blend_position", input_direction)
+	else:
+		pass
+		# animplayer.play("IdleDown")
+
+
+func move(delta):
+	pass

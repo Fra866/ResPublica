@@ -11,12 +11,16 @@ onready var ui = $UI/Control/RichTextLabel
 onready var transition_animation = $ScreenTransition/AnimationPlayer
 onready var scene_container = $CurrentScene
 
+onready var list_npc: Array
+onready var list_visited_scenes: Array
+
 onready var save_file # Saved data File
 onready var slot: int # Id of file_saved slot (can be 1 or 2)
 onready var loading_count: int = 1
 
 signal new_main_scene
 signal config
+
 
 func _ready():
 #	scene_container.get_child(0).queue_free()
@@ -45,6 +49,7 @@ func end_transition(player_pos):
 	var p = scene_container.get_children().back().find_node("Player")
 	if p:
 		p.position = player_pos
+	print(p)
 	emit_signal("new_main_scene")
 
 #func loadAll():

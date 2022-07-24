@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/floor.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Door.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/wall.png" type="Texture" id=4]
 [ext_resource path="res://NPC/NPC.tscn" type="PackedScene" id=5]
+[ext_resource path="res://CutsceneActivator.tscn" type="PackedScene" id=6]
 
 [sub_resource type="TileSet" id=1]
 0/name = "floor.png 0"
@@ -62,6 +63,18 @@ collision_mask = 7
 position = Vector2( 0, 128 )
 dialouge_list = [ "Benvenuto", "Cosa io potere fare per te?" ]
 is_seller = true
+sprite_path = "res://Assets/Player/Male_Spritesheet.png"
+hf = 3
+vf = 3
+f = 2
+
+[node name="Virgilio" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 144, 96 )
+dialouge_list = [ "Benvenuto", "Cosa io potere fare per te?" ]
+sprite_path = "res://UI/andreotti ow.png"
+hf = 3
+vf = 4
+f = 1
 
 [node name="Walls" type="StaticBody2D" parent="."]
 position = Vector2( -16, 64 )
@@ -80,3 +93,6 @@ polygon = PoolVector2Array( -0.846798, 16, -0.846798, 19.4409, -0.846798, 19.440
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Walls"]
 position = Vector2( 336, 0 )
 polygon = PoolVector2Array( 16, 0, 16, 0, 16, 128, 16, 144, -160, 144, -160, 128, 0, 128, 0, 0 )
+
+[node name="CutsceneActivator" parent="." instance=ExtResource( 6 )]
+position = Vector2( 144, 144 )

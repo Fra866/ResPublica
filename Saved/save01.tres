@@ -7,5 +7,5 @@
 script = ExtResource( 1 )
 array = [  ]
 current_scene = ExtResource( 2 )
-player_pos = Vector2( 80, 48 )
+player_pos = Vector2( 80, 16 )
 money = 1000
