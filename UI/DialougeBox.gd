@@ -35,6 +35,10 @@ func _ready():
 	$MarginContainer.visible = false
 
 
+func activate_dialouge():
+	return true
+
+
 func display_dialouge(npc):
 	print('DialougeBox NPC: ', npc.name)
 	current_npc = npc.name
@@ -43,16 +47,15 @@ func display_dialouge(npc):
 	s_list = npc.slogans_for_battle
 	open_shop = npc.is_seller
 	has_won_battle = npc.battle_won
-	
-	print(npc.battle_won)
 
 
 func _process(_delta):
 	player = get_parent().get_child(0).get_child(0).find_node('Player')
 	current_scene = scenemanager.get_child(0).get_child(0)
-
+	
+	
 	if player:
-		if Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding():
+		if Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding() or activate_dialouge():
 			if i < len(d_list):
 				display_text_line(d_list[i])
 				i += 1

@@ -69,8 +69,8 @@ vf = 3
 f = 2
 
 [node name="Virgilio" parent="YSort" instance=ExtResource( 5 )]
-position = Vector2( 144, 96 )
-dialouge_list = [ "Benvenuto", "Cosa io potere fare per te?" ]
+position = Vector2( 144, 80 )
+dialouge_list = [ "Io sono Virgilio", "Ora ti do la lettera", "Appena avremo programmato l'inventario" ]
 sprite_path = "res://UI/andreotti ow.png"
 hf = 3
 vf = 4

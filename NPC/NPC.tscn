@@ -150,7 +150,6 @@ dialouge_list = [ "Sono tutti distratti", "Reclamiamo la Corsica adesso" ]
 votes = 10
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -16 )
 scale = Vector2( 1, 1.06667 )
 texture = ExtResource( 1 )
 centered = false
@@ -160,7 +159,7 @@ vframes = 4
 frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 8, 0 )
+position = Vector2( 8, 8 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -177,3 +176,8 @@ tree_root = SubResource( 11 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/blend_position = Vector2( -0.000613511, 0.995446 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 8, 8 )
+enabled = true
+cast_to = Vector2( 0, 8 )

@@ -16,12 +16,14 @@ onready var door = get_node(NodePath('..')).find_node('Door')
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var saveMenu = get_node(NodePath("/root/SceneManager/Control"))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
+onready var cutscene_activator
 
 
 enum PlayerState { IDLE, RUNNING, TURNING, IN_PAUSE }
 enum FacingDirection { LEFT, UP, RIGHT, DOWN }
 
 onready var cutscene = false
+
 var is_moving = false
 var initial_position = Vector2(0, 0)
 var input_direction = Vector2(0, 0)
@@ -32,6 +34,7 @@ var direction = FacingDirection.DOWN
 signal enter_door(door)
 
 func _ready():
+	cutscene_activator = scenemanager.get_child(0).get_children().back().find_node("CutsceneActivator")
 	var current_scene = scenemanager.get_child(0).get_child(0)
 	
 	if not current_scene.name in scenemanager.list_visited_scenes:
@@ -51,14 +54,23 @@ func _ready():
 	door.connect('entered_door', self, 'new_scene')
 
 
+func stop_game():
+	cutscene = true
+
+
 func _physics_process(delta):
+	if cutscene_activator and cutscene_activator.cutscene:
+		cutscene = true
+	
+	print(cutscene_activator)
+	
 	if menu.state != 1 or cutscene: #!= MenuState.CLOSE
 		player_state = PlayerState.IN_PAUSE
 	if player_state == PlayerState.TURNING:
 		return
 	elif is_moving == false:
 		process_player_input()
-	elif input_direction != Vector2.ZERO:
+	elif input_direction != Vector2.ZERO and !cutscene:
 		animstate.travel("Run")
 		move(delta)
 	else:
@@ -67,7 +79,7 @@ func _physics_process(delta):
 
 
 func process_player_input():
-	if not player_state == PlayerState.IN_PAUSE:
+	if not player_state == PlayerState.IN_PAUSE and !cutscene:
 		if input_direction.y == 0:
 			input_direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
 			
@@ -89,7 +101,7 @@ func process_player_input():
 			animstate.travel("Idle")
 	
 	else:
-		pass
+		animstate.travel("Idle")
 	
 	if Input.is_action_just_pressed("ui_menu"):
 		openClose(menu)
@@ -140,6 +152,7 @@ func move(delta):
 	calculate_npcraycast(DoorRayCast)
 	calculate_npcraycast(ObjectRayCast)
 	
+	# print("% to next tile" , percent_to_next_tile)
 	percent_to_next_tile += (walk_speed * delta)
 	
 	if not NPCraycast.is_colliding() and not DoorRayCast.is_colliding() and not ObjectRayCast.is_colliding() and player_state != PlayerState.IN_PAUSE:
