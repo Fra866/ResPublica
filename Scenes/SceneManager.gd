@@ -49,7 +49,6 @@ func end_transition(player_pos):
 	var p = scene_container.get_children().back().find_node("Player")
 	if p:
 		p.position = player_pos
-	print(p)
 	emit_signal("new_main_scene")
 
 #func loadAll():

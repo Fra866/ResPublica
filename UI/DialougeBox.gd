@@ -21,6 +21,7 @@ var i = 0
 var open_shop: bool = false
 var has_won_battle: bool
 
+var start_dialouge: bool = false
 
 var battle_scene_path = 'res://Scenes/BattleScene.tscn'
 
@@ -55,7 +56,8 @@ func _process(_delta):
 	
 	
 	if player:
-		if Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding() or activate_dialouge():
+		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialouge:
+			start_dialouge = false
 			if i < len(d_list):
 				display_text_line(d_list[i])
 				i += 1
@@ -67,7 +69,7 @@ func _process(_delta):
 					open_shop = false
 					shop_box.priority_to_menu()
 				elif len(s_list) > 0:
-					print(scenemanager.list_npc)
+					# print(scenemanager.list_npc)
 					if !len(menu.slogan_list):
 						yield(display_text_line("Non hai slogan per combattere."), "completed")
 						$MarginContainer.visible = false

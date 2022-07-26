@@ -7,7 +7,9 @@ onready var collisionshape = $Area2D/CollisionShape2D
 onready var scenecontainer = scenemanager.get_child(0)
 onready var enabled: bool = true
 onready var currentscene
-onready var cutscene
+onready var cutscene: bool = false
+
+var i: int = 0
 
 export(int) var cutscene_code
 
@@ -21,7 +23,6 @@ func virgilio_cutscene():
 	cutscene = true
 	var virgilio = currentscene.get_child(1).get_child(3)
 	
-	player.stop_game()
 	player.animstate.travel("Idle")
 	player.animplayer.play('IdleUp')
 	
@@ -32,12 +33,19 @@ func virgilio_cutscene():
 	yield(get_tree().create_timer(1), "timeout")
 	virgilio.animplayer.play('IdleDown')
 	
-	dialouge_box.activate_dialouge()
+	dialouge_box.display_dialouge(virgilio)
+	
+	for j in range(len(virgilio.dialouge_list) + 1):
+		yield(get_tree().create_timer(1.5), "timeout")
+		dialouge_box.start_dialouge = true
+	
+	cutscene = false
+	virgilio.input_direction = Vector2(0, 0)
 
 
 func start_cutscene():
 	# enabled = false
-	player.stop_game()
+	# player.stop_game()
 	
 	match cutscene_code:
 		1:
@@ -46,10 +54,9 @@ func start_cutscene():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	player.stop_game()
-	
 	if player and enabled:
-		if player.position == self.position:
+		if player.position == self.position and i == 0:
 			currentscene = scenecontainer.get_child(0)
 			start_cutscene()
+			i += 1
 			# queue_free()

@@ -39,9 +39,6 @@ func _ready():
 	
 	if not current_scene.name in scenemanager.list_visited_scenes:
 		scenemanager.list_visited_scenes.append(current_scene.name)
-	
-	print(scenemanager.list_visited_scenes)
-	
 	var save_file = scenemanager.save_file
 	visible = true
 	dialouge_box.connect("priority_to_player", self, "get_priority")
@@ -54,15 +51,12 @@ func _ready():
 	door.connect('entered_door', self, 'new_scene')
 
 
-func stop_game():
-	cutscene = true
-
-
 func _physics_process(delta):
-	if cutscene_activator and cutscene_activator.cutscene:
-		cutscene = true
+	print(cutscene)
 	
-	print(cutscene_activator)
+	if cutscene_activator:
+		if cutscene_activator.cutscene:
+			cutscene = true
 	
 	if menu.state != 1 or cutscene: #!= MenuState.CLOSE
 		player_state = PlayerState.IN_PAUSE
@@ -131,6 +125,7 @@ func close_menu(m):
 
 
 func collided_with_npc(npc):
+	print(npc)
 	npc.interaction(self)
 
 
