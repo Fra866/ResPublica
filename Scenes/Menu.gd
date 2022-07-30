@@ -4,8 +4,11 @@ export(int) var state = 1
 onready var sprite = $MenuLayers/MainMenu/Sprite
 onready var control = $MenuLayers/MainMenu/Control
 onready var slogans = $MenuLayers/Slogans
-onready var container = $MenuLayers/Slogans/MainContainer
+onready var slogan_container = $MenuLayers/Slogans/MainContainer
 onready var slogan_selector = $MenuLayers/Slogans/MainContainer/Selector
+onready var objects = $MenuLayers/Objects
+onready var objects_container = $MenuLayers/Objects/MainContainer
+onready var objects_selector = $MenuLayers/Objects/MainContainer/Selector
 onready var menulayers = $MenuLayers
 onready var no_slog_text = $MenuLayers/Slogans/NoSloganText
 onready var political_compass = $MenuLayers/Slogans/PoliticalCompass
@@ -15,12 +18,16 @@ onready var player = get_node(NodePath('..')).find_node('Player')
 onready var screentransition = get_node(NodePath('/root/SceneManager'))
 onready var currentscene = get_node(NodePath('/root/SceneManager/CurrentScene'))
 onready var n_of_slogans: int
+onready var n_of_objects: int
 onready var corrent_slog
 
 var menu_main: bool = false
 var menu_slogans: bool = false
+var menu_objects: bool = false
 var slogan_index: int = 0
+
 onready var slogan_list: Array = []
+onready var object_list: Array = []
 
 func _ready():
 	menulayers = $MenuLayers
@@ -35,7 +42,8 @@ func _ready():
 
 
 func _process(_delta):
-	n_of_slogans = container.get_child_count() - 1
+	n_of_slogans = slogan_container.get_child_count() - 1
+	n_of_objects = objects_container.get_child_count() - 1
 	player = get_node(NodePath('..')).get_child(0).get_children().back().find_node("Player")
 	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene')).get_child(0)
 	
@@ -43,9 +51,16 @@ func _process(_delta):
 		control.visible = menu_main
 		sprite.visible = menu_main
 		slogans.visible = menu_slogans
+		objects.visible = menu_objects
+		
 		menulayers.position = player.position
 
 	if menu_slogans:
+		menu_main = false
+		if Input.is_action_just_pressed("ui_end"):
+			menu_slogans = false
+			menu_main = true
+			slogan_index = 0
 		if n_of_slogans == 0:
 			no_slog_text.visible = true
 			slogan_selector.visible = false
@@ -56,12 +71,7 @@ func _process(_delta):
 			corrent_slog = slogan_list[slogan_index]
 			
 			political_compass.set_main_pointer(corrent_slog.political_pos.x, -corrent_slog.political_pos.y)
-			menu_main = false
 			
-			if Input.is_action_just_pressed("ui_end"):
-				menu_slogans = false
-				menu_main = true
-				slogan_index = 0
 			if Input.is_action_just_pressed("ui_right"):
 				if slogan_index < (n_of_slogans - 1):
 					slogan_index += 1
@@ -73,19 +83,41 @@ func _process(_delta):
 
 		slogan_selector.rect_position.x = 32 * (slogan_index % 6) + 3
 		slogan_selector.rect_position.y = 40 * (int(slogan_index / 6))+ 9
-		
-	else:
-		if menu_main:
-			if Input.is_action_just_pressed("ui_down"):
-				if sprite.frame != 3:
-					sprite.frame += 1
-			if Input.is_action_just_pressed("ui_up"):
-				if sprite.frame != 0:
-					sprite.frame -= 1
-			if Input.is_action_just_pressed("ui_accept"):
-				match sprite.frame:
-					2:
-						priority_to_slogans()
+	
+	
+	if menu_objects:
+		objects_container.visible = false
+		menu_main = false
+		menu_slogans = false
+		if Input.is_action_just_pressed("ui_end"):
+			menu_objects = false
+			menu_main = true
+		if n_of_objects == 0:
+			no_slog_text.visible = true
+			slogan_selector.visible = false
+		else:
+			no_slog_text.visible = false
+			slogan_selector.visible = true
+	
+	if menu_main:
+		if Input.is_action_just_pressed("ui_down"):
+			if sprite.frame != 3:
+				sprite.frame += 1
+		if Input.is_action_just_pressed("ui_up"):
+			if sprite.frame != 0:
+				sprite.frame -= 1
+		if Input.is_action_just_pressed("ui_accept"):
+			match sprite.frame:
+				2:
+					priority_to_slogans()
+				3:
+					priority_to_objects()
+
+
+
+func priority_to_objects():
+	menu_objects = true
+	political_compass.visibility(false)
 
 
 func priority_to_slogans():
@@ -110,7 +142,7 @@ func new_p():
 
 func search_slog(slogan):
 	var i = 0
-	for node in container.get_children():
+	for node in slogan_container.get_children():
 		if i >= 1 and node.slogan_res == slogan:
 			return node
 		i += 1
@@ -129,7 +161,7 @@ func new_slogan(slogan):
 		new_slog_instance.slogan_res = slogan
 		new_slog_instance.position = Vector2(32 * (n_of_slogans % 6) + 15, 40*(int(n_of_slogans / 6))+ 20)
 		n_of_slogans += 1
-		container.add_child(new_slog_instance)
+		slogan_container.add_child(new_slog_instance)
 
 
 #func loadSlogans(data):

@@ -64,6 +64,7 @@ __meta__ = {
 }
 
 [node name="Slogans" type="Control" parent="MenuLayers"]
+visible = false
 margin_left = -96.0
 margin_top = -80.0
 margin_right = 94.0
@@ -101,3 +102,40 @@ __meta__ = {
 
 [node name="PoliticalCompass" parent="MenuLayers/Slogans" instance=ExtResource( 4 )]
 position = Vector2( 96, 128 )
+
+[node name="Objects" type="Control" parent="MenuLayers"]
+visible = false
+margin_left = -96.0
+margin_top = -80.0
+margin_right = 94.0
+margin_bottom = 80.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Sprite" parent="MenuLayers/Objects"]
+position = Vector2( 96, 54 )
+scale = Vector2( 2, 0.90625 )
+texture = ExtResource( 3 )
+
+[node name="MainContainer" type="Node2D" parent="MenuLayers/Objects"]
+
+[node name="Selector" type="ColorRect" parent="MenuLayers/Objects/MainContainer"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 39.0
+margin_bottom = 39.0
+color = Color( 0.454902, 0.94902, 0.203922, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NoSloganText" type="RichTextLabel" parent="MenuLayers/Objects"]
+margin_left = 16.0
+margin_top = 32.0
+margin_right = 176.0
+margin_bottom = 80.0
+text = "Non hai nessun oggetto."
+__meta__ = {
+"_edit_use_anchors_": false
+}
