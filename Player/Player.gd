@@ -52,8 +52,6 @@ func _ready():
 
 
 func _physics_process(delta):
-	print(cutscene)
-	
 	if cutscene_activator:
 		if cutscene_activator.cutscene:
 			cutscene = true

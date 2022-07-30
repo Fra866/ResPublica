@@ -13,6 +13,8 @@ onready var current_scene = scenemanager.get_child(0).get_child(0)
 onready var initiator
 onready var player
 
+onready var npc_name
+
 var d_list: Array = []
 var s_list: Array = []
 var finished_dialouge: bool = true
@@ -41,8 +43,8 @@ func activate_dialouge():
 
 
 func display_dialouge(npc):
-	print('DialougeBox NPC: ', npc.name)
-	current_npc = npc.name
+	current_npc = npc
+	npc_name = npc.name
 	
 	d_list = npc.dialouge_list
 	s_list = npc.slogans_for_battle
@@ -53,8 +55,7 @@ func display_dialouge(npc):
 func _process(_delta):
 	player = get_parent().get_child(0).get_child(0).find_node('Player')
 	current_scene = scenemanager.get_child(0).get_child(0)
-	
-	
+
 	if player:
 		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialouge:
 			start_dialouge = false
@@ -71,13 +72,13 @@ func _process(_delta):
 				elif len(s_list) > 0:
 					# print(scenemanager.list_npc)
 					if !len(menu.slogan_list):
-						yield(display_text_line("Non hai slogan per combattere."), "completed")
+						# yield(display_text_line("Non hai slogan per combattere."), "completed")
 						$MarginContainer.visible = false
 						emit_signal("priority_to_player")
 					else:
 						if !has_won_battle:
-							if not current_npc in scenemanager.list_npc:
-								scenemanager.list_npc.append(current_npc)
+							if not npc_name in scenemanager.list_npc:
+								scenemanager.list_npc.append(npc_name)
 							
 								scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 								emit_signal("send_npc", current_npc)

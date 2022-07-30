@@ -60,7 +60,6 @@ func _ready():
 
 
 func _process(_delta):
-#	Temporary solution. Visual cue, or selector, to be implemented soon.
 	if turn == TURN.PLAYER:
 		var slog = menu.slogan_list[id]
 		
@@ -105,8 +104,8 @@ func set_next_scene(scene: String, p_pos: Vector2):
 
 
 func set_npc(current_npc):
-	enemy_sprite.texture = load(npc.battle_sprite_path)
 	npc = current_npc
+	enemy_sprite.texture = load(npc.battle_sprite_path)
 
 
 func battle_ends():
