@@ -35,6 +35,7 @@ enum TURN {PLAYER, ENEMY, ATTACKING}
 onready var turn = TURN.PLAYER
 
 func _ready():
+	randomize()
 	enemy_sprite.texture = load("res://UI/andreotti/battle.png")
 	political_compass.visibility(true)
 	
