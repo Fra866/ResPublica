@@ -11,7 +11,10 @@ onready var objects_container = $MenuLayers/Objects/MainContainer
 onready var objects_selector = $MenuLayers/Objects/MainContainer/Selector
 onready var menulayers = $MenuLayers
 onready var no_slog_text = $MenuLayers/Slogans/NoSloganText
+onready var no_obj_text = $MenuLayers/Objects/NoObjectText
 onready var political_compass = $MenuLayers/Slogans/PoliticalCompass
+onready var objects_desc_displayer = $MenuLayers/Objects/DescriptionDisplayer
+onready var current_object_desc = $MenuLayers/Objects/DescriptionDisplayer/Background/InnerBackground/Text
 onready var ui = get_node("/root/SceneManager/UI")
 
 onready var player = get_node(NodePath('..')).find_node('Player')
@@ -19,12 +22,16 @@ onready var screentransition = get_node(NodePath('/root/SceneManager'))
 onready var currentscene = get_node(NodePath('/root/SceneManager/CurrentScene'))
 onready var n_of_slogans: int
 onready var n_of_objects: int
-onready var corrent_slog
+
+onready var current_slog
+onready var current_object
 
 var menu_main: bool = false
 var menu_slogans: bool = false
 var menu_objects: bool = false
+
 var slogan_index: int = 0
+var object_index: int = 0
 
 onready var slogan_list: Array = []
 onready var object_list: Array = []
@@ -41,7 +48,7 @@ func _ready():
 		new_slogan(slogan_res)
 
 
-func _process(_delta):
+func _process(_delta):	
 	n_of_slogans = slogan_container.get_child_count() - 1
 	n_of_objects = objects_container.get_child_count() - 1
 	player = get_node(NodePath('..')).get_child(0).get_children().back().find_node("Player")
@@ -54,6 +61,7 @@ func _process(_delta):
 		objects.visible = menu_objects
 		
 		menulayers.position = player.position
+		objects_desc_displayer.visible = menu_objects
 
 	if menu_slogans:
 		menu_main = false
@@ -68,9 +76,9 @@ func _process(_delta):
 		else:
 			no_slog_text.visible = false
 			slogan_selector.visible = true
-			corrent_slog = slogan_list[slogan_index]
+			current_slog = slogan_list[slogan_index]
 			
-			political_compass.set_main_pointer(corrent_slog.political_pos.x, -corrent_slog.political_pos.y)
+			political_compass.set_main_pointer(current_slog.political_pos.x, -current_slog.political_pos.y)
 			
 			if Input.is_action_just_pressed("ui_right"):
 				if slogan_index < (n_of_slogans - 1):
@@ -79,25 +87,32 @@ func _process(_delta):
 				if slogan_index > 0:
 					slogan_index -= 1
 			if Input.is_action_just_pressed("ui_accept"):
-				print(corrent_slog.name, corrent_slog.political_pos)
+				print(current_slog.name, current_slog.political_pos)
 
 		slogan_selector.rect_position.x = 32 * (slogan_index % 6) + 3
 		slogan_selector.rect_position.y = 40 * (int(slogan_index / 6))+ 9
 	
 	
 	if menu_objects:
-		objects_container.visible = false
+		objects_container.visible = true
 		menu_main = false
 		menu_slogans = false
 		if Input.is_action_just_pressed("ui_end"):
 			menu_objects = false
 			menu_main = true
+			object_index = 0
 		if n_of_objects == 0:
 			no_slog_text.visible = true
-			slogan_selector.visible = false
+			objects_selector.visible = false
 		else:
-			no_slog_text.visible = false
-			slogan_selector.visible = true
+			no_obj_text.visible = false
+			objects_selector.visible = true
+			current_object = object_list[object_index]
+			current_object_desc.text = current_object.description
+			
+			if Input.is_action_just_pressed("ui_accept"):
+				load(current_object.use_script.get_path()).new().foo()
+	
 	
 	if menu_main:
 		if Input.is_action_just_pressed("ui_down"):
@@ -162,6 +177,27 @@ func new_slogan(slogan):
 		new_slog_instance.position = Vector2(32 * (n_of_slogans % 6) + 15, 40*(int(n_of_slogans / 6))+ 20)
 		n_of_slogans += 1
 		slogan_container.add_child(new_slog_instance)
+
+
+func new_object(object):
+	if object in object_list:
+		pass
+	else:
+		# print(object.use_script.get_path())
+		object_list.append(object)
+		# var object_use_script = load(object.use_script.get_path()).new()
+		# object_use_script.foo()
+		ui.add_money(-object.prize)
+		
+		var new_obj_instance = load("res://Scenes/UI_Objects/ObjectNode.tscn").instance()
+		new_obj_instance.object_res = object
+		print("object: ", object.name)
+		
+		new_obj_instance.position = Vector2(32 * (n_of_objects % 6) + 15, 40*(int(n_of_objects / 6)) + 20)
+		n_of_objects += 1
+		objects_container.add_child(new_obj_instance)
+		
+		print(new_obj_instance in objects_container.get_children())
 
 
 #func loadSlogans(data):

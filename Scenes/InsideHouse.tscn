@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/floor.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Assets/wall.png" type="Texture" id=4]
 [ext_resource path="res://NPC/NPC.tscn" type="PackedScene" id=5]
 [ext_resource path="res://CutsceneActivator.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/UI_Objects/ObjectNode.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=8]
 
 [sub_resource type="TileSet" id=1]
 0/name = "floor.png 0"
@@ -70,11 +72,15 @@ f = 2
 
 [node name="Virgilio" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 144, 80 )
-dialouge_list = [ "Io sono Virgilio", "Ora ti do la lettera", "Appena avremo programmato l'inventario" ]
+dialouge_list = [ "Io sono Virgilio" ]
 sprite_path = "res://UI/andreotti ow.png"
 hf = 3
 vf = 4
 f = 1
+
+[node name="VirgilioMail" parent="YSort/Virgilio" instance=ExtResource( 7 )]
+visible = false
+object_res = ExtResource( 8 )
 
 [node name="Walls" type="StaticBody2D" parent="."]
 position = Vector2( -16, 64 )

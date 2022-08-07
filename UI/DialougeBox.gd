@@ -52,6 +52,13 @@ func display_dialouge(npc):
 	has_won_battle = npc.battle_won
 
 
+func has_obtained(object):
+	d_list = ['Hai ottenuto ' + object.name]
+	s_list = []
+	open_shop = false
+	has_won_battle = true
+
+
 func _process(_delta):
 	player = get_parent().get_child(0).get_child(0).find_node('Player')
 	current_scene = scenemanager.get_child(0).get_child(0)

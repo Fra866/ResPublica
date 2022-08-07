@@ -104,7 +104,6 @@ __meta__ = {
 position = Vector2( 96, 128 )
 
 [node name="Objects" type="Control" parent="MenuLayers"]
-visible = false
 margin_left = -96.0
 margin_top = -80.0
 margin_right = 94.0
@@ -130,12 +129,55 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NoSloganText" type="RichTextLabel" parent="MenuLayers/Objects"]
+[node name="NoObjectText" type="RichTextLabel" parent="MenuLayers/Objects"]
 margin_left = 16.0
 margin_top = 32.0
 margin_right = 176.0
 margin_bottom = 80.0
 text = "Non hai nessun oggetto."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DescriptionDisplayer" type="Control" parent="MenuLayers/Objects"]
+anchor_left = -0.084
+anchor_top = 0.6
+anchor_right = 1.095
+anchor_bottom = 1.0
+margin_left = -0.039999
+margin_right = -0.0500031
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="MenuLayers/Objects/DescriptionDisplayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.647059, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InnerBackground" type="ColorRect" parent="MenuLayers/Objects/DescriptionDisplayer/Background"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 218.0
+margin_bottom = 59.0
+color = Color( 0, 0.537255, 0.133333, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="MenuLayers/Objects/DescriptionDisplayer/Background/InnerBackground"]
+anchor_top = 0.204
+anchor_right = 1.0
+anchor_bottom = 0.796
+margin_left = 11.0
+margin_top = -0.0160007
+margin_right = -10.0
+margin_bottom = 0.015995
+text = "Lorem Ipsum"
+fit_content_height = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

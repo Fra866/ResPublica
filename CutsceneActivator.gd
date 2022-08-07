@@ -3,6 +3,7 @@ extends Node2D
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var player
+onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var collisionshape = $Area2D/CollisionShape2D
 onready var scenecontainer = scenemanager.get_child(0)
 onready var enabled: bool = true
@@ -26,11 +27,11 @@ func virgilio_cutscene():
 	player.animstate.travel("Idle")
 	player.animplayer.play('IdleUp')
 	
-	# virgilio.initial_position = virgilio.position
 	virgilio.animplayer.play('RunDown')
 	virgilio.input_direction = Vector2(0, 1)
 	
 	yield(get_tree().create_timer(1), "timeout")
+	
 	virgilio.animplayer.play('IdleDown')
 	
 	dialouge_box.display_dialouge(virgilio)
@@ -39,7 +40,17 @@ func virgilio_cutscene():
 		yield(get_tree().create_timer(1.5), "timeout")
 		dialouge_box.start_dialouge = true
 	
+	dialouge_box.has_obtained(virgilio.get_child(5))
+	
 	cutscene = false
+	
+	var object = virgilio.get_child(5).get_child(0).game_object_resource
+	menu.new_object(object)
+	load(object.use_script.get_path()).new().content = """
+	Nel mezzo delle elezioni di nostra vita,
+	Ci ritrovammo in un fascismo oscuro,
+	Che la ritta legislatura era smarrita...
+	"""
 	virgilio.input_direction = Vector2(0, 0)
 
 
