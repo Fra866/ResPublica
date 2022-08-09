@@ -151,6 +151,7 @@ func priority_to_menu():
 func priority_to_player():
 	menu_slogans = false
 	menu_main = false
+	menu_objects = false
 	political_compass.visibility(false)
 
 

@@ -43,6 +43,7 @@ func virgilio_cutscene():
 	dialouge_box.has_obtained(virgilio.get_child(5))
 	
 	cutscene = false
+	currentscene.cutscene_over(cutscene_code)
 	
 	var object = virgilio.get_child(5).get_child(0).game_object_resource
 	menu.new_object(object)
@@ -55,15 +56,11 @@ func virgilio_cutscene():
 
 
 func start_cutscene():
-	# enabled = false
-	# player.stop_game()
-	
 	match cutscene_code:
 		1:
 			virgilio_cutscene()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if player and enabled:
 		if player.position == self.position and i == 0:

@@ -52,27 +52,39 @@ func display_dialouge(npc):
 	has_won_battle = npc.battle_won
 
 
+func end_dialouge_box():
+	i = 0
+	$MarginContainer.visible = false
+	d_list = []
+
+
 func has_obtained(object):
 	d_list = ['Hai ottenuto ' + object.name]
 	s_list = []
-	open_shop = false
-	has_won_battle = true
+	# open_shop = false
+	# has_won_battle = true
+	i = 0
+	
+	start_dialouge = true
+	yield(get_tree().create_timer(1), "timeout")
+	end_dialouge_box()
+	
+	emit_signal("priority_to_player")
 
 
 func _process(_delta):
 	player = get_parent().get_child(0).get_child(0).find_node('Player')
 	current_scene = scenemanager.get_child(0).get_child(0)
-
+	
 	if player:
 		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialouge:
+			print(d_list)
 			start_dialouge = false
 			if i < len(d_list):
 				display_text_line(d_list[i])
 				i += 1
 			else:
-				i = 0
-				$MarginContainer.visible = false
-				d_list = []
+				end_dialouge_box()
 				if open_shop:
 					open_shop = false
 					shop_box.priority_to_menu()
