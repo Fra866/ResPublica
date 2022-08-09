@@ -5,7 +5,8 @@
 
 [resource]
 script = ExtResource( 1 )
-array = [  ]
+slogans = [  ]
+objects = [  ]
 current_scene = ExtResource( 2 )
 player_pos = Vector2( 80, 16 )
 money = 1000

@@ -46,7 +46,8 @@ func save_all():
 	var file_save = game_save_obj.new()
 	
 	file_save.player_pos = player.position
-	file_save.array = menu.slogan_list
+	file_save.slogans = menu.slogan_list
+	file_save.objects = menu.object_list
 	file_save.money = ui.get_money()
 	file_save.current_scene = load("res://Scenes/"+current_scene+".tscn")
 	ResourceSaver.save(scene_manager.save_file.get_path(), file_save)

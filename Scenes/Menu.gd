@@ -44,8 +44,11 @@ func _ready():
 	no_slog_text.visible = false
 	
 	var save_file = screentransition.save_file
-	for slogan_res in save_file.array:
+	
+	for slogan_res in save_file.slogans:
 		new_slogan(slogan_res)
+	for object_res in save_file.objects:
+		new_object(object_res)
 
 
 func _process(_delta):	
