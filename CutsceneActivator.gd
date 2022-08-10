@@ -36,7 +36,7 @@ func virgilio_cutscene():
 	
 	dialouge_box.display_dialouge(virgilio)
 	
-	for j in range(len(virgilio.dialouge_list) + 1):
+	for _j in range(len(virgilio.dialouge_list) + 1):
 		yield(get_tree().create_timer(1.5), "timeout")
 		dialouge_box.start_dialouge = true
 	
@@ -61,7 +61,7 @@ func start_cutscene():
 			virgilio_cutscene()
 
 
-func _process(delta):
+func _process(_delta):
 	if player and enabled:
 		if player.position == self.position and i == 0:
 			currentscene = scenecontainer.get_child(0)

@@ -13,6 +13,8 @@ onready var menulayers = $MenuLayers
 onready var no_slog_text = $MenuLayers/Slogans/NoSloganText
 onready var no_obj_text = $MenuLayers/Objects/NoObjectText
 onready var political_compass = $MenuLayers/Slogans/PoliticalCompass
+onready var slogans_desc_displayer = $MenuLayers/Slogans/DescriptionDisplayer
+onready var current_slogan_desc = $MenuLayers/Slogans/DescriptionDisplayer/Background/InnerBackground/Text
 onready var objects_desc_displayer = $MenuLayers/Objects/DescriptionDisplayer
 onready var current_object_desc = $MenuLayers/Objects/DescriptionDisplayer/Background/InnerBackground/Text
 onready var ui = get_node("/root/SceneManager/UI")
@@ -51,7 +53,7 @@ func _ready():
 		new_object(object_res)
 
 
-func _process(_delta):	
+func _process(_delta):
 	n_of_slogans = slogan_container.get_child_count() - 1
 	n_of_objects = objects_container.get_child_count() - 1
 	player = get_node(NodePath('..')).get_child(0).get_children().back().find_node("Player")
@@ -94,7 +96,7 @@ func _process(_delta):
 
 		slogan_selector.rect_position.x = 32 * (slogan_index % 6) + 3
 		slogan_selector.rect_position.y = 40 * (int(slogan_index / 6))+ 9
-	
+		current_slogan_desc.text = current_slog.name
 	
 	if menu_objects:
 		objects_container.visible = true

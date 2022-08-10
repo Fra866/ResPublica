@@ -16,8 +16,8 @@ onready var open: bool = false
 onready var first_accept: bool = true
 var index_element: int = 0
 
-#signal priority_to_player
-signal closed
+signal priority_to_player
+#signal closed
 
 func _ready():
 	prize_sign.visible = false

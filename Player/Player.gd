@@ -44,7 +44,7 @@ func _ready():
 	dialouge_box.connect("priority_to_player", self, "get_priority")
 	animtree.active = true
 	if scenemanager.loading_count == 1:
-		position = scenemanager.save_file.player_pos
+		position = save_file.player_pos
 	else:
 		initial_position = position
 	door = get_node(NodePath('..')).find_node('Door')

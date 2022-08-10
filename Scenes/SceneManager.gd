@@ -20,7 +20,7 @@ onready var slot: int # Id of file_saved slot (can be 1 or 2)
 onready var loading_count: int = 1
 
 signal new_main_scene
-signal config
+# signal config
 
 
 func _ready():
