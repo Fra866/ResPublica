@@ -6,13 +6,13 @@
 [ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=4]
 [ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=5]
 [ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=6]
-[ext_resource path="res://Scenes/InsideHouse.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=7]
 
 [resource]
 script = ExtResource( 1 )
 slogans = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 3 ) ]
 objects = [ ExtResource( 2 ) ]
-ended_cutscenes = [  ]
+ended_cutscenes = [ 1 ]
 current_scene = ExtResource( 7 )
-player_pos = Vector2( 224, 144 )
+player_pos = Vector2( 80, 48 )
 money = 800

@@ -1,4 +1,4 @@
-extends Node
+extends object_resource
 
 export(String) var content = """
 """
@@ -6,7 +6,6 @@ export(String) var content = """
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print(content)
-
 
 # A special thanks to we-know-who for the function's name
 func foo():

@@ -43,15 +43,18 @@ func virgilio_cutscene():
 	dialouge_box.has_obtained(virgilio.get_child(5))
 	
 	cutscene = false
-	currentscene.cutscene_over(cutscene_code)
+#	currentscene.cutscene_over(cutscene_code)
+	scenemanager.cutscene_over(cutscene_code)
 	
 	var object = virgilio.get_child(5).get_child(0).game_object_resource
 	menu.new_object(object)
-	load(object.use_script.get_path()).new().content = """
+#	load(object.use_script.get_path()).new().content = """
+	object.content = """
 	Nel mezzo delle elezioni di nostra vita,
 	Ci ritrovammo in un fascismo oscuro,
 	Che la ritta legislatura era smarrita...
 	"""
+	
 	virgilio.input_direction = Vector2(0, 0)
 
 

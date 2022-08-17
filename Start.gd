@@ -10,7 +10,7 @@ var started_game: bool = false
 
 onready var path_save_file: String
 onready var new_game: bool
-onready var config_file = load("res://Saved/config.tres")
+#onready var config_file = load("res://Saved/config.tres")
 
 
 func _ready():
@@ -84,9 +84,10 @@ func _on_Save3_pressed():
 
 
 func _on_Yes_pressed():
-	scene.save_file = load("res://Saved/config.tres")
-	start()
 	scene.save_file = load(path_save_file)
+	scene.save_file.initialize()
+#	scene.save_file = load("res://Saved/config.tres")
+	start()
 	scene.get_child(6).save_all() # SaveMenu
 
 

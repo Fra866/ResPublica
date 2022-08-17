@@ -71,9 +71,6 @@ margin_left = -96.0
 margin_top = -80.0
 margin_right = 94.0
 margin_bottom = 80.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Background" type="Sprite" parent="MenuLayers/Slogans"]
 position = Vector2( 96, 46 )
@@ -98,9 +95,6 @@ margin_top = 32.0
 margin_right = 176.0
 margin_bottom = 80.0
 text = "Non hai nessuno slogan."
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PoliticalCompass" parent="MenuLayers/Slogans" instance=ExtResource( 4 )]
 position = Vector2( 16, 135 )
@@ -114,9 +108,6 @@ margin_left = -0.0700035
 margin_top = -12.0
 margin_right = 15.95
 margin_bottom = -12.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Background" type="ColorRect" parent="MenuLayers/Slogans/DescriptionDisplayer"]
 anchor_left = 0.045

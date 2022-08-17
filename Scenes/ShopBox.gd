@@ -1,8 +1,8 @@
 extends CanvasLayer
-export(int) var firstTime
-var file1 = "res://gabibbo.txt"
-var test = "res://gabibbo.tres"
-var slogans = []
+#export(int) var firstTime
+#var file1 = "res://gabibbo.txt"
+#var test = "res://gabibbo.tres"
+#var slogans = []
 
 onready var background = $Background
 onready var selecter = $Background/Background2/Selecter
@@ -11,10 +11,14 @@ onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var ui = get_node("/root/SceneManager/UI")
 onready var prize_sign = $PrizeSign
 onready var prize_var = $PrizeSign/Interior/Control/PrizeVar
+onready var text_box = $TextBox
+onready var slogan_text = $TextBox/ColorRect/Panel/SlogText
+onready var political_compass = $PoliticalCompass
 
 onready var open: bool = false
 onready var first_accept: bool = true
 var index_element: int = 0
+var tmp_slogan = null
 
 signal priority_to_player
 #signal closed
@@ -23,10 +27,14 @@ func _ready():
 	prize_sign.visible = false
 	open = false
 	background.visible = false
+	text_box.visible = false
+
 
 func priority_to_menu():
 	index_element = 0
 	background.visible = true
+	text_box.visible = true
+	political_compass.visibility(true)
 	open = true
 	first_accept = true
 
@@ -58,9 +66,13 @@ func _process(_delta):
 			index_element = 0
 			open = false
 			priority_to_player()
-	
+			
 		selecter.rect_position.x = 4 + (index_element % 5)*32
 		selecter.rect_position.y = 4 + (index_element / 5)*28
+		
+		tmp_slogan = get_slogan_instance(index_element).slogan_res
+		slogan_text.text = tmp_slogan.name
+		political_compass.set_main_pointer(tmp_slogan.political_pos.x / 1.25, tmp_slogan.political_pos.y / 1.25)
 
 
 func brought(i_element):
@@ -79,4 +91,6 @@ func save(path):
 
 func priority_to_player():
 	background.visible = false
+	text_box.visible = false
+	political_compass.visibility(false)
 	player.get_priority()

@@ -1,16 +1,19 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=9 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
-[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=2]
-[ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=2]
+[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=3]
 [ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=4]
 [ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=5]
+[ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=7]
+[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=8]
 
 [resource]
 script = ExtResource( 1 )
-slogans = [ ExtResource( 4 ), ExtResource( 5 ) ]
-objects = [ ExtResource( 2 ) ]
+slogans = [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 2 ), ExtResource( 7 ) ]
+objects = [ ExtResource( 3 ) ]
 ended_cutscenes = [ 1 ]
-current_scene = ExtResource( 3 )
-player_pos = Vector2( 80, 32 )
-money = 900
+current_scene = ExtResource( 6 )
+player_pos = Vector2( -64, 32 )
+money = 750
