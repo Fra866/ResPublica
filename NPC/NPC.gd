@@ -59,11 +59,11 @@ func interaction(player):
 	animtree.set("parameters/blend_position", (player.position - position) / 16)
 	dialouge_box.display_dialouge(self)
 	
-	if len(slogans_for_battle):
-		var tmp = Temp.new()
-		tmp.slogans_for_battle = slogans_for_battle
-		tmp.political_pos = political_pos
-		ResourceSaver.save("res://NPC/tmp.tres", tmp)
+#	if len(slogans_for_battle):
+#		var tmp = Temp.new()
+#		tmp.slogans_for_battle = slogans_for_battle
+#		tmp.political_pos = political_pos
+#		ResourceSaver.save("res://NPC/tmp.tres", tmp)
 
 
 

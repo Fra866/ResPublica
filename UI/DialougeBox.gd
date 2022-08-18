@@ -78,7 +78,6 @@ func _process(_delta):
 	
 	if player:
 		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialouge:
-			print(d_list)
 			start_dialouge = false
 			if i < len(d_list):
 				display_text_line(d_list[i])
@@ -104,7 +103,6 @@ func _process(_delta):
 								emit_signal("npc_slogans", s_list)
 								emit_signal("next_scene", current_scene.name, player.position)
 								
-								print(scenemanager.list_npc)
 							else:
 								emit_signal("priority_to_player")
 						else:

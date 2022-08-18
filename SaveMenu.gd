@@ -49,7 +49,6 @@ func save_all():
 	file_save.slogans = menu.slogan_list
 	file_save.objects = menu.object_list
 	file_save.ended_cutscenes = scene_manager.list_ended_cutscenes
-#	print(file_save.ended_cutscenes)
 	file_save.money = ui.get_money()
 	file_save.current_scene = load("res://Scenes/" + current_scene.name + ".tscn")
 	

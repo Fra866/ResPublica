@@ -123,7 +123,6 @@ func close_menu(m):
 
 
 func collided_with_npc(npc):
-	print(npc)
 	npc.interaction(self)
 
 

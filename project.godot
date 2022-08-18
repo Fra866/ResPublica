@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://meta.gd"
 }, {
 "base": "Resource",
+"class": "ObjectResource",
+"language": "GDScript",
+"path": "res://Items/Objects/object_resource.gd"
+}, {
+"base": "Resource",
 "class": "Saved",
 "language": "GDScript",
 "path": "res://saved.gd"
@@ -38,20 +43,15 @@ _global_script_classes=[ {
 "class": "Temp",
 "language": "GDScript",
 "path": "res://NPC/tmp.gd"
-}, {
-"base": "Resource",
-"class": "object_resource",
-"language": "GDScript",
-"path": "res://Items/Objects/object_resource.gd"
 } ]
 _global_script_class_icons={
 "GameObject": "",
 "Meta": "",
+"ObjectResource": "",
 "Saved": "",
 "Slogan": "",
 "SloganResource": "",
-"Temp": "",
-"object_resource": ""
+"Temp": ""
 }
 
 [application]

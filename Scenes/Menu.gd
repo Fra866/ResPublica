@@ -85,6 +85,7 @@ func _process(_delta):
 			
 			political_compass.set_main_pointer(current_slog.political_pos.x, -current_slog.political_pos.y)
 			
+			handle_input(slogan_index, n_of_slogans, slogan_selector.rect_position)
 			if Input.is_action_just_pressed("ui_right"):
 				if slogan_index < (n_of_slogans - 1):
 					slogan_index += 1
@@ -114,9 +115,12 @@ func _process(_delta):
 			objects_selector.visible = true
 			current_object = object_list[object_index]
 			current_object_desc.text = current_object.description
+			handle_input(object_index, n_of_objects, objects_selector.rect_position)
 			
 			if Input.is_action_just_pressed("ui_accept"):
-				current_object.foo()
+				print(objects_container.get_children())
+				objects_container.get_child(1).foo(current_object.id) # Temporary Solution
+	
 	
 	
 	if menu_main:
@@ -161,18 +165,20 @@ func new_p():
 	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene'))
 
 
-func search_slog(slogan):
-	var i = 0
-	for node in slogan_container.get_children():
-		if i >= 1 and node.slogan_res == slogan:
-			return node
-		i += 1
+func handle_input(index: int, maxv: int, selector: Vector2):
+	if Input.is_action_just_pressed("ui_right"):
+		if index < maxv - 1:
+			index += 1
+	if Input.is_action_just_pressed("ui_left"):
+		if index > 0:
+			index -= 1
+	selector.x = 32 * (index % 6) + 3
+	selector.y = 40 * (index / 6) + 9
 
 
 func new_slogan(slogan):
 	if slogan in slogan_list:
 		print("Già comprato: ", slogan_list)
-		# search_slog(slogan).slogan_res.xp += 20
 	else:
 		slogan_list.append(slogan)
 #		print(ui.get_child(0).get_child(0).text)
@@ -187,27 +193,11 @@ func new_slogan(slogan):
 
 func new_object(object):
 	if not object in object_list:
-		# print(object.use_script.get_path())
 		object_list.append(object)
-		# var object_use_script = load(object.use_script.get_path()).new()
-		# object_use_script.foo()
 		ui.add_money(-object.prize)
 		
 		var new_obj_instance = load("res://Scenes/UI_Objects/ObjectNode.tscn").instance()
 		new_obj_instance.object_res = object
-#		print("object: ", object.name)
-		
 		new_obj_instance.position = Vector2(32 * (n_of_objects % 6) + 15, 40*(int(n_of_objects / 6)) + 20)
 		n_of_objects += 1
 		objects_container.add_child(new_obj_instance)
-		
-#		print(new_obj_instance in objects_container.get_children())
-
-
-#func loadSlogans(data):
-#	var file = File.new()
-#	file.open("user://gabibbo.txt", File.READ)
-#	while file.get_position() < file.get_len():
-#		var data = file.get_line()
-#	new_slogan(load(data))
-
