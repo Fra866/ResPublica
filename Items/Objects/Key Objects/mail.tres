@@ -12,3 +12,4 @@ description = "Lettera di Virgilio, stalker di Dante"
 prize = 0
 texture = ExtResource( 2 )
 use_script = ExtResource( 3 )
+display_on_battle = false

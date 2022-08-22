@@ -16,7 +16,7 @@ border_color = Color( 0.709804, 0.776471, 0, 1 )
 [node name="BattleScene" type="Node2D"]
 script = ExtResource( 3 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 margin_right = 320.0
 margin_bottom = 192.0
 color = Color( 0.027451, 0.360784, 0.45098, 1 )
@@ -64,23 +64,87 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BattleMenu" type="Node2D" parent="."]
-
-[node name="Container" type="ColorRect" parent="BattleMenu"]
+[node name="Background2" type="ColorRect" parent="."]
 margin_left = 16.0
 margin_top = 96.0
 margin_right = 304.0
 margin_bottom = 176.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Node2D" type="Node2D" parent="BattleMenu"]
+[node name="BattleMenu" type="Node2D" parent="."]
+
+[node name="Selector" type="Node2D" parent="BattleMenu"]
 position = Vector2( 29, 97 )
 
-[node name="ColorRect" type="ColorRect" parent="BattleMenu/Node2D"]
+[node name="SelectorBackground" type="ColorRect" parent="BattleMenu/Selector"]
 margin_right = 30.0
 margin_bottom = 30.0
 color = Color( 0.992157, 0.0313726, 0.0313726, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Slogans" type="Node2D" parent="BattleMenu"]
+
+[node name="Objects" type="Node2D" parent="BattleMenu"]
+
+[node name="WhatToDo" type="Node2D" parent="BattleMenu"]
+
+[node name="Panel" type="Panel" parent="BattleMenu/WhatToDo"]
+margin_left = 16.0
+margin_top = 96.0
+margin_right = 304.0
+margin_bottom = 176.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveLabel" type="Label" parent="BattleMenu/WhatToDo/Panel"]
+margin_left = 10.0
+margin_top = 2.0
+margin_right = 272.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 100, 14 )
+text = "Cosa vuoi fare?"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="Container" parent="BattleMenu/WhatToDo/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -52.0
+margin_top = -21.0
+margin_right = 38.0
+margin_bottom = 19.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slogans" type="Button" parent="BattleMenu/WhatToDo/Panel/Container"]
+margin_left = -60.0
+margin_top = 19.0
+margin_bottom = 39.0
+text = "Slogans"
+
+[node name="Objects" type="Button" parent="BattleMenu/WhatToDo/Panel/Container"]
+margin_left = 17.0
+margin_top = 19.0
+margin_right = 76.0
+margin_bottom = 39.0
+text = "Oggetti"
+
+[node name="Quit" type="Button" parent="BattleMenu/WhatToDo/Panel/Container"]
+margin_left = 90.0
+margin_top = 19.0
+margin_right = 165.0
+margin_bottom = 39.0
+text = "Volare Via"
 
 [node name="PoliticalCompass" parent="." instance=ExtResource( 4 )]
 position = Vector2( 160, 48 )

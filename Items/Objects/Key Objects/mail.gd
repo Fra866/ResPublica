@@ -1,9 +1,7 @@
-#extends ObjectResource
 extends Node
 
-export(String) var content = """
-Mussolini Delenda Est
-"""
+export(String) var content = "Mussolini Delenda Est"
+
 var wrapper = load("res://Test.tscn").instance()
 
 var list_of_mail_contents = [

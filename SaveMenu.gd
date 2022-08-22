@@ -50,6 +50,7 @@ func save_all():
 	file_save.objects = menu.object_list
 	file_save.ended_cutscenes = scene_manager.list_ended_cutscenes
 	file_save.money = ui.get_money()
+	file_save.votes = ui.get_votes()
 	file_save.current_scene = load("res://Scenes/" + current_scene.name + ".tscn")
 	
 	ResourceSaver.save(scene_manager.save_file.get_path(), file_save)

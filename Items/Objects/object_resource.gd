@@ -7,6 +7,7 @@ export(String) var description
 export(int) var prize
 export(Texture) var texture
 export(Script) var use_script
+export(bool) var display_on_battle
 
 
 #func ready():

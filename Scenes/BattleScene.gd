@@ -4,19 +4,31 @@ extends Node2D
 onready var scenemanager = get_node(NodePath('/root/SceneManager/'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var dialogue_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
+onready var ui = get_node(NodePath('/root/SceneManager/UI'))
+
+onready var whattodo = $BattleMenu/WhatToDo/
+onready var slogButton = $BattleMenu/WhatToDo/Panel/Container/Slogans
+onready var objButton = $BattleMenu/WhatToDo/Panel/Container/Objects
+onready var quitButton = $BattleMenu/WhatToDo/Panel/Container/Quit
 onready var pBar = $LifeBars/PlayerBar
 onready var npcBar = $LifeBars/NPCBar
 onready var sloganlist = $BattleMenu/Slogans
+onready var objectlist = $BattleMenu/Objects
 onready var battlemenu = $BattleMenu
-onready var selector = $BattleMenu/Node2D/ColorRect
+onready var selector = $BattleMenu/Selector/SelectorBackground
 onready var margincontainer = $ActionLog/MarginContainer
 onready var action_log = $ActionLog/MarginContainer/Panel/Label
 onready var political_compass = $PoliticalCompass
-onready var npc
 onready var enemy_sprite = $EnemySprite
 
 onready var n_of_slogans = 0
+onready var n_of_objects = 0
+
 onready var max_slogans = 8
+onready var max_objects = 8
+
+onready var votes: int
+
 onready var priority = true
 onready var enemy_slogans: Array
 var id = 0
@@ -32,7 +44,11 @@ onready var first_attack_player = true
 onready var first_attack_enemy = true
 
 enum TURN {PLAYER, ENEMY, ATTACKING}
+enum BATTLE_UI {SLOGANS, OBJECTS, EXIT, MENU}
+
 onready var turn = TURN.PLAYER
+onready var battle_ui = BATTLE_UI.MENU
+
 
 func _ready():
 	randomize()
@@ -43,6 +59,16 @@ func _ready():
 	dialogue_box.connect("next_scene", self, "set_next_scene")
 	dialogue_box.connect("send_npc", self, "set_npc")
 	
+	sloganlist.visible = false
+	objectlist.visible = false
+	
+	slogButton.grab_focus()
+	
+	slogan_setup()
+	object_setup()
+
+
+func slogan_setup():
 	for slogan_res in menu.slogan_list:
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
@@ -60,32 +86,61 @@ func _ready():
 		sloganlist.add_child(new_slog_instance)
 
 
-func _process(_delta):
-	if turn == TURN.PLAYER:
-		var slog = menu.slogan_list[id]
-		
-		if Input.is_action_just_pressed("ui_right") and id < n_of_slogans - 1:
-			id += 1
-		if Input.is_action_just_pressed("ui_down") and (id + 7) < n_of_slogans - 1:
-			id += 7
-		if Input.is_action_just_pressed("ui_up") and id > 6:
-			id -= 7
-		if Input.is_action_just_pressed("ui_left") and id > 0:
-			id -= 1
-		
-		political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
+func object_setup():
+	for object_res in menu.object_list:
+		if object_res.display_on_battle:
+			var new_obj_instance = load("res://Scenes/UI_Objects/ObjectNode.tscn").instance()
+			
+			new_obj_instance.object_res = object_res
+			
+			n_of_objects += 1
+			
+			var x = 12 + 32 * (n_of_objects % max_objects)
+			if x == 12:
+				x += 32 # + (32 * n_of_slogans/max_slogans)
+			var y = 112 + 40*(int(n_of_objects / (max_objects + 1)))
 
-	selector.rect_position = Vector2(32 * (id % (max_slogans - 1)), 40*(int(id / (max_slogans - 1))))
-	
-	
-	if Input.is_action_just_pressed("ui_accept"):
-		attacking = true
-		playerAttack(menu.slogan_list[id])
-#		print(menu.slogan_list[id].name)
-#		action_log.text = "Hai usato " + used_slog.name
-#		margincontainer.visible = true
-#		yield(get_tree().create_timer(1), "timeout")
-#		battlemenu.visible = false
+			new_obj_instance.position = Vector2(x, y)
+			new_obj_instance.scale = Vector2(1.3, 1.3)
+			objectlist.add_child(new_obj_instance)
+
+func _process(_delta):
+	if battle_ui == BATTLE_UI.MENU:
+		selector.visible = false
+		sloganlist.visible = false
+		whattodo.visible = true
+		
+		if Input.is_action_just_pressed("ui_accept"):
+			if slogButton.has_focus():
+				battle_ui = BATTLE_UI.SLOGANS
+	elif battle_ui == BATTLE_UI.SLOGANS:
+		selector.visible = true
+		sloganlist.visible = true
+		whattodo.visible = false
+		
+		if turn == TURN.PLAYER:
+			var slog = menu.slogan_list[id]
+			
+			if Input.is_action_just_pressed("ui_right") and id < n_of_slogans - 1:
+				id += 1
+			if Input.is_action_just_pressed("ui_down") and (id + 7) < n_of_slogans - 1:
+				id += 7
+			if Input.is_action_just_pressed("ui_up") and id > 6:
+				id -= 7
+			if Input.is_action_just_pressed("ui_left") and id > 0:
+				id -= 1
+			if Input.is_action_just_pressed("ui_end"):
+				battle_ui = BATTLE_UI.MENU
+				slogButton.grab_focus()
+			
+			political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
+
+		selector.rect_position = Vector2(32 * (id % (max_slogans - 1)), 40*(int(id / (max_slogans - 1))))
+		
+		
+		if Input.is_action_just_pressed("ui_accept"):
+			attacking = true
+			playerAttack(menu.slogan_list[id])
 
 
 func get_rand():
@@ -105,16 +160,22 @@ func set_next_scene(scene: String, p_pos: Vector2):
 
 
 func set_npc(current_npc):
-	npc = current_npc
-	enemy_sprite.texture = load(npc.battle_sprite_path)
+	votes = current_npc.votes
+	enemy_sprite.texture = load(current_npc.battle_sprite_path)
 
 
-func battle_ends():
-	action_log.text = "Battaglia finita"
+func battle_ends(victory):
+	action_log.text = "Battaglia finita."
 	margincontainer.visible = true
 	battlemenu.visible = false
+	yield(get_tree().create_timer(2), "timeout")
+	
+	if victory:
+		action_log.text = "Hai ottenuto " + str(votes) + " voti."
+		yield(get_tree().create_timer(1.5), "timeout")
+		ui.add_votes(votes)
+	
 	end(next_scene)
-	# yield(get_tree().create_timer(1), "timeout")
 	
 	# scenemanager.start_transition("scene_path", Vector2(0,0))
 
@@ -138,6 +199,7 @@ func npcAttack(attack_slog):
 	action_log.text = "Il nemico ha usato " + attack_slog.name
 	e_attack = attack_slog.political_pos
 	political_compass.set_enemy_pointer(e_attack.x, -e_attack.y)
+	battle_ui = BATTLE_UI.MENU
 	yield(get_tree().create_timer(1), "timeout")
 	margincontainer.visible = false
 	battlemenu.visible = true
@@ -145,7 +207,11 @@ func npcAttack(attack_slog):
 	
 	damage(p_attack, e_attack)
 	if npcBar.value == 0 or pBar.value == 0:
-		battle_ends()
+		battle_ends(pBar.value)
+	
+	battle_ui = BATTLE_UI.MENU
+	slogButton.grab_focus()
+	
 	turn = TURN.PLAYER
 	
 #	print(slogan.name)
