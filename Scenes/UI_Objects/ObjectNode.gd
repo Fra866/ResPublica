@@ -17,5 +17,5 @@ func _ready():
 func foo(id: int):
 	var script = load(object_res.use_script.get_path()).new()
 	if script.wrapper:
-		get_parent().add_child(script.wrapper)
-		script.foo(id)
+		get_node(script.path).add_child(script.wrapper)
+	script.foo(id)

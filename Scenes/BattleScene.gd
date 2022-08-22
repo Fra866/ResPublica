@@ -109,10 +109,16 @@ func _process(_delta):
 		selector.visible = false
 		sloganlist.visible = false
 		whattodo.visible = true
+		slogButton.grab_focus()
 		
 		if Input.is_action_just_pressed("ui_accept"):
 			if slogButton.has_focus():
 				battle_ui = BATTLE_UI.SLOGANS
+			elif objButton.has_focus():
+				battle_ui = BATTLE_UI.OBJECTS
+			else:
+				battle_ui = BATTLE_UI.EXIT
+				
 	elif battle_ui == BATTLE_UI.SLOGANS:
 		selector.visible = true
 		sloganlist.visible = true
@@ -135,12 +141,18 @@ func _process(_delta):
 			
 			political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
 
-		selector.rect_position = Vector2(32 * (id % (max_slogans - 1)), 40*(int(id / (max_slogans - 1))))
+			selector.rect_position = Vector2(32 * (id % (max_slogans - 1)), 40*(int(id / (max_slogans - 1))))
 		
 		
-		if Input.is_action_just_pressed("ui_accept"):
-			attacking = true
-			playerAttack(menu.slogan_list[id])
+			if Input.is_action_just_pressed("ui_accept"):
+				attacking = true
+#				playerAttack(slog)
+				playerAttack(menu.slogan_list[id])
+			
+	elif battle_ui == BATTLE_UI.OBJECTS:
+		pass
+	elif battle_ui == BATTLE_UI.EXIT:
+		battle_ends(0)
 
 
 func get_rand():

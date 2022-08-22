@@ -72,7 +72,7 @@ func _process(_delta):
 		
 		tmp_slogan = get_slogan_instance(index_element).slogan_res
 		slogan_text.text = tmp_slogan.name
-		political_compass.set_main_pointer(tmp_slogan.political_pos.x / 1.25, tmp_slogan.political_pos.y / 1.25)
+		political_compass.set_main_pointer(tmp_slogan.political_pos.x / 1.25, -tmp_slogan.political_pos.y / 1.25)
 
 
 func brought(i_element):
