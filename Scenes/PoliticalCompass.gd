@@ -14,7 +14,7 @@ func _ready():
 
 func visibility(vis: bool):
 	visible = vis
-#	main_pointer.visible = vis
+	main_pointer.visible = vis
 
 
 func reset_pointer():
@@ -43,6 +43,7 @@ func set_line(initial_pos: Vector2, x: float, y: float):
 
 func hide_line():
 	next_position.visible = false
+
 
 func enemy_pointer_visible(vis: bool):
 	enemy_pointer.visible = vis

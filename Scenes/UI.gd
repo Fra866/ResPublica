@@ -5,7 +5,6 @@ onready var liracoin = $Liracoin/RichTextLabel
 onready var votes = $Votes/RichTextLabel
 onready var screentransition = get_node(NodePath('/root/SceneManager'))
 
-
 func _ready():
 	liracoin.text = str(screentransition.save_file.money)
 

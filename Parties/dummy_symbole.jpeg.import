@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/main_pokemon_background.png-57065a3c8cd5d371d36a6698456779c0.stex"
+path="res://.import/dummy_symbole.jpeg-3b260d2c7e71d1b4fa7d0fecdf61b8bf.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Pokemon Party/main_pokemon_background.png"
-dest_files=[ "res://.import/main_pokemon_background.png-57065a3c8cd5d371d36a6698456779c0.stex" ]
+source_file="res://Parties/dummy_symbole.jpeg"
+dest_files=[ "res://.import/dummy_symbole.jpeg-3b260d2c7e71d1b4fa7d0fecdf61b8bf.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

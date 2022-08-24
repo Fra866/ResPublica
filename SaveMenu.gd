@@ -53,5 +53,6 @@ func save_all():
 	file_save.money = ui.get_money()
 	file_save.votes = ui.get_votes()
 	file_save.current_scene = load("res://Scenes/" + current_scene.name + ".tscn")
+	file_save.player_party = menu.party
 	
 	ResourceSaver.save(scene_manager.save_file.get_path(), file_save)

@@ -27,6 +27,7 @@ onready var n_of_objects = 0
 onready var max_slogans = 8
 onready var max_objects = 8
 
+onready var enemy_political_pos: Vector2
 onready var votes: int
 
 onready var priority = true
@@ -223,6 +224,9 @@ func battle_ends(victory):
 	yield(get_tree().create_timer(2), "timeout")
 	
 	if victory:
+		menu.party.total_votes += votes
+		menu.party.political_pos = (menu.party.political_pos + enemy_political_pos)/2
+		
 		action_log.text = "Hai ottenuto " + str(votes) + " voti."
 		yield(get_tree().create_timer(1.5), "timeout")
 		ui.add_votes(votes)
@@ -241,47 +245,24 @@ func playerAttack(slogan):
 	p_attack = slogan.political_pos
 	margincontainer.visible = true
 	yield(get_tree().create_timer(1), "timeout")
-	battlemenu.visible = false
 	
-	npcAttack(enemy_slogans[randi() % len(enemy_slogans) - 1])
-
-
-func npcAttack(attack_slog):
-	turn = TURN.ENEMY
-	action_log.text = "Il nemico ha usato " + attack_slog.name
-	e_attack = attack_slog.political_pos
-	political_compass.set_enemy_pointer(e_attack.x, -e_attack.y)
-	battle_ui = BATTLE_UI.MENU
-	yield(get_tree().create_timer(1), "timeout")
-	margincontainer.visible = false
-	battlemenu.visible = true
-	yield(get_tree().create_timer(0.1), "timeout")
+	damage(p_attack)
 	
-	damage(p_attack, e_attack)
-	if npcBar.value == 0 or pBar.value == 0:
-		battle_ends(pBar.value)
+	if npcBar.value:
+		margincontainer.visible = false
 	
-	battle_ui = BATTLE_UI.MENU
-	id = 0
-	slogButton.grab_focus()
+		turn = TURN.PLAYER
+		battle_ui = BATTLE_UI.MENU
 	
-	turn = TURN.PLAYER
-	
-#	print(slogan.name)
-#	pBar.value -= slogan.xp
-#	attacking = true
-#	if !pBar.value:
-#		end()
-
-
-func damage(p_pos: Vector2, n_pos: Vector2):
-#	The sum of distances on both axises must be greater than 10 to hurt the player,
-#	otherwise it successfully hits the enemy.
-	var d = (10 - abs(p_pos.x - n_pos.x) - abs(p_pos.y - n_pos.y)) / 2
-	if d < 0:
-		pBar.value -= 8 * abs(d)
+		slogButton.grab_focus()
 	else:
-		npcBar.value -= 8*d
+		battle_ends(!npcBar.value)
+#	npcAttack(enemy_slogans[randi() % len(enemy_slogans) - 1])
+
+
+func damage(p_pos: Vector2):
+	var d = 10 - (enemy_political_pos.x - p_pos.x) + 10 - (enemy_political_pos.y - p_pos.y)
+	npcBar.value -= d
 
 
 func end(scene):

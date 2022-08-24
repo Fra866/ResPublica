@@ -25,6 +25,11 @@ _global_script_classes=[ {
 "path": "res://Items/Objects/object_resource.gd"
 }, {
 "base": "Resource",
+"class": "PoliticalParty",
+"language": "GDScript",
+"path": "res://Parties/party.gd"
+}, {
+"base": "Resource",
 "class": "Saved",
 "language": "GDScript",
 "path": "res://saved.gd"
@@ -48,6 +53,7 @@ _global_script_class_icons={
 "GameObject": "",
 "Meta": "",
 "ObjectResource": "",
+"PoliticalParty": "",
 "Saved": "",
 "Slogan": "",
 "SloganResource": "",
