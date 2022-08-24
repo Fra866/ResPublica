@@ -108,8 +108,8 @@ func _process(_delta):
 	if battle_ui == BATTLE_UI.MENU:
 		selector.visible = false
 		sloganlist.visible = false
+		objectlist.visible = false
 		whattodo.visible = true
-		slogButton.grab_focus()
 		
 		if Input.is_action_just_pressed("ui_accept"):
 			if slogButton.has_focus():
@@ -122,27 +122,27 @@ func _process(_delta):
 	elif battle_ui == BATTLE_UI.SLOGANS:
 		selector.visible = true
 		sloganlist.visible = true
+		objectlist.visible = false
 		whattodo.visible = false
 		
 		if turn == TURN.PLAYER:
 			var slog = menu.slogan_list[id]
-			
-			if Input.is_action_just_pressed("ui_right") and id < n_of_slogans - 1:
-				id += 1
-			if Input.is_action_just_pressed("ui_down") and (id + 7) < n_of_slogans - 1:
-				id += 7
-			if Input.is_action_just_pressed("ui_up") and id > 6:
-				id -= 7
-			if Input.is_action_just_pressed("ui_left") and id > 0:
-				id -= 1
-			if Input.is_action_just_pressed("ui_end"):
-				battle_ui = BATTLE_UI.MENU
-				slogButton.grab_focus()
-			
+#
+#			if Input.is_action_just_pressed("ui_right") and id < n_of_slogans - 1:
+#				id += 1
+#			if Input.is_action_just_pressed("ui_down") and (id + 7) < n_of_slogans - 1:
+#				id += 7
+#			if Input.is_action_just_pressed("ui_up") and id > 6:
+#				id -= 7
+#			if Input.is_action_just_pressed("ui_left") and id > 0:
+#				id -= 1
+			id = handle_input(id, n_of_slogans, selector)
 			political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
 
-			selector.rect_position = Vector2(32 * (id % (max_slogans - 1)), 40*(int(id / (max_slogans - 1))))
-		
+#			if Input.is_action_just_pressed("ui_end"):
+#				battle_ui = BATTLE_UI.MENU
+#				id = 0
+#				slogButton.grab_focus()
 		
 			if Input.is_action_just_pressed("ui_accept"):
 				attacking = true
@@ -150,9 +150,36 @@ func _process(_delta):
 				playerAttack(menu.slogan_list[id])
 			
 	elif battle_ui == BATTLE_UI.OBJECTS:
-		pass
+		whattodo.visible = false
+		sloganlist.visible = false
+		selector.visible = true
+		objectlist.visible = true
+		
+		id = handle_input(id, n_of_objects, selector)
+		if Input.is_action_just_pressed("ui_accept"):
+			pass
+	
 	elif battle_ui == BATTLE_UI.EXIT:
 		battle_ends(0)
+	
+	if Input.is_action_just_pressed("ui_end"):
+		battle_ui = BATTLE_UI.MENU
+		id = 0
+		slogButton.grab_focus()
+
+
+func handle_input(id, maxv, selector):
+	if Input.is_action_just_pressed("ui_left") and id:
+		id -= 1
+	if Input.is_action_just_pressed("ui_right") and id < maxv - 1:
+		id += 1
+	if Input.is_action_just_pressed("ui_down") and id + 7 < maxv:
+		id += 7
+	if Input.is_action_just_pressed("ui_up") and id > 6:
+		id -= 7
+	
+	selector.rect_position = Vector2(32 * (id % (maxv - 1)), 40*(id / (maxv - 1)))
+	return id
 
 
 func get_rand():

@@ -1,6 +1,6 @@
 extends Node
 
-
+var wrapper = null
 # 					COMBATTENTI!					
 # The idea is to use different script for the objects
 # each with it's own unique function

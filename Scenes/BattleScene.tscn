@@ -69,9 +69,6 @@ margin_left = 16.0
 margin_top = 96.0
 margin_right = 304.0
 margin_bottom = 176.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="BattleMenu" type="Node2D" parent="."]
 
@@ -119,9 +116,6 @@ margin_left = -52.0
 margin_top = -21.0
 margin_right = 38.0
 margin_bottom = 19.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Slogans" type="Button" parent="BattleMenu/WhatToDo/Panel/Container"]
 margin_left = -60.0

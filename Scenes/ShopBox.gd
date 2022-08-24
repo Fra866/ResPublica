@@ -80,7 +80,7 @@ func _process(_delta):
 		else:
 			id_object = handle_input(id_object, n_objects, obj_selector)
 			tmp_object = get_instance(object_list, id_object).object_res
-			description.text = tmp_object.name
+			description.text = tmp_object.description
 			
 			if Input.is_action_just_pressed("ui_accept"):
 				if not first_accept:

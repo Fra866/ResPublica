@@ -7,7 +7,7 @@ var next_scene = null
 onready var current_scene = get_child(0).get_child(0)
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var menu = $Menu
-onready var ui = $UI/Control/RichTextLabel
+#onready var ui = $UI/Control/RichTextLabel
 onready var transition_animation = $ScreenTransition/AnimationPlayer
 onready var scene_container = $CurrentScene
 
@@ -31,6 +31,7 @@ func _ready():
 	var scene = save_file.current_scene
 	
 	scene_container.add_child(scene.instance())
+	list_npc = save_file.list_npc
 	list_ended_cutscenes = save_file.ended_cutscenes
 	current_scene = get_child(0).get_child(0)
 	transition_animation.play("FadeToTransparent")
