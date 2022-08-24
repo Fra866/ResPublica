@@ -113,17 +113,23 @@ func _process(_delta):
 		
 		if Input.is_action_just_pressed("ui_accept"):
 			if slogButton.has_focus():
+				switch_visibility(true)
 				battle_ui = BATTLE_UI.SLOGANS
+#				selector.visible = true
+#				sloganlist.visible = true
+#				objectlist.visible = false
+#				whattodo.visible = false
 			elif objButton.has_focus():
+				switch_visibility(false)
 				battle_ui = BATTLE_UI.OBJECTS
 			else:
 				battle_ui = BATTLE_UI.EXIT
 				
 	elif battle_ui == BATTLE_UI.SLOGANS:
-		selector.visible = true
-		sloganlist.visible = true
-		objectlist.visible = false
-		whattodo.visible = false
+#		whattodo.visible = false
+#		selector.visible = true
+#		sloganlist.visible = true
+#		objectlist.visible = false
 		
 		if turn == TURN.PLAYER:
 			var slog = menu.slogan_list[id]
@@ -150,14 +156,14 @@ func _process(_delta):
 				playerAttack(menu.slogan_list[id])
 			
 	elif battle_ui == BATTLE_UI.OBJECTS:
-		whattodo.visible = false
-		sloganlist.visible = false
-		selector.visible = true
-		objectlist.visible = true
-		
-		id = handle_input(id, n_of_objects, selector)
-		if Input.is_action_just_pressed("ui_accept"):
-			pass
+#		whattodo.visible = false
+#		sloganlist.visible = false
+#		selector.visible = true
+#		objectlist.visible = true
+		if n_of_objects:
+			id = handle_input(id, n_of_objects, selector)
+			if Input.is_action_just_pressed("ui_accept"):
+				pass
 	
 	elif battle_ui == BATTLE_UI.EXIT:
 		battle_ends(0)
@@ -178,8 +184,15 @@ func handle_input(id, maxv, selector):
 	if Input.is_action_just_pressed("ui_up") and id > 6:
 		id -= 7
 	
-	selector.rect_position = Vector2(32 * (id % (maxv - 1)), 40*(id / (maxv - 1)))
+	selector.rect_position = Vector2(32 * (id % maxv), 40*(id / maxv))
 	return id
+
+
+func switch_visibility(slogans: bool):
+	whattodo.visible = !whattodo.visible
+	selector.visible = !selector.visible
+	sloganlist.visible = slogans
+	objectlist.visible = !slogans
 
 
 func get_rand():
@@ -249,6 +262,7 @@ func npcAttack(attack_slog):
 		battle_ends(pBar.value)
 	
 	battle_ui = BATTLE_UI.MENU
+	id = 0
 	slogButton.grab_focus()
 	
 	turn = TURN.PLAYER
