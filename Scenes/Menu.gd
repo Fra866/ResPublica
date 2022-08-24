@@ -1,5 +1,7 @@
 extends Node2D
+
 export(int) var state = 1
+export(Resource) var party
 
 onready var sprite = $MenuLayers/MainMenu/Sprite
 onready var control = $MenuLayers/MainMenu/Control

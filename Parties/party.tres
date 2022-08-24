@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Parties/party.gd" type="Script" id=1]
+[ext_resource path="res://Parties/dummy_symbole.jpeg" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+party_name = "Partito della Salvezza Italica"
+symbole = ExtResource( 2 )
+total_votes = 1
+political_pos = Vector2( 0, 0 )

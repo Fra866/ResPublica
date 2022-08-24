@@ -12,3 +12,4 @@ ended_cutscenes = [ 1 ]
 current_scene = ExtResource( 3 )
 player_pos = Vector2( 80, 48 )
 money = 1000
+votes = 0
