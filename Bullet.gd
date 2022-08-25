@@ -1,20 +1,18 @@
 extends StaticBody2D
+const SPEED = 100.0
 
-onready var raycast = $RayCast2D
+onready var battle_box = get_parent().get_parent().get_parent()
+#To use when implemented in BattleSceneS
+#onready var battle_box = get_node("/root/SceneManager/CurrentScene").get_child(0).get_child(6)
 onready var player = get_parent().get_parent().find_node("Player")
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var target = Vector2(60, 117)
 
-signal hit
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
+
 
 func _process(delta):
-	if raycast.is_colliding():
-		player.hit()
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	position = position.move_toward(target, delta * SPEED)
+	if position == target:
+		battle_box.remove(self)

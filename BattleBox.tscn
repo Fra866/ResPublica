@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Player/PlayerSprite.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://BattleBox.gd" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0, 0, 0, 1 )
@@ -12,25 +12,24 @@ border_width_bottom = 3
 border_color = Color( 1, 1, 1, 1 )
 
 [node name="BattleBox" type="Node2D"]
+script = ExtResource( 3 )
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
 margin_right = 120.0
 margin_bottom = 120.0
 custom_styles/panel = SubResource( 1 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PanelContainer"]
-visible = false
-polygon = PoolVector2Array( 0, 0, 0, 3, 116, 3, 120, 120, 0, 120, 0, 120, 120, 120, 120, 0 )
+[node name="Walls" type="StaticBody2D" parent="."]
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="PanelContainer"]
-visible = false
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
+polygon = PoolVector2Array( 0, 0, 0, 3, 117, 3, 117, 117, 0, 117, 0, 120, 120, 120, 120, 0 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Walls"]
 polygon = PoolVector2Array( 0, 3, 3, 3, 3, 117, 0, 117 )
 
-[node name="Player" parent="PanelContainer" instance=ExtResource( 1 )]
-position = Vector2( 40, 43 )
-scale = Vector2( 0.8, 0.8 )
+[node name="Player" parent="Walls" instance=ExtResource( 1 )]
+position = Vector2( 47.5, 47.5 )
+scale = Vector2( 0.6, 0.6 )
 
-[node name="Bullets" type="Node2D" parent="PanelContainer"]
+[node name="Bullets" type="Node2D" parent="Walls"]
 position = Vector2( 3, 3 )
-
-[node name="Bullet" parent="PanelContainer/Bullets" instance=ExtResource( 2 )]
