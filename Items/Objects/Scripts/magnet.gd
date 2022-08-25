@@ -17,5 +17,5 @@ func _ready():
 	pass
 
 
-func use_object(p_pointer, e_pointer):
+func use_object(_p_pointer, _e_pointer):
 	pass

@@ -48,6 +48,7 @@ func _ready():
 	no_slog_text.visible = false
 	
 	var save_file = screentransition.save_file
+#	party = save_file.player_party
 	
 	for slogan_res in save_file.slogans:
 		new_slogan(slogan_res)
@@ -86,19 +87,11 @@ func _process(_delta):
 			current_slog = slogan_list[slogan_index]
 			
 			political_compass.set_main_pointer(current_slog.political_pos.x, -current_slog.political_pos.y)
+			slogan_index = handle_input(slogan_index, n_of_slogans, slogan_selector)
 			
-			handle_input(slogan_index, n_of_slogans, slogan_selector.rect_position)
-			if Input.is_action_just_pressed("ui_right"):
-				if slogan_index < (n_of_slogans - 1):
-					slogan_index += 1
-			if Input.is_action_just_pressed("ui_left"):
-				if slogan_index > 0:
-					slogan_index -= 1
 			if Input.is_action_just_pressed("ui_accept"):
 				print(current_slog.name, current_slog.political_pos)
 
-			slogan_selector.rect_position.x = 32 * (slogan_index % 6) + 3
-			slogan_selector.rect_position.y = 40 * (int(slogan_index / 6))+ 9
 			current_slogan_desc.text = current_slog.name
 	
 	if menu_objects:
@@ -117,10 +110,9 @@ func _process(_delta):
 			objects_selector.visible = true
 			current_object = object_list[object_index]
 			current_object_desc.text = current_object.description
-			handle_input(object_index, n_of_objects, objects_selector.rect_position)
+			object_index = handle_input(object_index, n_of_objects, objects_selector)
 			
 			if Input.is_action_just_pressed("ui_accept"):
-				print(objects_container.get_children())
 				objects_container.get_child(1).foo(current_object.id) # Temporary Solution
 	
 	
@@ -167,15 +159,15 @@ func new_p():
 	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene'))
 
 
-func handle_input(index: int, maxv: int, selector: Vector2):
+func handle_input(index: int, maxv: int, selector):
 	if Input.is_action_just_pressed("ui_right"):
 		if index < maxv - 1:
 			index += 1
 	if Input.is_action_just_pressed("ui_left"):
 		if index > 0:
 			index -= 1
-	selector.x = 32 * (index % 6) + 3
-	selector.y = 40 * (index / 6) + 9
+	selector.rect_position = Vector2(32 * (index % 6) + 3, 40 * (index / 6) + 9)
+	return index
 
 
 func new_slogan(slogan):
