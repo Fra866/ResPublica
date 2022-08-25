@@ -11,6 +11,7 @@ onready var slogButton = $BattleMenu/WhatToDo/Panel/Container/Slogans
 onready var objButton = $BattleMenu/WhatToDo/Panel/Container/Objects
 onready var quitButton = $BattleMenu/WhatToDo/Panel/Container/Quit
 onready var pBar = $LifeBars/PlayerBar
+onready var pLabel = $LifeBars/PlayerBar/Label
 onready var npcBar = $LifeBars/NPCBar
 onready var sloganlist = $BattleMenu/Slogans
 onready var objectlist = $BattleMenu/Objects
@@ -31,7 +32,9 @@ onready var enemy_political_pos: Vector2
 onready var votes: int
 
 onready var priority = true
-onready var enemy_slogans: Array
+onready var enemy_weapon: BulletObject
+onready var enemy_shots: int = 0
+#onready var enemy_slogans: Array
 var id = 0
 var next_scene = ""
 var player_pos = Vector2(0, 0)
@@ -56,7 +59,8 @@ func _ready():
 	enemy_sprite.texture = load("res://UI/andreotti/battle.png")
 	political_compass.visibility(true)
 	
-	dialogue_box.connect("npc_slogans", self, "set_npc_slogans")
+#	dialogue_box.connect("npc_slogans", self, "set_npc_slogans")
+	dialogue_box.connect("npc_weapons", self, "set_npc_weapons")
 	dialogue_box.connect("next_scene", self, "set_next_scene")
 	dialogue_box.connect("send_npc", self, "set_npc")
 	
@@ -80,7 +84,7 @@ func slogan_setup():
 		var x = 12 + 32 * (n_of_slogans % max_slogans)
 		if x == 12:
 			x += 32 # + (32 * n_of_slogans/max_slogans)
-		var y = 112 + 40*(int(n_of_slogans / (max_slogans+1)))
+		var y = 142 + 40*(int(n_of_slogans / (max_slogans+1)))
 
 		new_slog_instance.position = Vector2(x, y)
 		new_slog_instance.scale = Vector2(1.3, 1.3)
@@ -99,7 +103,7 @@ func object_setup():
 			var x = 12 + 32 * (n_of_objects % max_objects)
 			if x == 12:
 				x += 32 # + (32 * n_of_slogans/max_slogans)
-			var y = 112 + 40*(int(n_of_objects / (max_objects + 1)))
+			var y = 142 + 40*(int(n_of_objects / (max_objects + 1)))
 
 			new_obj_instance.position = Vector2(x, y)
 			new_obj_instance.scale = Vector2(1.3, 1.3)
@@ -203,8 +207,11 @@ func get_rand():
 	return tmp.slogans_for_battle[n]
 
 
-func set_npc_slogans(slogan_list):
-	enemy_slogans = slogan_list
+#func set_npc_slogans(slogan_list):
+#	enemy_slogans = slogan_list
+func set_npc_weapons(weapon, shots):
+	enemy_weapon = weapon
+	enemy_shots = shots
 
 
 func set_next_scene(scene: String, p_pos: Vector2):
@@ -245,23 +252,46 @@ func playerAttack(slogan):
 	p_attack = slogan.political_pos
 	margincontainer.visible = true
 	yield(get_tree().create_timer(1), "timeout")
+	margincontainer.visible = false
+	
+	npcAttack(enemy_weapon, enemy_shots)
 	
 	damage(p_attack)
 	
-	if npcBar.value:
-		margincontainer.visible = false
+#	if npcBar.value:
+#		margincontainer.visible = false
 	
+#		turn = TURN.PLAYER
+#		battle_ui = BATTLE_UI.MENU
+	
+#		slogButton.grab_focus()
+#	else:
+#		battle_ends(!npcBar.value)
+#	npcAttack(enemy_slogans[randi() % len(enemy_slogans) - 1])
+
+
+func npcAttack(weapon, shots):
+	turn = TURN.ENEMY
+	$BattleBox.set("attacking", true)
+	yield($BattleBox.generate(weapon, shots), "completed")
+	$BattleBox.set("attacking", false)
+	yield(get_tree().create_timer(1), "timeout")
+#	damage(p_attack)
+
+	if npcBar.value:
 		turn = TURN.PLAYER
 		battle_ui = BATTLE_UI.MENU
-	
 		slogButton.grab_focus()
 	else:
 		battle_ends(!npcBar.value)
-#	npcAttack(enemy_slogans[randi() % len(enemy_slogans) - 1])
 
 
 func damage(p_pos: Vector2):
 	var d = 10 - (enemy_political_pos.x - p_pos.x) + 10 - (enemy_political_pos.y - p_pos.y)
+#	if d < 0:
+#		pBar.value -= d
+#		pLabel.text = pBar.value
+#	else:
 	npcBar.value -= d
 
 

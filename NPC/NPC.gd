@@ -13,7 +13,9 @@ onready var texture
 onready var raycast = $RayCast2D
 
 export(Array, String) var dialouge_list
-export(Array, Resource) var slogans_for_battle
+#export(Array, Resource) var slogans_for_battle
+export(Resource) var weapon
+export(int) var shots
 export(Vector2) var political_pos
 export(bool) var is_seller
 export(bool) var battle_won

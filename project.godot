@@ -10,6 +10,16 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "BulletNode",
+"language": "GDScript",
+"path": "res://BulletNode.gd"
+}, {
+"base": "Resource",
+"class": "BulletObject",
+"language": "GDScript",
+"path": "res://Items/Bullets/bullet_resource.gd"
+}, {
+"base": "Node",
 "class": "GameObject",
 "language": "GDScript",
 "path": "res://Items/Objects/object.gd"
@@ -50,6 +60,8 @@ _global_script_classes=[ {
 "path": "res://NPC/tmp.gd"
 } ]
 _global_script_class_icons={
+"BulletNode": "",
+"BulletObject": "",
 "GameObject": "",
 "Meta": "",
 "ObjectResource": "",

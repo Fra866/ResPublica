@@ -16,7 +16,9 @@ onready var player
 onready var npc_name
 
 var d_list: Array = []
-var s_list: Array = []
+#var s_list: Array = []
+var weapon
+var shots
 var finished_dialouge: bool = true
 var n_lines: int
 var i = 0
@@ -29,7 +31,8 @@ var battle_scene_path = 'res://Scenes/BattleScene.tscn'
 
 signal priority_to_player
 signal send_npc(npc)
-signal npc_slogans(slogan_list)
+#signal npc_slogans(slogan_list)
+signal npc_weapons(weapon, shots)
 signal next_scene(scene, p_pos)
 #signal next_player_pos(player_pos)
 
@@ -47,7 +50,9 @@ func display_dialouge(npc):
 	npc_name = npc.name
 	
 	d_list = npc.dialouge_list
-	s_list = npc.slogans_for_battle
+	weapon = npc.weapon
+	shots = npc.shots
+#	s_list = npc.slogans_for_battle
 	open_shop = npc.is_seller
 	has_won_battle = npc.battle_won
 
@@ -60,7 +65,7 @@ func end_dialouge_box():
 
 func has_obtained(object):
 	d_list = ['Hai ottenuto ' + object.name]
-	s_list = []
+#	s_list = []
 	# open_shop = false
 	# has_won_battle = true
 	i = 0
@@ -87,7 +92,8 @@ func _process(_delta):
 				if open_shop:
 					open_shop = false
 					shop_box.priority_to_menu()
-				elif len(s_list) > 0:
+#				elif len(s_list) > 0:
+				elif weapon:
 					# print(scenemanager.list_npc)
 					if !len(menu.slogan_list):
 						# yield(display_text_line("Non hai slogan per combattere."), "completed")
@@ -100,7 +106,8 @@ func _process(_delta):
 							
 								scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 								emit_signal("send_npc", current_npc)
-								emit_signal("npc_slogans", s_list)
+#								emit_signal("npc_slogans", s_list)
+								emit_signal("npc_weapons", weapon, shots)
 								emit_signal("next_scene", current_scene.name, player.position)
 								
 							else:

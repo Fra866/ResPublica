@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Bullet.gd" type="Script" id=1]
+[ext_resource path="res://BulletNode.gd" type="Script" id=2]
+[ext_resource path="res://Items/Bullets/coin.tres" type="Resource" id=3]
+[ext_resource path="res://Assets/Liracoin.png" type="Texture" id=4]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 8.0
+height = 2.0
+
+[node name="Bullet" type="StaticBody2D"]
+script = ExtResource( 1 )
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource( 2 )
+bullet_resource = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 8, 8 )
+scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 8, 8 )
+shape = SubResource( 1 )
