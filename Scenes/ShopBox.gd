@@ -5,20 +5,30 @@ extends CanvasLayer
 #var slogans = []
 
 onready var background = $Background
-onready var selecter = $Background/Background2/Selecter
+onready var sloganbg = $Background/SloganBG
+onready var objectbg = $Background/ObjectBG
+onready var slog_selector = $Background/SloganBG/Selector
+onready var obj_selector = $Background/ObjectBG/Selector
+onready var slogan_list = $Background/SloganBG/Slogans
+onready var object_list = $Background/ObjectBG/Objects
 onready var player
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var ui = get_node("/root/SceneManager/UI")
 onready var prize_sign = $PrizeSign
 onready var prize_var = $PrizeSign/Interior/Control/PrizeVar
 onready var text_box = $TextBox
-onready var slogan_text = $TextBox/ColorRect/Panel/SlogText
+onready var description = $TextBox/ColorRect/Panel/Description
 onready var political_compass = $PoliticalCompass
 
+onready var n_slogans = $Background/SloganBG/Slogans.get_child_count()
+onready var n_objects = $Background/ObjectBG/Objects.get_child_count()
 onready var open: bool = false
 onready var first_accept: bool = true
-var index_element: int = 0
+var id_slogan: int = 0
+var id_object: int = 0
+
 var tmp_slogan = null
+var tmp_object = null
 
 signal priority_to_player
 #signal closed
@@ -31,63 +41,87 @@ func _ready():
 
 
 func priority_to_menu():
-	index_element = 0
+	id_slogan = 0
+	id_object = 0
 	background.visible = true
+	sloganbg.visible = true
+	objectbg.visible = false
 	text_box.visible = true
 	political_compass.visibility(true)
 	open = true
 	first_accept = true
 
-func get_slogan_instance(index):
-	return get_node(NodePath("Background/Background2/Node2D/SloganNode" + str(index + 1)))
+
+func get_instance(node: Node, index: int):
+	return node.get_child(index)
+
 
 func _process(_delta):
 	player = get_parent().get_child(0).get_child(0).find_node('Player')
 	prize_sign.visible = open
 	
 	if open:
-		prize_var.text = str(get_slogan_instance(index_element).slogan_res.prize)
-		if Input.is_action_just_pressed("ui_left") and index_element > 0:
-			index_element -= 1
-		if Input.is_action_just_pressed("ui_right") and index_element < 19:
-			index_element += 1
-		
-		if Input.is_action_just_pressed("ui_down") and index_element < 15:
-			index_element += 5
-		if Input.is_action_just_pressed("ui_up") and index_element > 4:
-			index_element -= 5
-	
-		if Input.is_action_just_pressed("ui_accept"):
-			if not first_accept:
-				brought(index_element)
-			first_accept = false
-	
-		if Input.is_action_just_pressed("ui_end"):
-			index_element = 0
-			open = false
-			priority_to_player()
+		if sloganbg.visible:
+			id_slogan = handle_input(id_slogan, n_slogans, slog_selector)
+			tmp_slogan = get_instance(slogan_list, id_slogan).slogan_res
+			description.text = tmp_slogan.name
+			political_compass.set_main_pointer(tmp_slogan.political_pos.x / 1.25, -tmp_slogan.political_pos.y / 1.25)
 			
-		selecter.rect_position.x = 4 + (index_element % 5)*32
-		selecter.rect_position.y = 4 + (index_element / 5)*28
+			if Input.is_action_just_pressed("ui_accept"):
+				if not first_accept:
+					bought("slogan")
+				first_accept = false
+				
+			if Input.is_action_just_pressed("ui_object"):
+				sloganbg.visible = false
+				objectbg.visible = true
+				political_compass.visibility(false)
+				
+		else:
+			id_object = handle_input(id_object, n_objects, obj_selector)
+			tmp_object = get_instance(object_list, id_object).object_res
+			description.text = tmp_object.description
+			
+			if Input.is_action_just_pressed("ui_accept"):
+				if not first_accept:
+					bought("object")
+				first_accept = false
+				
+			if Input.is_action_just_pressed("ui_slogan"):
+				sloganbg.visible = true
+				objectbg.visible = false
+				political_compass.visibility(true)
+
+		if Input.is_action_just_pressed("ui_end"):
+				open = false
+				priority_to_player()
+
+
+func bought(type: String):
+	var selected_el = null
+	match type:
+		"slogan":
+			selected_el = get_instance(slogan_list, id_slogan)
+			menu.new_slogan(selected_el.slogan_res)
+		"object":
+			selected_el = get_instance(object_list, id_object)
+			menu.new_object(selected_el.object_res)
+
+
+func handle_input(index, maxv, selector):
+	if Input.is_action_just_pressed("ui_left") and index > 0:
+		index -= 1
+	if Input.is_action_just_pressed("ui_right") and index < maxv - 1:
+		index += 1
+	if Input.is_action_just_pressed("ui_down") and index < maxv - 5:
+		index += 5
+	if Input.is_action_just_pressed("ui_up") and index > 5:
+		index -= 5
 		
-		tmp_slogan = get_slogan_instance(index_element).slogan_res
-		slogan_text.text = tmp_slogan.name
-		political_compass.set_main_pointer(tmp_slogan.political_pos.x / 1.25, tmp_slogan.political_pos.y / 1.25)
+	selector.rect_position.x = 4 + (index % 5)*32
+	selector.rect_position.y = 4 + (index / 5)*28
+	return index
 
-
-func brought(i_element):
-	var selected_slogan = get_slogan_instance(i_element)
-	# slogans.append(selected_slogan)
-	
-#	print(selected_slogan.slogan_res in menu.slogan_list)
-	
-	menu.new_slogan(selected_slogan.slogan_res)
-
-func save(path):
-	var file = File.new()
-	file.open(path, File.READ_WRITE)
-	for s in menu.slogan_list:
-		file.store_line(s.slogan_res.get_path())
 
 func priority_to_player():
 	background.visible = false

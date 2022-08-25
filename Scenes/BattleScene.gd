@@ -20,6 +20,7 @@ onready var margincontainer = $ActionLog/MarginContainer
 onready var action_log = $ActionLog/MarginContainer/Panel/Label
 onready var political_compass = $PoliticalCompass
 onready var enemy_sprite = $EnemySprite
+onready var battlebox = $BattleBox
 
 onready var n_of_slogans = 0
 onready var n_of_objects = 0
@@ -54,7 +55,8 @@ onready var battle_ui = BATTLE_UI.MENU
 func _ready():
 	randomize()
 	enemy_sprite.texture = load("res://UI/andreotti/battle.png")
-	political_compass.visibility(true)
+	
+	battlebox.visible = true
 	
 	dialogue_box.connect("npc_slogans", self, "set_npc_slogans")
 	dialogue_box.connect("next_scene", self, "set_next_scene")
@@ -105,43 +107,100 @@ func object_setup():
 			new_obj_instance.scale = Vector2(1.3, 1.3)
 			objectlist.add_child(new_obj_instance)
 
+
 func _process(_delta):
-	if battle_ui == BATTLE_UI.MENU:
+	# political_compass.visibility(!battlebox.visible)
+	
+	if turn == TURN.ATTACKING:
+		whattodo.visible = false
 		selector.visible = false
 		sloganlist.visible = false
-		whattodo.visible = true
+		objectlist.visible = false
+		
+		if Input.is_action_pressed("ui_left"):
+			battlebox.move_pointer(Vector2(-1, 0))
+		if Input.is_action_pressed("ui_right"):
+			battlebox.move_pointer(Vector2(1, 0))
+		if Input.is_action_pressed("ui_down"):
+			battlebox.move_pointer(Vector2(0, 1))
+		if Input.is_action_pressed("ui_up"):
+			battlebox.move_pointer(Vector2(0, -1))
 		
 		if Input.is_action_just_pressed("ui_accept"):
-			if slogButton.has_focus():
-				battle_ui = BATTLE_UI.SLOGANS
-	elif battle_ui == BATTLE_UI.SLOGANS:
-		selector.visible = true
-		sloganlist.visible = true
-		whattodo.visible = false
-		
-		if turn == TURN.PLAYER:
-			var slog = menu.slogan_list[id]
+			pass
+	
+	else:
+		if battle_ui == BATTLE_UI.MENU:
+			selector.visible = false
+			sloganlist.visible = false
+			objectlist.visible = false
+			whattodo.visible = true
 			
-			if Input.is_action_just_pressed("ui_right") and id < n_of_slogans - 1:
-				id += 1
-			if Input.is_action_just_pressed("ui_down") and (id + 7) < n_of_slogans - 1:
-				id += 7
-			if Input.is_action_just_pressed("ui_up") and id > 6:
-				id -= 7
-			if Input.is_action_just_pressed("ui_left") and id > 0:
-				id -= 1
-			if Input.is_action_just_pressed("ui_end"):
-				battle_ui = BATTLE_UI.MENU
-				slogButton.grab_focus()
+			if Input.is_action_just_pressed("ui_accept"):
+				if slogButton.has_focus():
+					switch_visibility(true)
+					political_compass.visibility(true)
+					battle_ui = BATTLE_UI.SLOGANS
+				elif objButton.has_focus():
+					switch_visibility(false)
+					battle_ui = BATTLE_UI.OBJECTS
+				else:
+					battle_ui = BATTLE_UI.EXIT
+					
+		elif battle_ui == BATTLE_UI.SLOGANS:
+			political_compass.visible = true
 			
-			political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
+			if turn == TURN.PLAYER:
+				var slog = menu.slogan_list[id]
+				id = handle_input(id, n_of_slogans, selector)
+				political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
 
-		selector.rect_position = Vector2(32 * (id % (max_slogans - 1)), 40*(int(id / (max_slogans - 1))))
-		
-		
-		if Input.is_action_just_pressed("ui_accept"):
-			attacking = true
-			playerAttack(menu.slogan_list[id])
+	#			if Input.is_action_just_pressed("ui_end"):
+	#				battle_ui = BATTLE_UI.MENU
+	#				id = 0
+	#				slogButton.grab_focus()
+			
+				if Input.is_action_just_pressed("ui_accept"):
+					playerAttack(menu.slogan_list[id])
+				
+		elif battle_ui == BATTLE_UI.OBJECTS:
+	#		whattodo.visible = false
+	#		sloganlist.visible = false
+	#		selector.visible = true
+	#		objectlist.visible = true
+			if n_of_objects:
+				id = handle_input(id, n_of_objects, selector)
+				if Input.is_action_just_pressed("ui_accept"):
+					pass
+	
+		elif battle_ui == BATTLE_UI.EXIT:
+			battle_ends(0)
+	
+		if Input.is_action_just_pressed("ui_end"):
+			battle_ui = BATTLE_UI.MENU
+			id = 0
+			slogButton.grab_focus()
+
+
+func handle_input(id, maxv, selector):
+	if Input.is_action_just_pressed("ui_left") and id:
+		id -= 1
+	if Input.is_action_just_pressed("ui_right") and id < maxv - 1:
+		id += 1
+	if Input.is_action_just_pressed("ui_down") and id + 7 < maxv:
+		id += 7
+	if Input.is_action_just_pressed("ui_up") and id > 6:
+		id -= 7
+	
+	selector.rect_position = Vector2(32 * (id % maxv), 40*(id / maxv))
+	return id
+
+
+func switch_visibility(slogans: bool):
+	whattodo.visible = !whattodo.visible
+	selector.visible = !selector.visible
+	sloganlist.visible = slogans
+	objectlist.visible = !slogans
 
 
 func get_rand():
@@ -165,6 +224,52 @@ func set_npc(current_npc):
 	enemy_sprite.texture = load(current_npc.battle_sprite_path)
 
 
+
+
+func playerAttack(slogan):
+	attacking = true
+	political_compass.visible = false
+	political_compass.set_main_pointer(slogan.political_pos.x, -slogan.political_pos.y)
+	political_compass.hide_line()
+	
+	turn = TURN.ATTACKING
+	action_log.text = "Hai usato " + slogan.name
+	p_attack = slogan.political_pos
+	margincontainer.visible = true
+	yield(get_tree().create_timer(1), "timeout")
+	
+	damage(p_attack)
+	
+	if npcBar.value:
+		margincontainer.visible = false
+		npcAttack()
+	else:
+		battle_ends(!npcBar.value)
+	
+
+
+func npcAttack():
+	turn = TURN.ATTACKING
+	var bullet = load("res://Bullet.tscn").instance()
+	bullet.position.y = -42
+	bullet.position.x = randi() % 90
+	bullet.scale = Vector2(1, 1)
+	
+	battlebox.get_child(0).get_child(2).add_child(bullet)
+	yield(get_tree().create_timer(2), "timeout")
+	
+	battlebox.get_child(0).get_child(2).get_child(0).queue_free()
+	
+	turn = TURN.PLAYER
+	battle_ui = BATTLE_UI.MENU
+	slogButton.grab_focus()
+
+
+func damage(p_pos: Vector2):
+	var d = 10 - (enemy_political_pos.x - p_pos.x) + 10 - (enemy_political_pos.y - p_pos.y)
+	npcBar.value -= d
+
+
 func battle_ends(victory):
 	action_log.text = "Battaglia finita."
 	margincontainer.visible = true
@@ -182,35 +287,6 @@ func battle_ends(victory):
 	end(next_scene)
 	
 	# scenemanager.start_transition("scene_path", Vector2(0,0))
-
-
-func playerAttack(slogan):
-	political_compass.set_main_pointer(slogan.political_pos.x, -slogan.political_pos.y)
-	political_compass.hide_line()
-	
-	turn = TURN.ATTACKING
-	action_log.text = "Hai usato " + slogan.name
-	p_attack = slogan.political_pos
-	margincontainer.visible = true
-	yield(get_tree().create_timer(1), "timeout")
-	
-	damage(p_attack)
-	
-	if npcBar.value:
-		margincontainer.visible = false
-	
-		turn = TURN.PLAYER
-		battle_ui = BATTLE_UI.MENU
-	
-		slogButton.grab_focus()
-	else:
-		battle_ends(!npcBar.value)
-	# npcAttack(enemy_slogans[randi() % len(enemy_slogans) - 1])
-
-
-func damage(p_pos: Vector2):
-	var d = 10 - (enemy_political_pos.x - p_pos.x) + 10 - (enemy_political_pos.y - p_pos.y)
-	npcBar.value -= d
 
 
 func end(scene):

@@ -1,18 +1,20 @@
 [gd_resource type="Resource" load_steps=7 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
-[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=2]
-[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=3]
+[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=3]
 [ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=4]
-[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=5]
+[ext_resource path="res://Items/Slogans/cose_buone.tres" type="Resource" id=5]
 [ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Parties/party.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )
 slogans = [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ) ]
-objects = [ ExtResource( 2 ) ]
-ended_cutscenes = [ 1 ]
+objects = [  ]
+ended_cutscenes = [  ]
+list_npc = [ [ "Andreotti", Vector2( -4, -2 ) ], "Andreotti" ]
 current_scene = ExtResource( 6 )
-player_pos = Vector2( -112, 48 )
+player_party = ExtResource( 7 )
+player_pos = Vector2( -96, 48 )
 money = 850
-votes = 0
+votes = 10

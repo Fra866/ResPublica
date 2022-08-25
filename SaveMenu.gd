@@ -48,6 +48,7 @@ func save_all():
 	file_save.player_pos = player.position
 	file_save.slogans = menu.slogan_list
 	file_save.objects = menu.object_list
+	file_save.list_npc = scene_manager.list_npc
 	file_save.ended_cutscenes = scene_manager.list_ended_cutscenes
 	file_save.money = ui.get_money()
 	file_save.votes = ui.get_votes()

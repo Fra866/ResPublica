@@ -38,6 +38,3 @@ margin_bottom = 48.0
 text = "Lorem Ipsum"
 valign = 3
 max_lines_visible = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}

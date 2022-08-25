@@ -7,6 +7,7 @@ onready var screentransition = get_node(NodePath('/root/SceneManager'))
 
 func _ready():
 	liracoin.text = str(screentransition.save_file.money)
+#	votes.text = str(screentransition.save_file.votes)
 
 
 func add_money(m: int):

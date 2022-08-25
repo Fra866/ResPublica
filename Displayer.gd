@@ -18,7 +18,7 @@ func _ready():
 
 
 func _process(_delta):
-	if Input.is_action_just_pressed("ui_down") and line_id < label.get_line_count():
+	if Input.is_action_just_pressed("ui_down") and line_id < label.get_line_count() - 1:
 		line_id += 3
 		label.scroll_to_line(line_id)
 	if Input.is_action_just_pressed("ui_up") and line_id > 2:
@@ -38,11 +38,8 @@ func self_close():
 
 func split(text: String):
 	var word = ""
-	
-	print(text)
-	
 	for i in len(text):
-		if text[i] != ' ':
+		if text[i] != ' ' or '\n':
 			word += text[i]
 		else:
 			word += text[i]
@@ -54,7 +51,7 @@ func split(text: String):
 func display():
 	var c = 0
 	for wd in words:
-		if c + len(wd) >= maxchar:
+		if c + len(wd) > maxchar:
 			label.newline()
 			c = 0
 		label.add_text(wd)

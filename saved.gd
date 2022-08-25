@@ -4,6 +4,7 @@ class_name Saved
 export(Array, Resource) var slogans = []
 export(Array, Resource) var objects = []
 export(Array, Resource) var ended_cutscenes
+export(Array, Resource) var list_npc = []
 export(Resource) var current_scene = load("res://Scenes/Level1.tscn")
 export(Resource) var player_party
 export(Vector2) var player_pos
@@ -14,6 +15,7 @@ export(int) var votes = 0
 func initialize():
 	objects = []
 	slogans = []
+	list_npc = []
 	ended_cutscenes = []
 	current_scene = load("res://Scenes/Level1.tscn")
 	player_party = load("res://Parties/party.tres")

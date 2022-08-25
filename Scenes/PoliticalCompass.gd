@@ -30,6 +30,11 @@ func set_main_pointer(x: float, y: float):
 	main_pointer.rect_position = Vector2(x*4 - 2, y*4 - 2)
 
 
+func move_main_pointer(x: float, y: float):
+	main_pointer.rect_position.x += x
+	main_pointer.rect_position.y += y
+
+
 func set_enemy_pointer(x: float, y: float):
 	enemy_pointer.visible = true
 	enemy_pointer.rect_position = Vector2(x*4 - 2, y*4 - 2)

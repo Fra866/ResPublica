@@ -3,13 +3,15 @@ extends Node
 export(String) var content = "Mussolini Delenda Est"
 
 var wrapper = load("res://Test.tscn").instance()
+var path: NodePath = "/root/SceneManager/Menu/MenuLayers/Objects/"
 
 var list_of_mail_contents = [
-	"""
-	Nel mezzo delle elezioni di nostra vita,
-	Ci ritrovammo nella SELVA OSCURA,
-	Che la ritta legislatura era smarrita...
-	""",
+	"""Nel mezzo delle elezioni di nostra vita,
+
+Ci ritrovammo nella SELVA OSCURA,
+
+Che la ritta legislatura era smarrita...
+""",
 	
 	"""
 	Si lavora e si produce per la patria e per il boss finale

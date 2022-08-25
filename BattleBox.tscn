@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/battles/PlayerPointer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://BattleBox.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color( 1, 1, 1, 1 )
+
+[node name="BattleBox" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_right = 181.0
+margin_bottom = 154.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PanelContainer"]
+visible = false
+polygon = PoolVector2Array( 0, 0, 0, 3, 116, 3, 120, 120, 0, 120, 0, 120, 120, 120, 120, 0 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="PanelContainer"]
+visible = false
+polygon = PoolVector2Array( 0, 3, 3, 3, 3, 117, 0, 117 )
+
+[node name="AttackContainer" type="Node2D" parent="PanelContainer"]
+position = Vector2( 3, 3 )
+
+[node name="PlayerPointer" parent="PanelContainer" instance=ExtResource( 1 )]
+position = Vector2( 93, 77 )
+scale = Vector2( 1.5, 1.5 )
