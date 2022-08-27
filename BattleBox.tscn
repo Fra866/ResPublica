@@ -18,21 +18,20 @@ script = ExtResource( 2 )
 margin_right = 181.0
 margin_bottom = 154.0
 custom_styles/panel = SubResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PanelContainer"]
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
 visible = false
-polygon = PoolVector2Array( 0, 0, 0, 3, 116, 3, 120, 120, 0, 120, 0, 120, 120, 120, 120, 0 )
+polygon = PoolVector2Array( 0, 0, 0, 3, 178, 3, 178, 151, 0, 151, 0, 154, 181, 154, 181, 0 )
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="PanelContainer"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Walls"]
 visible = false
-polygon = PoolVector2Array( 0, 3, 3, 3, 3, 117, 0, 117 )
+polygon = PoolVector2Array( 0, 3, 3, 3, 3, 151, 0, 151 )
 
-[node name="AttackContainer" type="Node2D" parent="PanelContainer"]
+[node name="AttackContainer" type="Node2D" parent="Walls"]
 position = Vector2( 3, 3 )
 
-[node name="PlayerPointer" parent="PanelContainer" instance=ExtResource( 1 )]
+[node name="PlayerPointer" parent="Walls" instance=ExtResource( 1 )]
 position = Vector2( 93, 77 )
 scale = Vector2( 1.5, 1.5 )

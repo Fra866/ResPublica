@@ -83,6 +83,9 @@ margin_left = 16.0
 margin_top = 130.0
 margin_right = 304.0
 margin_bottom = 180.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Container" type="Container" parent="BattleMenu/WhatToDo/Panel"]
 anchor_left = 0.5
@@ -122,8 +125,8 @@ anchor_left = 0.05
 anchor_top = 0.533
 anchor_right = 0.95
 anchor_bottom = 0.978
-margin_top = 33.06
-margin_bottom = 13.96
+margin_top = 20.06
+margin_bottom = 0.960007
 __meta__ = {
 "_edit_use_anchors_": false
 }

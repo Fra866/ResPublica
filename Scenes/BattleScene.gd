@@ -131,6 +131,8 @@ func _process(_delta):
 	
 	else:
 		if battle_ui == BATTLE_UI.MENU:
+			
+			battlebox.visible = false
 			selector.visible = false
 			sloganlist.visible = false
 			objectlist.visible = false
@@ -149,6 +151,7 @@ func _process(_delta):
 					
 		elif battle_ui == BATTLE_UI.SLOGANS:
 			political_compass.visible = true
+			battlebox.visible = false
 			
 			if turn == TURN.PLAYER:
 				var slog = menu.slogan_list[id]
@@ -250,15 +253,17 @@ func playerAttack(slogan):
 
 func npcAttack():
 	turn = TURN.ATTACKING
-	var bullet = load("res://Bullet.tscn").instance()
-	bullet.position.y = -42
-	bullet.position.x = randi() % 90
-	bullet.scale = Vector2(1, 1)
+	battlebox.visible = true
+	yield(battlebox.generate(), "completed")
+#	var bullet = load("res://Bullet.tscn").instance()
+#	bullet.position.y = -42
+#	bullet.position.x = randi() % 90
+#	bullet.scale = Vector2(1, 1)
 	
-	battlebox.get_child(0).get_child(2).add_child(bullet)
-	yield(get_tree().create_timer(2), "timeout")
+#	battlebox.get_child(1).get_child(2).add_child(bullet)
+#	yield(get_tree().create_timer(2), "timeout")
 	
-	battlebox.get_child(0).get_child(2).get_child(0).queue_free()
+#	battlebox.get_child(1).get_child(2).get_child(0).queue_free()
 	
 	turn = TURN.PLAYER
 	battle_ui = BATTLE_UI.MENU
