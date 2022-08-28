@@ -5,11 +5,11 @@ onready var collision_shape = $CollisionShape2D
 
 func _ready():
 	raycast.enabled = true
-#	bullet
+	raycast.cast_to = Vector2(0, 0)
 
 
 func _process(delta):
-	pass
+	print(raycast.cast_to)
 
 
 func check_collisions():

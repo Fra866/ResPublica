@@ -4,26 +4,48 @@ onready var player_pointer = $Walls/PlayerPointer
 onready var p_raycast = player_pointer.get_child(2)
 onready var attack_container = $Walls/AttackContainer
 
-var attack
+onready var attack_id: int # IDEA: Using IDs to decide what attack shold be started. This will depend on the npc
+var attack # Containes the current attack Node
 
 func _ready():
 	pass
 #	$Walls/AttackContainer.connect()
 
 
+func reset_pointer():
+	player_pointer.position = Vector2(88, 80)
+
+
 func move_pointer(input_direction: Vector2):
-	p_raycast.cast_to = Vector2(input_direction.x * 10, input_direction.y * 10)
+	# p_raycast.cast_to = Vector2(input_direction.x, input_direction.y)
 	p_raycast.force_raycast_update()
 	
 	if !p_raycast.is_colliding():
 		player_pointer.position += input_direction
 
+
 func _process(delta):
-	if attack_container.get_children():
-		print(player_pointer.check_collisions())
+	if attack_container.get_children() and player_pointer.check_collisions():
+		pass
+		# ToDo:
+		# Implement hit() function
+		
+		# Create an invincibility state for the pointer of 
+		# 1 second lenght that activates when is hit.
+
+
+func start_attack(attack, time_of_action: float):
+	$Walls/AttackContainer.add_child(attack)
+	yield(get_tree().create_timer(time_of_action), "timeout")
+
 
 func generate():
-	attack = fascio()
+	# See BattleScene.gd, npcAttack() 
+	print(attack_id)
+	if attack_id == 1:
+		fascio()
+	else:
+		bullet()
 	
 	$Walls/AttackContainer.add_child(attack)
 	yield(get_tree().create_timer(3), "timeout")
@@ -34,7 +56,7 @@ func bullet():
 	bullet.position = Vector2(randi() % 90, -42)
 	bullet.scale = Vector2(1, 1)
 
-	return bullet
+	start_attack(bullet, 2)
 
 
 func fascio():
@@ -42,4 +64,4 @@ func fascio():
 	fascio.position = Vector2(205, 123)
 	fascio.scale = Vector2(3, 3)
 	
-	return fascio
+	start_attack(fascio, 3)

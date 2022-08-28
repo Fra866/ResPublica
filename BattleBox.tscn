@@ -33,5 +33,5 @@ polygon = PoolVector2Array( 0, 3, 3, 3, 3, 151, 0, 151 )
 position = Vector2( 3, 3 )
 
 [node name="PlayerPointer" parent="Walls" instance=ExtResource( 1 )]
-position = Vector2( 93, 77 )
+position = Vector2( 88, 80 )
 scale = Vector2( 1.5, 1.5 )

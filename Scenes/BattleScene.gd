@@ -253,21 +253,15 @@ func playerAttack(slogan):
 
 func npcAttack():
 	turn = TURN.ATTACKING
+	battlebox.reset_pointer()
 	battlebox.visible = true
+	
+	battlebox.attack_id = randi() % 2 # DUMMY RANDOM ID GENERATOR
 	yield(battlebox.generate(), "completed")
-#	var bullet = load("res://Bullet.tscn").instance()
-#	bullet.position.y = -42
-#	bullet.position.x = randi() % 90
-#	bullet.scale = Vector2(1, 1)
 	
-#	battlebox.get_child(1).get_child(2).add_child(bullet)
-#	yield(get_tree().create_timer(2), "timeout")
-	
-#	battlebox.get_child(1).get_child(2).get_child(0).queue_free()
-	
-	turn = TURN.PLAYER
 	battle_ui = BATTLE_UI.MENU
 	slogButton.grab_focus()
+	turn = TURN.PLAYER
 
 
 func damage(p_pos: Vector2):
