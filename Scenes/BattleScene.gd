@@ -33,7 +33,7 @@ onready var votes: int
 #onready var attack_id : int
 
 onready var priority = true
-#onready var enemy_slogans: Array
+onready var attacks_list: Array
 var id = 0
 var next_scene = ""
 var player_pos = Vector2(0, 0)
@@ -59,7 +59,7 @@ func _ready():
 	
 	battlebox.visible = true
 	
-#	dialogue_box.connect("npc_slogans", self, "set_npc_slogans")
+	dialogue_box.connect("npc_attacks", self, "set_attacks")
 	dialogue_box.connect("next_scene", self, "set_next_scene")
 	dialogue_box.connect("send_npc", self, "set_npc")
 	
@@ -205,8 +205,8 @@ func get_rand():
 	return tmp.slogans_for_battle[n]
 
 
-#func set_npc_slogans(slogan_list):
-#	enemy_slogans = slogan_list
+func set_attacks(attack_ids_list):
+	attacks_list = attack_ids_list
 
 
 func set_next_scene(scene: String, p_pos: Vector2):
@@ -246,7 +246,7 @@ func npcAttack():
 	turn = TURN.ATTACKING
 	battlebox.reset_pointer()
 	battlebox.visible = true
-	yield(battlebox.generate(), "completed")
+	yield(battlebox.generate(attacks_list), "completed")
 
 	yield(get_tree(), "idle_frame")
 	battle_ui = BATTLE_UI.MENU

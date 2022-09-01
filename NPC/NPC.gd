@@ -13,7 +13,8 @@ onready var texture
 onready var raycast = $RayCast2D
 
 export(Array, String) var dialouge_list
-export(Array, Resource) var slogans_for_battle
+export(Array, Resource) var slogans_for_battle # Useless
+export(Array, int) var attack_ids
 export(Vector2) var political_pos
 export(bool) var is_seller
 export(bool) var battle_won
@@ -60,13 +61,6 @@ func setting_up_sprite():
 func interaction(player):
 	animtree.set("parameters/blend_position", (player.position - position) / 16)
 	dialouge_box.display_dialouge(self)
-	
-#	if len(slogans_for_battle):
-#		var tmp = Temp.new()
-#		tmp.slogans_for_battle = slogans_for_battle
-#		tmp.political_pos = political_pos
-#		ResourceSaver.save("res://NPC/tmp.tres", tmp)
-
 
 
 func _physics_process(delta):

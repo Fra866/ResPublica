@@ -36,10 +36,14 @@ func _process(_delta):
 		# 1 second lenght that activates when is hit.
 
 
-func generate():
-	if attack_id == 1:
+func generate(attacks_list):
+	# Select random attack from the available ones
+	attack_id = attacks_list[randi() % len(attacks_list)]
+	
+	# Dummy check system
+	if attack_id == 0:
 		attack = fascio()
-	else:
+	elif attack_id == 1:
 		attack = bullet()
 		
 	start_attack(attack[0], attack[1])

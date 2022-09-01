@@ -16,6 +16,7 @@
 position = Vector2( -96, 32 )
 dialouge_list = [ "Mafia? Cos'è una Mafia?" ]
 slogans_for_battle = [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 7 ) ]
+attack_ids = [ 0, 1 ]
 political_pos = Vector2( -4, -2 )
 battle_sprite_path = "res://UI/andreotti/battle.png"
 attack = 1
@@ -28,6 +29,7 @@ f = 7
 position = Vector2( -96, 80 )
 dialouge_list = [ "Questo sprite va buttato" ]
 slogans_for_battle = [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 7 ) ]
+attack_ids = [ 1 ]
 political_pos = Vector2( -4, -2 )
 battle_sprite_path = "res://UI/andreotti/battle.png"
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"

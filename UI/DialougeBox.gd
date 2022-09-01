@@ -16,7 +16,8 @@ onready var player
 onready var npc_name
 
 var d_list: Array = []
-var s_list: Array = []
+var s_list: Array = [] # Useless
+var att_ids_list: Array = []
 var finished_dialouge: bool = true
 var n_lines: int
 var i = 0
@@ -29,7 +30,7 @@ var battle_scene_path = 'res://Scenes/BattleScene.tscn'
 
 signal priority_to_player
 signal send_npc(npc)
-#signal npc_slogans(slogan_list)
+signal npc_attacks(attack_ids_list)
 signal next_scene(scene, p_pos)
 #signal next_player_pos(player_pos)
 
@@ -48,6 +49,7 @@ func display_dialouge(npc):
 	
 	d_list = npc.dialouge_list
 	s_list = npc.slogans_for_battle
+	att_ids_list = npc.attack_ids
 	open_shop = npc.is_seller
 	has_won_battle = npc.battle_won
 
@@ -61,8 +63,7 @@ func end_dialouge_box():
 func has_obtained(object):
 	d_list = ['Hai ottenuto ' + object.name]
 	s_list = []
-	# open_shop = false
-	# has_won_battle = true
+	att_ids_list = []
 	i = 0
 	
 	start_dialouge = true
@@ -100,7 +101,7 @@ func _process(_delta):
 							
 								scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 								emit_signal("send_npc", current_npc)
-#								emit_signal("npc_slogans", s_list)
+								emit_signal("npc_attacks", att_ids_list)
 								emit_signal("next_scene", current_scene.name, player.position)
 								
 							else:
