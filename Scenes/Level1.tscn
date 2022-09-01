@@ -18,6 +18,7 @@ dialouge_list = [ "Mafia? Cos'è una Mafia?" ]
 slogans_for_battle = [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 7 ) ]
 political_pos = Vector2( -4, -2 )
 battle_sprite_path = "res://UI/andreotti/battle.png"
+attack = 1
 sprite_path = "res://UI/andreotti ow.png"
 hf = 3
 vf = 4

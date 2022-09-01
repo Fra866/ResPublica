@@ -3,11 +3,10 @@ extends Node2D
 var next_scene = null
 
 
-#onready var player = get_node(NodePath('/root/SceneManager/CurrentScene/Level1/YSort/Player'))
 onready var current_scene = get_child(0).get_child(0)
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var menu = $Menu
-#onready var ui = $UI/Control/RichTextLabel
+onready var ui = $UI
 onready var transition_animation = $ScreenTransition/AnimationPlayer
 onready var scene_container = $CurrentScene
 
@@ -16,7 +15,7 @@ onready var list_visited_scenes: Array
 onready var list_ended_cutscenes: Array
 
 onready var save_file # Saved data File
-onready var slot: int # Id of file_saved slot (can be 1 or 2)
+onready var slot: int # Id of file_saved slot (can be 1, 2 or 3)
 onready var loading_count: int = 1
 
 signal new_main_scene

@@ -29,7 +29,7 @@ var battle_scene_path = 'res://Scenes/BattleScene.tscn'
 
 signal priority_to_player
 signal send_npc(npc)
-signal npc_slogans(slogan_list)
+#signal npc_slogans(slogan_list)
 signal next_scene(scene, p_pos)
 #signal next_player_pos(player_pos)
 
@@ -100,7 +100,7 @@ func _process(_delta):
 							
 								scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 								emit_signal("send_npc", current_npc)
-								emit_signal("npc_slogans", s_list)
+#								emit_signal("npc_slogans", s_list)
 								emit_signal("next_scene", current_scene.name, player.position)
 								
 							else:

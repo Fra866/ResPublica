@@ -12,6 +12,6 @@ ended_cutscenes = [  ]
 list_npc = [  ]
 current_scene = ExtResource( 6 )
 player_party = ExtResource( 7 )
-player_pos = Vector2( 80, 32 )
+player_pos = Vector2( 80, 16 )
 money = 1000
 votes = 0

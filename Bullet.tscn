@@ -8,8 +8,7 @@ extents = Vector2( 6, 6 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "Hit"
-length = 1.2
-loop = true
+length = 0.7
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -17,7 +16,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 1, 2, 1, 2 ]

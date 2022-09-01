@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 onready var raycast = $RayCast2D
+var damage: int = 10
 
 func _ready():
 	rotation_degrees = 0
@@ -18,11 +19,9 @@ func _ready():
 	
 	self.queue_free()
 
-
+# Test-only function, since collision is now handled by battlebox
 func collision():
 	if raycast.is_colliding():
 		print('Sei stato FASCIATO')
+		raycast.enabled = false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

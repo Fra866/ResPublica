@@ -30,9 +30,10 @@ onready var max_objects = 8
 
 onready var enemy_political_pos: Vector2
 onready var votes: int
+#onready var attack_id : int
 
 onready var priority = true
-onready var enemy_slogans: Array
+#onready var enemy_slogans: Array
 var id = 0
 var next_scene = ""
 var player_pos = Vector2(0, 0)
@@ -58,7 +59,7 @@ func _ready():
 	
 	battlebox.visible = true
 	
-	dialogue_box.connect("npc_slogans", self, "set_npc_slogans")
+#	dialogue_box.connect("npc_slogans", self, "set_npc_slogans")
 	dialogue_box.connect("next_scene", self, "set_next_scene")
 	dialogue_box.connect("send_npc", self, "set_npc")
 	
@@ -146,7 +147,7 @@ func _process(_delta):
 				elif objButton.has_focus():
 					switch_visibility(false)
 					battle_ui = BATTLE_UI.OBJECTS
-				else:
+				elif quitButton.has_focus():
 					battle_ui = BATTLE_UI.EXIT
 					
 		elif battle_ui == BATTLE_UI.SLOGANS:
@@ -158,19 +159,10 @@ func _process(_delta):
 				id = handle_input(id, n_of_slogans, selector)
 				political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
 
-	#			if Input.is_action_just_pressed("ui_end"):
-	#				battle_ui = BATTLE_UI.MENU
-	#				id = 0
-	#				slogButton.grab_focus()
-			
 				if Input.is_action_just_pressed("ui_accept"):
 					playerAttack(menu.slogan_list[id])
 				
 		elif battle_ui == BATTLE_UI.OBJECTS:
-	#		whattodo.visible = false
-	#		sloganlist.visible = false
-	#		selector.visible = true
-	#		objectlist.visible = true
 			if n_of_objects:
 				id = handle_input(id, n_of_objects, selector)
 				if Input.is_action_just_pressed("ui_accept"):
@@ -185,18 +177,18 @@ func _process(_delta):
 			slogButton.grab_focus()
 
 
-func handle_input(id, maxv, selector):
-	if Input.is_action_just_pressed("ui_left") and id:
-		id -= 1
-	if Input.is_action_just_pressed("ui_right") and id < maxv - 1:
-		id += 1
-	if Input.is_action_just_pressed("ui_down") and id + 7 < maxv:
-		id += 7
-	if Input.is_action_just_pressed("ui_up") and id > 6:
-		id -= 7
+func handle_input(index, maxv, selector):
+	if Input.is_action_just_pressed("ui_left") and index:
+		index -= 1
+	if Input.is_action_just_pressed("ui_right") and index < maxv - 1:
+		index += 1
+	if Input.is_action_just_pressed("ui_down") and index + 7 < maxv:
+		index += 7
+	if Input.is_action_just_pressed("ui_up") and index > 6:
+		index -= 7
 	
-	selector.rect_position = Vector2(32 * (id % maxv), 40*(id / maxv))
-	return id
+	selector.rect_position = Vector2(32 * (index % maxv), 40*(index / maxv))
+	return index
 
 
 func switch_visibility(slogans: bool):
@@ -213,8 +205,8 @@ func get_rand():
 	return tmp.slogans_for_battle[n]
 
 
-func set_npc_slogans(slogan_list):
-	enemy_slogans = slogan_list
+#func set_npc_slogans(slogan_list):
+#	enemy_slogans = slogan_list
 
 
 func set_next_scene(scene: String, p_pos: Vector2):
@@ -225,7 +217,7 @@ func set_next_scene(scene: String, p_pos: Vector2):
 func set_npc(current_npc):
 	votes = current_npc.votes
 	enemy_sprite.texture = load(current_npc.battle_sprite_path)
-
+	battlebox.attack_id = current_npc.attack
 
 
 
@@ -248,17 +240,15 @@ func playerAttack(slogan):
 		npcAttack()
 	else:
 		battle_ends(!npcBar.value)
-	
 
 
 func npcAttack():
 	turn = TURN.ATTACKING
 	battlebox.reset_pointer()
 	battlebox.visible = true
-	
-	battlebox.attack_id = randi() % 2 # DUMMY RANDOM ID GENERATOR
 	yield(battlebox.generate(), "completed")
-	
+
+	yield(get_tree(), "idle_frame")
 	battle_ui = BATTLE_UI.MENU
 	slogButton.grab_focus()
 	turn = TURN.PLAYER
@@ -273,7 +263,11 @@ func battle_ends(victory):
 	action_log.text = "Battaglia finita."
 	margincontainer.visible = true
 	battlemenu.visible = false
-	yield(get_tree().create_timer(2), "timeout")
+	
+	var timer = Timer.new()
+	add_child(timer)
+	timer.start(2)
+	yield(timer, "timeout")
 	
 	if victory:
 		menu.party.total_votes += votes
@@ -281,7 +275,7 @@ func battle_ends(victory):
 		
 		action_log.text = "Hai ottenuto " + str(votes) + " voti."
 		yield(get_tree().create_timer(1.5), "timeout")
-		ui.add_votes(votes)
+		ui.loadVotes(votes)
 	
 	end(next_scene)
 	

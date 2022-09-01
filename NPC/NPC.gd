@@ -19,7 +19,7 @@ export(bool) var is_seller
 export(bool) var battle_won
 export(int) var votes
 export(String) var battle_sprite_path
-export(Array, Resource) var attacks
+export(int) var attack
 
 
 export(String) var sprite_path

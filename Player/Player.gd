@@ -1,5 +1,8 @@
 extends KinematicBody2D
+
+
 export(float) var walk_speed = 4.0
+
 const TILE_SIZE = 16
 
 onready var NPCraycast = $NPCRayCast2D

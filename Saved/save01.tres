@@ -1,21 +1,21 @@
 [gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
-[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=2]
-[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=3]
+[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=2]
+[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=3]
 [ext_resource path="res://Parties/party.tres" type="Resource" id=4]
 [ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=5]
-[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=6]
+[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=6]
 [ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=7]
 
 [resource]
 script = ExtResource( 1 )
-slogans = [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 6 ) ]
-objects = [ ExtResource( 2 ) ]
+slogans = [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 2 ) ]
+objects = [ ExtResource( 3 ) ]
 ended_cutscenes = [ 1 ]
 list_npc = [  ]
 current_scene = ExtResource( 7 )
 player_party = ExtResource( 4 )
-player_pos = Vector2( -64, 48 )
+player_pos = Vector2( -64, 32 )
 money = 850
 votes = 0

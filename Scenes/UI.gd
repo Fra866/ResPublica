@@ -4,6 +4,8 @@ onready var shop = get_node(NodePath("../ShopBox"))
 onready var liracoin = $Liracoin/RichTextLabel
 onready var votes = $Votes/RichTextLabel
 onready var screentransition = get_node(NodePath('/root/SceneManager'))
+onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
+
 
 func _ready():
 	liracoin.text = str(screentransition.save_file.money)
@@ -16,16 +18,17 @@ func add_money(m: int):
 
 
 func add_votes(v: int):
-	var votes = $Votes/RichTextLabel
-	votes.text = str(int(votes.text) + v)
+	# print(menu.party.total_votes)
+	# menu.party.total_votes += v
+	loadVotes(menu.party.total_votes)
 
 
 func loadLira(val):
 	liracoin.text = val
 
 
-func loadVotes(val):
-	votes.text = val
+func loadVotes(val:int):
+	votes.text = str(val)
 
 
 func get_money():

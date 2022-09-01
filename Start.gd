@@ -36,6 +36,7 @@ func _on_Button_pressed():
 	
 	$Panel/Container2/Save1.grab_focus()
 
+
 func _on_Button2_pressed():
 	new_game = false
 	$Panel/Container.visible = false

@@ -1,7 +1,8 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Images/Characters/player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Parties/party.tres" type="Resource" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -376,6 +377,7 @@ graph_offset = Vector2( -232.163, -59.3819 )
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 3
 script = ExtResource( 2 )
+party = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 8, 7 )
