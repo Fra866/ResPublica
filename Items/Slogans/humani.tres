@@ -6,6 +6,7 @@
 script = ExtResource( 2 )
 xp = 30
 political_pos = Vector2( -4, -2 )
+damage_area = [ Vector2( 0, -18 ), Vector2( 43, -18 ), Vector2( 43, 16 ), Vector2( 0, 16 ) ]
 name = "Restiamo humani"
 id = 4
 prize = 50

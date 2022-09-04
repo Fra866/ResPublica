@@ -36,3 +36,9 @@ __meta__ = {
 }
 
 [node name="AttacksContainers" type="Node2D" parent="."]
+
+[node name="ExtraDamageArea" type="CollisionPolygon2D" parent="."]
+position = Vector2( -37.8248, 98.7733 )
+rotation = -0.00427683
+scale = Vector2( 1.30231, 2.02867 )
+polygon = PoolVector2Array( 3, -66, 29.5, -50, 55.7, -31.7, 3, -31.7 )

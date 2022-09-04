@@ -6,6 +6,7 @@
 script = ExtResource( 2 )
 xp = 30
 political_pos = Vector2( -3, -1 )
+damage_area = [ Vector2( -34, 0 ), Vector2( 0, 0 ), Vector2( 0, 34 ), Vector2( -34, -34 ) ]
 name = "L'articolo 1 dice che"
 id = 5
 prize = 50

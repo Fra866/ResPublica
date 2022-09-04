@@ -158,7 +158,8 @@ func _process(_delta):
 				var slog = menu.slogan_list[id]
 				id = handle_input(id, n_of_slogans, selector)
 				political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
-
+				political_compass.set_damage_area(slog.damage_area)
+				
 				if Input.is_action_just_pressed("ui_accept"):
 					playerAttack(menu.slogan_list[id])
 				
@@ -218,13 +219,14 @@ func set_npc(current_npc):
 	votes = current_npc.votes
 	enemy_sprite.texture = load(current_npc.battle_sprite_path)
 	battlebox.attack_id = current_npc.attack
-
+	enemy_political_pos = current_npc.political_pos
 
 
 func playerAttack(slogan):
 	attacking = true
 	political_compass.visible = false
 	political_compass.set_main_pointer(slogan.political_pos.x, -slogan.political_pos.y)
+	political_compass.set_enemy_pointer(enemy_political_pos.x, -enemy_political_pos.y)
 	political_compass.hide_line()
 	
 	turn = TURN.ATTACKING
@@ -257,6 +259,9 @@ func npcAttack():
 func damage(p_pos: Vector2):
 	var d = 10 - (enemy_political_pos.x - p_pos.x) + 10 - (enemy_political_pos.y - p_pos.y)
 	npcBar.value -= d
+	
+	print("Enemy PolPos: ", enemy_political_pos)
+	print("Damage Area: ",political_compass.damage_area.polygon)
 
 
 func battle_ends(victory):
