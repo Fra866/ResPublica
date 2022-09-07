@@ -45,6 +45,14 @@ func set_damage_area(dm: Array):
 	damage_area.polygon = dm
 
 
+func hide_damage_area():
+	damage_area.visible = false
+
+
+func show_damage_area():
+	damage_area.visible = true
+
+
 func set_line(initial_pos: Vector2, x: float, y: float):
 	next_position.visible = true
 	next_position.points[0] = Vector2(initial_pos.x + 4, initial_pos.y + 4)

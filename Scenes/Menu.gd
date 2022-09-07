@@ -3,29 +3,43 @@ extends Node2D
 export(int) var state = 1
 export(Resource) var party
 
+onready var menulayers = $MenuLayers
 onready var sprite = $MenuLayers/MainMenu/Sprite
 onready var control = $MenuLayers/MainMenu/Control
+
 onready var slogans = $MenuLayers/Slogans
-onready var slogan_container = $MenuLayers/Slogans/MainContainer
-onready var slogan_selector = $MenuLayers/Slogans/MainContainer/Selector
 onready var objects = $MenuLayers/Objects
+onready var party_options = $MenuLayers/Party
+
+onready var slogan_container = $MenuLayers/Slogans/MainContainer
 onready var objects_container = $MenuLayers/Objects/MainContainer
+onready var voters_container = $MenuLayers/Party/MainContainer/Selector
+
+onready var slogan_selector = $MenuLayers/Slogans/MainContainer/Selector
 onready var objects_selector = $MenuLayers/Objects/MainContainer/Selector
-onready var menulayers = $MenuLayers
+onready var voters_selector = $MenuLayers/Party/MainContainer/Selector
+
 onready var no_slog_text = $MenuLayers/Slogans/NoSloganText
 onready var no_obj_text = $MenuLayers/Objects/NoObjectText
-onready var political_compass = $MenuLayers/Slogans/PoliticalCompass
+
+onready var political_compass_slog = $MenuLayers/Slogans/PoliticalCompass
+onready var political_compass_party = $MenuLayers/Party/PoliticalCompass
+
 onready var slogans_desc_displayer = $MenuLayers/Slogans/DescriptionDisplayer
-onready var current_slogan_desc = $MenuLayers/Slogans/DescriptionDisplayer/Background/InnerBackground/Text
 onready var objects_desc_displayer = $MenuLayers/Objects/DescriptionDisplayer
+
+onready var current_slogan_desc = $MenuLayers/Slogans/DescriptionDisplayer/Background/InnerBackground/Text
 onready var current_object_desc = $MenuLayers/Objects/DescriptionDisplayer/Background/InnerBackground/Text
+
 onready var ui = get_node("/root/SceneManager/UI")
 
 onready var player = get_node(NodePath('..')).find_node('Player')
 onready var screentransition = get_node(NodePath('/root/SceneManager'))
 onready var currentscene = get_node(NodePath('/root/SceneManager/CurrentScene'))
+
 onready var n_of_slogans: int
 onready var n_of_objects: int
+onready var n_of_voters: int
 
 onready var current_slog
 onready var current_object
@@ -33,12 +47,15 @@ onready var current_object
 var menu_main: bool = false
 var menu_slogans: bool = false
 var menu_objects: bool = false
+var menu_party: bool = false
 
 var slogan_index: int = 0
 var object_index: int = 0
+var voter_index: int = 0
 
 onready var slogan_list: Array = []
 onready var object_list: Array = []
+onready var voter_list: Array = []
 
 func _ready():
 	menulayers = $MenuLayers
@@ -59,6 +76,8 @@ func _ready():
 func _process(_delta):
 	n_of_slogans = slogan_container.get_child_count() - 1
 	n_of_objects = objects_container.get_child_count() - 1
+	n_of_voters = voters_container.get_child_count() - 1
+	
 	player = get_node(NodePath('..')).get_child(0).get_children().back().find_node("Player")
 	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene')).get_child(0)
 	
@@ -67,6 +86,7 @@ func _process(_delta):
 		sprite.visible = menu_main
 		slogans.visible = menu_slogans
 		objects.visible = menu_objects
+		party_options.visible = menu_party
 		
 		menulayers.position = player.position
 		objects_desc_displayer.visible = menu_objects
@@ -80,14 +100,14 @@ func _process(_delta):
 		if n_of_slogans == 0:
 			no_slog_text.visible = true
 			slogan_selector.visible = false
-			political_compass.visibility(false)
+			political_compass_slog.visibility(false)
 		else:
 			no_slog_text.visible = false
 			slogan_selector.visible = true
 			current_slog = slogan_list[slogan_index]
 			
-			political_compass.set_main_pointer(current_slog.political_pos.x, -current_slog.political_pos.y)
-			political_compass.set_damage_area(current_slog.damage_area)
+			political_compass_slog.set_main_pointer(current_slog.political_pos.x, -current_slog.political_pos.y)
+			political_compass_slog.set_damage_area(current_slog.damage_area)
 			slogan_index = handle_input(slogan_index, n_of_slogans, slogan_selector)
 			
 			if Input.is_action_just_pressed("ui_accept"):
@@ -116,6 +136,12 @@ func _process(_delta):
 			if Input.is_action_just_pressed("ui_accept"):
 				objects_container.get_child(1).foo(current_object.id) # Temporary Solution
 	
+	if menu_party:
+		menu_main = false
+		menu_party = true
+		if Input.is_action_just_pressed("ui_end"):
+			menu_party = false
+			menu_main = true
 	
 	
 	if menu_main:
@@ -127,33 +153,43 @@ func _process(_delta):
 				sprite.frame -= 1
 		if Input.is_action_just_pressed("ui_accept"):
 			match sprite.frame:
+				0:
+					priority_to_party_options()
+				1:
+					pass
 				2:
 					priority_to_slogans()
 				3:
 					priority_to_objects()
 
 
+func priority_to_party_options():
+	menu_party = true
+	political_compass_party.hide_damage_area()
+	political_compass_party.set_main_pointer(party.political_pos.x, party.political_pos.y)
+	political_compass_party.visibility(true)
+
 
 func priority_to_objects():
 	menu_objects = true
-	political_compass.visibility(false)
+	political_compass_slog.visibility(false)
 
 
 func priority_to_slogans():
 	menu_slogans = true
-	political_compass.visibility(true)
+	political_compass_slog.visibility(true)
 
 
 func priority_to_menu():
 	menu_main = true
-	political_compass.visibility(false)
+	political_compass_slog.visibility(false)
 
 
 func priority_to_player():
 	menu_slogans = false
 	menu_main = false
 	menu_objects = false
-	political_compass.visibility(false)
+	political_compass_slog.visibility(false)
 
 
 func new_p():
@@ -196,3 +232,11 @@ func new_object(object):
 		new_obj_instance.position = Vector2(32 * (n_of_objects % 6) + 15, 40*(int(n_of_objects / 6)) + 20)
 		n_of_objects += 1
 		objects_container.add_child(new_obj_instance)
+
+func new_voter(voter):
+	if not voter in voter_list:
+		voter_list.append(voter)
+		
+		# var new_voter_instance
+
+		n_of_voters += 1

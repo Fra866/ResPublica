@@ -33,7 +33,7 @@ margin_left = 16.0
 margin_top = 32.0
 margin_right = 112.0
 margin_bottom = 56.0
-text = "Opzioni"
+text = "Partito"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -232,3 +232,32 @@ fit_content_height = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Party" type="Control" parent="MenuLayers"]
+margin_left = -96.0
+margin_top = -80.0
+margin_right = 94.0
+margin_bottom = 80.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="Sprite" parent="MenuLayers/Party"]
+position = Vector2( 96, 78 )
+scale = Vector2( 2, 1.28125 )
+texture = ExtResource( 3 )
+
+[node name="MainContainer" type="Node2D" parent="MenuLayers/Party"]
+
+[node name="Selector" type="ColorRect" parent="MenuLayers/Party/MainContainer"]
+margin_left = -16.0
+margin_top = 16.0
+margin_right = 16.0
+margin_bottom = 48.0
+color = Color( 0.94902, 0.203922, 0.203922, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PoliticalCompass" parent="MenuLayers/Party" instance=ExtResource( 4 )]
+position = Vector2( 176, 80 )

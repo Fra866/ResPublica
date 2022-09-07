@@ -287,7 +287,6 @@ func damage(p_pos: Vector2):
 	
 	print("Enemy PolPos: ", enemy_political_pos)
 	print("Damage Area: ",political_compass.damage_area.polygon)
-	# print("Damagable: ", damageable(enemy_political_pos))
 
 
 func battle_ends(victory):
@@ -301,7 +300,7 @@ func battle_ends(victory):
 	yield(timer, "timeout")
 	
 	if victory:
-		menu.party.total_votes += votes
+		menu.party.votes += votes
 		menu.party.political_pos = (menu.party.political_pos + enemy_political_pos)/2
 		
 		action_log.text = "Hai ottenuto " + str(votes) + " voti."
