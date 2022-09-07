@@ -29,8 +29,8 @@ onready var max_slogans = 8
 onready var max_objects = 8
 
 onready var enemy_political_pos: Vector2
+onready var enemy_area: Array
 onready var votes: int
-#onready var attack_id : int
 
 onready var priority = true
 onready var attacks_list: Array
@@ -218,7 +218,6 @@ func set_next_scene(scene: String, p_pos: Vector2):
 func set_npc(current_npc):
 	votes = current_npc.votes
 	enemy_sprite.texture = load(current_npc.battle_sprite_path)
-	battlebox.attack_id = current_npc.attack
 	enemy_political_pos = current_npc.political_pos
 
 
@@ -235,6 +234,7 @@ func playerAttack(slogan):
 	margincontainer.visible = true
 	yield(get_tree().create_timer(1), "timeout")
 	
+#	if damageable(p_attack):
 	damage(p_attack)
 	
 	if npcBar.value:
@@ -256,12 +256,38 @@ func npcAttack():
 	turn = TURN.PLAYER
 
 
+func damageable(slogan: Vector2):
+#	If area will instead be a circle -- [[x0, y0], radius]
+#	var center = Vector2(enemy_area[0][0], enemy_area[0][1])
+#	return abs(slogan - center) < enemy_area[1]
+	var check_x: bool
+	var check_y: bool
+	
+	if slogan.x <= enemy_area[0][1] and slogan.x >= enemy_area[0][0]:
+		check_x = true
+	if slogan.y <= enemy_area[1][1] and slogan.y >= enemy_area[1][0]:
+		check_y = true
+
+	return check_x and check_y
+
+
+func extra_damage():
+	# If player is also in damage area
+	# Returns extra damage
+	return int(Geometry.is_point_in_polygon(player_pos, political_compass.damage_area.polygon)) * 10
+
+
 func damage(p_pos: Vector2):
-	var d = 10 - (enemy_political_pos.x - p_pos.x) + 10 - (enemy_political_pos.y - p_pos.y)
-	npcBar.value -= d
+	
+	if Geometry.is_point_in_polygon(enemy_political_pos, political_compass.damage_area.polygon):
+		var d = 20 - sqrt(float(pow((enemy_political_pos.x - p_pos.x), 2) + pow((enemy_political_pos.y - p_pos.y), 2)))
+		d += extra_damage()
+		
+		npcBar.value -= d
 	
 	print("Enemy PolPos: ", enemy_political_pos)
 	print("Damage Area: ",political_compass.damage_area.polygon)
+	# print("Damagable: ", damageable(enemy_political_pos))
 
 
 func battle_ends(victory):

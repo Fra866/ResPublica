@@ -1,12 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://NPC/NPC.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=3]
 [ext_resource path="res://Scenes/House.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Door.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Items/Slogans/cose_buone.tres" type="Resource" id=7]
-[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=8]
 
 [node name="Level1" type="Node2D"]
 
@@ -15,11 +12,10 @@
 [node name="Andreotti" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -96, 32 )
 dialouge_list = [ "Mafia? Cos'è una Mafia?" ]
-slogans_for_battle = [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 7 ) ]
 attack_ids = [ 0, 1 ]
-political_pos = Vector2( -4, -2 )
+political_pos = Vector2( 4, -2 )
+influence_area = [ [ 0, 8 ], [ 0, 8 ] ]
 battle_sprite_path = "res://UI/andreotti/battle.png"
-attack = 1
 sprite_path = "res://UI/andreotti ow.png"
 hf = 3
 vf = 4
@@ -28,7 +24,6 @@ f = 7
 [node name="Sempronio" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -96, 80 )
 dialouge_list = [ "Questo sprite va buttato" ]
-slogans_for_battle = [ ExtResource( 8 ), ExtResource( 3 ), ExtResource( 7 ) ]
 attack_ids = [ 1 ]
 political_pos = Vector2( -4, -2 )
 battle_sprite_path = "res://UI/andreotti/battle.png"

@@ -87,6 +87,7 @@ func _process(_delta):
 			current_slog = slogan_list[slogan_index]
 			
 			political_compass.set_main_pointer(current_slog.political_pos.x, -current_slog.political_pos.y)
+			political_compass.set_damage_area(current_slog.damage_area)
 			slogan_index = handle_input(slogan_index, n_of_slogans, slogan_selector)
 			
 			if Input.is_action_just_pressed("ui_accept"):

@@ -13,14 +13,14 @@ onready var texture
 onready var raycast = $RayCast2D
 
 export(Array, String) var dialouge_list
-export(Array, Resource) var slogans_for_battle # Useless
 export(Array, int) var attack_ids
 export(Vector2) var political_pos
+export(Array) var influence_area = [[],[]]
 export(bool) var is_seller
 export(bool) var battle_won
 export(int) var votes
 export(String) var battle_sprite_path
-export(int) var attack
+#export(int) var attack
 
 
 export(String) var sprite_path

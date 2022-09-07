@@ -1,23 +1,23 @@
 [gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
-[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=2]
-[ext_resource path="res://Scenes/InsideHouse.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=3]
 [ext_resource path="res://Parties/party.tres" type="Resource" id=4]
-[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=5]
-[ext_resource path="res://Items/Slogans/cose_buone.tres" type="Resource" id=6]
-[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=7]
-[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=8]
-[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=9]
+[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=5]
+[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=6]
+[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=7]
+[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=8]
+[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=9]
 
 [resource]
 script = ExtResource( 1 )
-slogans = [ ExtResource( 9 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 6 ) ]
-objects = [ ExtResource( 2 ) ]
+slogans = [ ExtResource( 6 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 9 ) ]
+objects = [ ExtResource( 7 ) ]
 ended_cutscenes = [ 1 ]
-list_npc = [  ]
-current_scene = ExtResource( 3 )
+list_npc = [ "Andreotti" ]
+current_scene = ExtResource( 2 )
 player_party = ExtResource( 4 )
-player_pos = Vector2( 80, 160 )
+player_pos = Vector2( -64, 48 )
 money = 750
-votes = 0
+votes = 10

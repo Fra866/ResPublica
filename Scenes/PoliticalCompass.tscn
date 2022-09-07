@@ -31,14 +31,8 @@ margin_top = -34.0
 margin_right = -29.0
 margin_bottom = -30.0
 color = Color( 0.729412, 0.529412, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="AttacksContainers" type="Node2D" parent="."]
 
 [node name="ExtraDamageArea" type="CollisionPolygon2D" parent="."]
-position = Vector2( -37.8248, 98.7733 )
-rotation = -0.00427683
-scale = Vector2( 1.30231, 2.02867 )
-polygon = PoolVector2Array( 3, -66, 29.5, -50, 55.7, -31.7, 3, -31.7 )
+polygon = PoolVector2Array( -3, 3, -3, -34, 34, -34, 34, 3 )

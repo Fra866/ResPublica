@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 xp = 30
 political_pos = Vector2( 4, -2 )
-damage_area = [ Vector2( 4, -50 ), Vector2( 84, -50 ), Vector2( 84, -34 ), Vector2( 4, -34 ) ]
+damage_area = PoolVector2Array( -32, -8, -32, 8, 32, 8, 32, -8 )
 name = "Impero FrancUEse"
 id = 7
 prize = 50

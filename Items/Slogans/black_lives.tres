@@ -6,7 +6,7 @@
 script = ExtResource( 2 )
 xp = 30
 political_pos = Vector2( -6, -5 )
-damage_area = [ Vector2( 3, -66 ), Vector2( 29.5, -50 ), Vector2( 55.7, -31.7 ), Vector2( 3, -31.7 ) ]
+damage_area = PoolVector2Array( -32, 0, -32, 32, 0, 32 )
 name = "#UcrainiViteContano"
 id = 3
 prize = 50

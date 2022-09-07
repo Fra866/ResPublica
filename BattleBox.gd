@@ -5,7 +5,8 @@ onready var p_raycast = player_pointer.get_child(2)
 onready var attack_container = $Walls/AttackContainer
 
 onready var attack_id: int # IDEA: Using IDs to decide what attack shold be started. This will depend on the npc
-var attack: Array = [null, null] # Containes the current attack Node
+var attack: Array # Containes the current attack Node
+var attack_types: Array = ["fascio", "bullet"]
 
 signal player_hit
 
@@ -41,10 +42,7 @@ func generate(attacks_list):
 	attack_id = attacks_list[randi() % len(attacks_list)]
 	
 	# Dummy check system
-	if attack_id == 0:
-		attack = fascio()
-	elif attack_id == 1:
-		attack = bullet()
+	attack = call(attack_types[attack_id])
 		
 	start_attack(attack[0], attack[1])
 	yield(get_tree().create_timer(3), "timeout")
