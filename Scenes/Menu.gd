@@ -237,6 +237,10 @@ func new_voter(voter):
 	if not voter in voter_list:
 		voter_list.append(voter)
 		
-		# var new_voter_instance
-
+		var new_voter_instance = load("res://Scenes/EnemySprite.tscn").instance()
+		new_voter_instance = voter
+		
+		new_voter_instance.position = Vector2(0, 32)
+		voters_container.add_child(new_voter_instance)
+		
 		n_of_voters += 1

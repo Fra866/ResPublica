@@ -28,9 +28,7 @@ onready var n_of_objects = 0
 onready var max_slogans = 8
 onready var max_objects = 8
 
-onready var enemy_political_pos: Vector2
 onready var enemy_area: Array
-onready var votes: int
 
 onready var priority = true
 onready var attacks_list: Array
@@ -157,12 +155,12 @@ func _process(_delta):
 			if turn == TURN.PLAYER:
 				var slog = menu.slogan_list[id]
 				id = handle_input(id, n_of_slogans, selector)
-				political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
+				# political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
 				political_compass.set_damage_area(slog.damage_area)
 				
 				if Input.is_action_just_pressed("ui_accept"):
 					playerAttack(menu.slogan_list[id])
-				
+		
 		elif battle_ui == BATTLE_UI.OBJECTS:
 			if n_of_objects:
 				id = handle_input(id, n_of_objects, selector)
@@ -216,16 +214,20 @@ func set_next_scene(scene: String, p_pos: Vector2):
 
 
 func set_npc(current_npc):
-	votes = current_npc.votes
+	enemy_sprite.npc_name = current_npc.name
+	enemy_sprite.npc_desc = current_npc.description
+	enemy_sprite.sex = current_npc.sex
+	enemy_sprite.max_hp = current_npc.max_hp
+	enemy_sprite.votes = current_npc.votes
 	enemy_sprite.texture = load(current_npc.battle_sprite_path)
-	enemy_political_pos = current_npc.political_pos
+	enemy_sprite.political_pos = current_npc.political_pos
 
 
 func playerAttack(slogan):
 	attacking = true
 	political_compass.visible = false
-	political_compass.set_main_pointer(slogan.political_pos.x, -slogan.political_pos.y)
-	political_compass.set_enemy_pointer(enemy_political_pos.x, -enemy_political_pos.y)
+	political_compass.set_main_pointer(player_pos.x, -player_pos.y)
+	political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
 	political_compass.hide_line()
 	
 	turn = TURN.ATTACKING
@@ -279,14 +281,14 @@ func extra_damage():
 
 func damage(p_pos: Vector2):
 	
-	if Geometry.is_point_in_polygon(enemy_political_pos, political_compass.damage_area.polygon):
-		var d = 20 - sqrt(float(pow((enemy_political_pos.x - p_pos.x), 2) + pow((enemy_political_pos.y - p_pos.y), 2)))
+	if Geometry.is_point_in_polygon(enemy_sprite.political_pos, political_compass.damage_area.polygon):
+		var d = 20 - sqrt(float(pow((enemy_sprite.political_pos.x - p_pos.x), 2) + pow((enemy_sprite.political_pos.y - p_pos.y), 2)))
 		d += extra_damage()
 		
 		npcBar.value -= d
 	
-	print("Enemy PolPos: ", enemy_political_pos)
-	print("Damage Area: ",political_compass.damage_area.polygon)
+	# print("Enemy PolPos: ", enemy_sprite.political_pos)
+	# print("Damage Area: ",political_compass.damage_area.polygon)
 
 
 func battle_ends(victory):
@@ -300,13 +302,15 @@ func battle_ends(victory):
 	yield(timer, "timeout")
 	
 	if victory:
-		menu.party.votes += votes
-		menu.party.political_pos = (menu.party.political_pos + enemy_political_pos)/2
+		menu.party.votes += enemy_sprite.votes
+		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
 		
-		action_log.text = "Hai ottenuto " + str(votes) + " voti."
+		action_log.text = "Hai ottenuto " + str(enemy_sprite.votes) + " voti."
 		yield(get_tree().create_timer(1.5), "timeout")
-		ui.loadVotes(votes)
+		ui.loadVotes(enemy_sprite.votes)
 	
+		menu.new_voter(enemy_sprite)
+
 	end(next_scene)
 	
 	# scenemanager.start_transition("scene_path", Vector2(0,0))

@@ -14,12 +14,20 @@ onready var raycast = $RayCast2D
 
 export(Array, String) var dialouge_list
 export(Array, int) var attack_ids
-export(Vector2) var political_pos
 export(Array) var influence_area = [[],[]]
 export(bool) var is_seller
 export(bool) var battle_won
-export(int) var votes
+
 export(String) var battle_sprite_path
+export(String) var description = ""
+export(String, "Uomo", "Donna") var sex # See: EnemySprite.gd
+export(Vector2) var political_pos
+export(int) var votes
+export(int) var lvl
+export(int) var max_hp
+export(float, -100, 100, 10) var popularity 
+export(float, -100, 100, 10) var mafia_points
+
 #export(int) var attack
 
 

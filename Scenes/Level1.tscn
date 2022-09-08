@@ -11,11 +11,14 @@
 
 [node name="Andreotti" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -96, 32 )
-dialouge_list = [ "Mafia? Cos'è una Mafia?" ]
+dialouge_list = [ "Lavorare m'è sempre piaciuto.", "È una... utile deformazione." ]
 attack_ids = [ 0, 1 ]
-political_pos = Vector2( 4, -2 )
 influence_area = [ [ 0, 8 ], [ 0, 8 ] ]
 battle_sprite_path = "res://UI/andreotti/battle.png"
+political_pos = Vector2( 4, -2 )
+lvl = 4
+popularity = 30.0
+mafia_points = 20.0
 sprite_path = "res://UI/andreotti ow.png"
 hf = 3
 vf = 4
@@ -25,8 +28,10 @@ f = 7
 position = Vector2( -96, 80 )
 dialouge_list = [ "Questo sprite va buttato" ]
 attack_ids = [ 1 ]
-political_pos = Vector2( -4, -2 )
 battle_sprite_path = "res://UI/andreotti/battle.png"
+political_pos = Vector2( -4, -2 )
+lvl = 1
+popularity = -20.0
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"
 hf = 3
 vf = 3

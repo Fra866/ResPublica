@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://UI/andreotti/battle.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/EnemySprite.gd" type="Script" id=2]
+
+[node name="EnemySprite" type="Sprite"]
+position = Vector2( -16, -16 )
+scale = Vector2( 0.528301, 0.516129 )
+texture = ExtResource( 1 )
+centered = false
+script = ExtResource( 2 )
+npc_name = "???"
+npc_desc = "Politico della prima repubblica, esponente di Democrazia Cristiana. Non guardarlo negli occhi"
+sex = "Uomo"
+popularity = 20.0
+mafia_points = 30.0

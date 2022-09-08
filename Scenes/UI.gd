@@ -8,6 +8,7 @@ onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 
 
 func _ready():
+	print(typeof(liracoin.text))
 	liracoin.text = str(screentransition.save_file.money)
 #	votes.text = str(screentransition.save_file.votes)
 
