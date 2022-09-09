@@ -13,7 +13,7 @@ onready var party_options = $MenuLayers/Party
 
 onready var slogan_container = $MenuLayers/Slogans/MainContainer
 onready var objects_container = $MenuLayers/Objects/MainContainer
-onready var voters_container = $MenuLayers/Party/MainContainer/Selector
+onready var voters_container = $MenuLayers/Party/MainContainer
 
 onready var slogan_selector = $MenuLayers/Slogans/MainContainer/Selector
 onready var objects_selector = $MenuLayers/Objects/MainContainer/Selector
@@ -139,6 +139,7 @@ func _process(_delta):
 	if menu_party:
 		menu_main = false
 		menu_party = true
+		voter_index = handle_input(voter_index, n_of_voters, voters_selector)
 		if Input.is_action_just_pressed("ui_end"):
 			menu_party = false
 			menu_main = true
@@ -203,7 +204,10 @@ func handle_input(index: int, maxv: int, selector):
 	if Input.is_action_just_pressed("ui_left"):
 		if index > 0:
 			index -= 1
-	selector.rect_position = Vector2(32 * (index % 6) + 3, 40 * (index / 6) + 9)
+	if selector == slogan_selector or selector == objects_selector:
+		selector.rect_position = Vector2(32 * (index % 6) + 3, 40 * (index / 6) + 9)
+	else:
+		selector.rect_position = Vector2(32 * (index - 1), 40 * (index / 6) + 16)
 	return index
 
 
@@ -236,11 +240,20 @@ func new_object(object):
 func new_voter(voter):
 	if not voter in voter_list:
 		voter_list.append(voter)
+		n_of_voters += 1
 		
 		var new_voter_instance = load("res://Scenes/EnemySprite.tscn").instance()
-		new_voter_instance = voter
 		
-		new_voter_instance.position = Vector2(0, 32)
+		new_voter_instance.texture = voter.texture
+		new_voter_instance.npc_name = voter.npc_name
+		new_voter_instance.npc_desc = voter.npc_desc
+		new_voter_instance.lvl = voter.lvl
+		new_voter_instance.political_pos = voter.political_pos
+		new_voter_instance.votes = voter.votes
+		new_voter_instance.popularity = voter.popularity
+		new_voter_instance.mafia_points = voter.mafia_points
+		
+		new_voter_instance.position = Vector2(-14 + 32*(n_of_voters - 1), 16)
+		
 		voters_container.add_child(new_voter_instance)
-		
-		n_of_voters += 1
+		print(new_voter_instance)

@@ -284,6 +284,7 @@ func damage(p_pos: Vector2):
 	if Geometry.is_point_in_polygon(enemy_sprite.political_pos, political_compass.damage_area.polygon):
 		var d = 20 - sqrt(float(pow((enemy_sprite.political_pos.x - p_pos.x), 2) + pow((enemy_sprite.political_pos.y - p_pos.y), 2)))
 		d += extra_damage()
+		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
 		
 		npcBar.value -= d
 	
