@@ -48,11 +48,17 @@ custom_styles/bg = SubResource( 3 )
 value = 100.0
 rounded = true
 percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="LifeBars/PlayerBar"]
 margin_left = 55.0
 margin_right = 85.0
 margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="NPCBar" type="ProgressBar" parent="LifeBars"]
 margin_left = 220.0
@@ -104,26 +110,34 @@ margin_left = -52.0
 margin_top = -21.0
 margin_right = 38.0
 margin_bottom = 19.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Slogans" type="Button" parent="BattleMenu/WhatToDo/Panel/Container"]
 margin_left = -60.0
-margin_top = 10.0
-margin_bottom = 30.0
+margin_bottom = 20.0
 text = "Slogans"
 
 [node name="Objects" type="Button" parent="BattleMenu/WhatToDo/Panel/Container"]
-margin_left = 17.0
-margin_top = 10.0
-margin_right = 76.0
-margin_bottom = 30.0
+margin_left = -60.0
+margin_top = 22.0
+margin_right = -1.0
+margin_bottom = 42.0
 text = "Oggetti"
 
 [node name="Quit" type="Button" parent="BattleMenu/WhatToDo/Panel/Container"]
 margin_left = 90.0
-margin_top = 10.0
+margin_top = 23.0
 margin_right = 165.0
-margin_bottom = 30.0
-text = "Volare Via"
+margin_bottom = 43.0
+text = "Scappa"
+
+[node name="Capture" type="Button" parent="BattleMenu/WhatToDo/Panel/Container"]
+margin_left = 90.0
+margin_right = 165.0
+margin_bottom = 20.0
+text = "Cattura"
 
 [node name="ActionLog" type="CanvasLayer" parent="."]
 

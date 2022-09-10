@@ -57,6 +57,7 @@ onready var slogan_list: Array = []
 onready var object_list: Array = []
 onready var voter_list: Array = []
 
+
 func _ready():
 	menulayers = $MenuLayers
 	sprite.visible = menu_main
@@ -157,7 +158,7 @@ func _process(_delta):
 				0:
 					priority_to_party_options()
 				1:
-					pass
+					pass # Mafia
 				2:
 					priority_to_slogans()
 				3:

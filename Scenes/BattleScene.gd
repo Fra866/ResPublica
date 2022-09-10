@@ -9,11 +9,15 @@ onready var ui = get_node(NodePath('/root/SceneManager/UI'))
 onready var whattodo = $BattleMenu/WhatToDo/
 onready var slogButton = $BattleMenu/WhatToDo/Panel/Container/Slogans
 onready var objButton = $BattleMenu/WhatToDo/Panel/Container/Objects
+onready var captureButton = $BattleMenu/WhatToDo/Panel/Container/Capture
 onready var quitButton = $BattleMenu/WhatToDo/Panel/Container/Quit
+
 onready var pBar = $LifeBars/PlayerBar
 onready var npcBar = $LifeBars/NPCBar
+
 onready var sloganlist = $BattleMenu/Slogans
 onready var objectlist = $BattleMenu/Objects
+
 onready var battlemenu = $BattleMenu
 onready var selector = $BattleMenu/Selector/SelectorBackground
 onready var margincontainer = $ActionLog/MarginContainer
@@ -75,6 +79,7 @@ func slogan_setup():
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
 		new_slog_instance.slogan_res = slogan_res
+		new_slog_instance.visible = true
 		
 		n_of_slogans += 1
 		
@@ -108,8 +113,6 @@ func object_setup():
 
 
 func _process(_delta):
-	# political_compass.visibility(!battlebox.visible)
-	
 	if turn == TURN.ATTACKING:
 		whattodo.visible = false
 		selector.visible = false
@@ -138,19 +141,26 @@ func _process(_delta):
 			whattodo.visible = true
 			
 			if Input.is_action_just_pressed("ui_accept"):
-				if slogButton.has_focus():
-					switch_visibility(true)
+				# switch_visibility(false)
+				
+				if slogButton.has_focus() == true:
+					switch_visibility(false)
 					political_compass.visibility(true)
 					battle_ui = BATTLE_UI.SLOGANS
 				elif objButton.has_focus():
 					switch_visibility(false)
 					battle_ui = BATTLE_UI.OBJECTS
+				elif captureButton.has_focus():
+					switch_visibility(false)
+					capture_enemy()
 				elif quitButton.has_focus():
+					switch_visibility(false)
 					battle_ui = BATTLE_UI.EXIT
-					
+				
 		elif battle_ui == BATTLE_UI.SLOGANS:
 			political_compass.visible = true
 			battlebox.visible = false
+			sloganlist.visible = true
 			
 			if turn == TURN.PLAYER:
 				var slog = menu.slogan_list[id]
@@ -224,26 +234,28 @@ func set_npc(current_npc):
 
 
 func playerAttack(slogan):
-	attacking = true
-	political_compass.visible = false
-	political_compass.set_main_pointer(player_pos.x, -player_pos.y)
-	political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
-	political_compass.hide_line()
+	if slogan.xp > 0:
+		slogan.xp -= 1
 	
-	turn = TURN.ATTACKING
-	action_log.text = "Hai usato " + slogan.name
-	p_attack = slogan.political_pos
-	margincontainer.visible = true
-	yield(get_tree().create_timer(1), "timeout")
+		attacking = true
+		political_compass.visible = false
+		political_compass.set_main_pointer(player_pos.x, -player_pos.y)
+		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
+		political_compass.hide_line()
 	
-#	if damageable(p_attack):
-	damage(p_attack)
+		turn = TURN.ATTACKING
+		action_log.text = "Hai usato " + slogan.name
+		p_attack = slogan.political_pos
+		margincontainer.visible = true
+		yield(get_tree().create_timer(1), "timeout")
 	
-	if npcBar.value:
-		margincontainer.visible = false
-		npcAttack()
-	else:
-		battle_ends(!npcBar.value)
+		damage(p_attack)
+	
+		if npcBar.value:
+			margincontainer.visible = false
+			npcAttack()
+		else:
+			battle_ends(!npcBar.value)
 
 
 func npcAttack():
@@ -286,10 +298,43 @@ func damage(p_pos: Vector2):
 		d += extra_damage()
 		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
 		
+
 		npcBar.value -= d
 	
 	# print("Enemy PolPos: ", enemy_sprite.political_pos)
 	# print("Damage Area: ",political_compass.damage_area.polygon)
+
+
+func capture_enemy():
+	if npcBar.value <= 15:
+		menu.new_voter(enemy_sprite)
+		ui.loadVotes(enemy_sprite.votes)
+		
+		action_log.text = enemy_sprite.npc_name + " è entrato nel tuo partito."
+		margincontainer.visible = true
+		battlemenu.visible = false
+		yield(get_tree().create_timer(0.5), "timeout")
+		
+		menu.party.votes += enemy_sprite.votes
+		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
+		battle_ends(true)
+	else:
+		action_log.text = enemy_sprite.npc_name + " non è entrato nel tuo partito."
+		margincontainer.visible = true
+		battlemenu.visible = false
+		
+		var timer = Timer.new()
+		add_child(timer)
+		timer.start(1)
+		yield(timer, "timeout")
+		
+		margincontainer.visible = false
+		battlemenu.visible = true
+		
+		slogButton.grab_focus()
+		
+		turn = TURN.PLAYER
+		battle_ui = BATTLE_UI.MENU
 
 
 func battle_ends(victory):
@@ -303,14 +348,8 @@ func battle_ends(victory):
 	yield(timer, "timeout")
 	
 	if victory:
-		menu.party.votes += enemy_sprite.votes
-		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
-		
 		action_log.text = "Hai ottenuto " + str(enemy_sprite.votes) + " voti."
 		yield(get_tree().create_timer(1.5), "timeout")
-		ui.loadVotes(enemy_sprite.votes)
-	
-		menu.new_voter(enemy_sprite)
 
 	end(next_scene)
 	

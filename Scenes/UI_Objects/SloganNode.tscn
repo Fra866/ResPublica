@@ -13,3 +13,19 @@ slogan_resource = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.05, 0.05 )
+
+[node name="XPbar" type="ProgressBar" parent="."]
+margin_left = -12.0
+margin_top = 9.0
+margin_right = 46.0
+margin_bottom = 23.0
+rect_scale = Vector2( 0.4, 0.4 )
+size_flags_horizontal = 0
+size_flags_vertical = 1
+max_value = 30.0
+step = 1.0
+value = 30.0
+rounded = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
