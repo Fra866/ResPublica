@@ -116,7 +116,7 @@ func handle_input(index, maxv, selector):
 		index += 1
 	if Input.is_action_just_pressed("ui_down") and index < maxv - 5:
 		index += 5
-	if Input.is_action_just_pressed("ui_up") and index > 5:
+	if Input.is_action_just_pressed("ui_up") and index > 4:
 		index -= 5
 		
 	selector.rect_position.x = 4 + (index % 5)*32

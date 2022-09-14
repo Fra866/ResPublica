@@ -30,8 +30,6 @@ color = Color( 0.027451, 0.360784, 0.45098, 1 )
 [node name="EnemySprite" parent="." instance=ExtResource( 1 )]
 position = Vector2( 144, 16 )
 scale = Vector2( 0.830188, 0.774194 )
-npc_name = ""
-npc_desc = ""
 
 [node name="LifeBars" type="Node2D" parent="."]
 
@@ -78,10 +76,10 @@ margin_bottom = 180.0
 [node name="BattleMenu" type="Node2D" parent="."]
 
 [node name="Selector" type="Node2D" parent="BattleMenu"]
-visible = false
 position = Vector2( 29, 101 )
 
 [node name="SelectorBackground" type="ColorRect" parent="BattleMenu/Selector"]
+visible = false
 margin_right = 30.0
 margin_bottom = 30.0
 color = Color( 0.992157, 0.0313726, 0.0313726, 1 )

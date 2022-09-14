@@ -2,18 +2,17 @@ extends Control
 export(int) var state = 1
 export(Resource) var game_save_obj
 
-var paths = ["res://save01.tres", "res://save02.tres"]
-
 onready var yes = $Panel/Container/Yes
 onready var no = $Panel/Container/No
 onready var ui = get_node(NodePath("/root/SceneManager/UI"))
 onready var menu = get_node(NodePath("/root/SceneManager/Menu"))
 onready var shop = get_node(NodePath('/root/SceneManager/ShopBox'))
 onready var scene_manager = get_node(NodePath("/root/SceneManager"))
+onready var save_path: String
 
 func _ready():
 	self.visible = false
-#	print(scene_manager.save_file.get_path())
+	save_path = scene_manager.save_file.get_path()
 
 
 func priority_to_menu():
@@ -44,11 +43,13 @@ func save_all():
 	var player = get_node(NodePath("../CurrentScene")).get_children().back().find_node("Player")
 	var current_scene = scene_manager.get_child(0).get_child(0)
 	var file_save = game_save_obj.new()
+	file_save.take_over_path(scene_manager.save_file.get_path())
 	
 	file_save.player_pos = player.position
 	file_save.slogans = menu.slogan_list
 	file_save.objects = menu.object_list
-	file_save.list_npc = scene_manager.list_npc
+	file_save.voters = menu.voter_list
+#	file_save.list_npc = scene_manager.list_npc
 	file_save.ended_cutscenes = scene_manager.list_ended_cutscenes
 	file_save.money = ui.get_money()
 	file_save.votes = ui.get_votes()

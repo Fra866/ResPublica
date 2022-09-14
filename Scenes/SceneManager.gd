@@ -10,7 +10,7 @@ onready var ui = $UI
 onready var transition_animation = $ScreenTransition/AnimationPlayer
 onready var scene_container = $CurrentScene
 
-onready var list_npc: Array
+#onready var list_npc: Array
 onready var list_visited_scenes: Array
 onready var list_ended_cutscenes: Array
 
@@ -30,7 +30,7 @@ func _ready():
 	var scene = save_file.current_scene
 	
 	scene_container.add_child(scene.instance())
-	list_npc = save_file.list_npc
+#	list_npc = save_file.list_npc
 	list_ended_cutscenes = save_file.ended_cutscenes
 	current_scene = get_child(0).get_child(0)
 	transition_animation.play("FadeToTransparent")
@@ -57,6 +57,7 @@ func end_transition(player_pos):
 	var p = scene_container.get_children().back().find_node("Player")
 	if p:
 		p.position = player_pos
+
 	emit_signal("new_main_scene")
 
 #func loadAll():

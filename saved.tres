@@ -5,7 +5,11 @@
 
 [resource]
 script = ExtResource( 1 )
-array = [  ]
+slogans = [  ]
+objects = [  ]
+ended_cutscenes = [  ]
+list_npc = [  ]
 current_scene = ExtResource( 2 )
 player_pos = Vector2( 0, 0 )
 money = 1000
+votes = 0

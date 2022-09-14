@@ -21,6 +21,7 @@ onready var voters_selector = $MenuLayers/Party/MainContainer/Selector
 
 onready var no_slog_text = $MenuLayers/Slogans/NoSloganText
 onready var no_obj_text = $MenuLayers/Objects/NoObjectText
+onready var no_party_text = $MenuLayers/Party/NoPartyText
 
 onready var political_compass_slog = $MenuLayers/Slogans/PoliticalCompass
 onready var political_compass_party = $MenuLayers/Party/PoliticalCompass
@@ -66,12 +67,14 @@ func _ready():
 	no_slog_text.visible = false
 	
 	var save_file = screentransition.save_file
-#	party = save_file.player_party
+	party = save_file.player_party
 	
 	for slogan_res in save_file.slogans:
 		new_slogan(slogan_res)
 	for object_res in save_file.objects:
 		new_object(object_res)
+	for voter in save_file.voters:
+		new_voter(voter)
 
 
 func _process(_delta):
@@ -135,15 +138,18 @@ func _process(_delta):
 			object_index = handle_input(object_index, n_of_objects, objects_selector)
 			
 			if Input.is_action_just_pressed("ui_accept"):
-				objects_container.get_child(1).foo(current_object.id) # Temporary Solution
+				objects_container.get_child(object_index+1).foo(current_object.id) # Temporary Solution
 	
 	if menu_party:
 		menu_main = false
 		menu_party = true
 		voter_index = handle_input(voter_index, n_of_voters, voters_selector)
+		
 		if Input.is_action_just_pressed("ui_end"):
 			menu_party = false
 			menu_main = true
+		
+		political_compass_party.visibility(!(!party))
 	
 	
 	if menu_main:
@@ -167,9 +173,11 @@ func _process(_delta):
 
 func priority_to_party_options():
 	menu_party = true
-	political_compass_party.hide_damage_area()
-	political_compass_party.set_main_pointer(party.political_pos.x, party.political_pos.y)
-	political_compass_party.visibility(true)
+	no_party_text.visible = !party
+	political_compass_party.visibility(!(!party))
+	if party:
+		political_compass_party.show_damage_area(false)
+		political_compass_party.set_main_pointer(party.political_pos.x, party.political_pos.y)
 
 
 func priority_to_objects():
@@ -191,6 +199,7 @@ func priority_to_player():
 	menu_slogans = false
 	menu_main = false
 	menu_objects = false
+	menu_party = false
 	political_compass_slog.visibility(false)
 
 
@@ -208,7 +217,7 @@ func handle_input(index: int, maxv: int, selector):
 	if selector == slogan_selector or selector == objects_selector:
 		selector.rect_position = Vector2(32 * (index % 6) + 3, 40 * (index / 6) + 9)
 	else:
-		selector.rect_position = Vector2(32 * (index - 1), 40 * (index / 6) + 16)
+		selector.rect_position = Vector2(32 * (index % 4) + 3, 40 * (index / 4) + 16)
 	return index
 
 
@@ -217,7 +226,6 @@ func new_slogan(slogan):
 		print("Già comprato: ", slogan_list)
 	else:
 		slogan_list.append(slogan)
-#		print(ui.get_child(0).get_child(0).text)
 		ui.add_money(-slogan.prize)
 	
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
@@ -238,13 +246,13 @@ func new_object(object):
 		n_of_objects += 1
 		objects_container.add_child(new_obj_instance)
 
+
 func new_voter(voter):
 	if not voter in voter_list:
-		voter_list.append(voter)
-		n_of_voters += 1
 		
 		var new_voter_instance = load("res://Scenes/EnemySprite.tscn").instance()
-		
+		new_voter_instance.init(voter)
+
 		new_voter_instance.texture = voter.texture
 		new_voter_instance.npc_name = voter.npc_name
 		new_voter_instance.npc_desc = voter.npc_desc
@@ -252,9 +260,9 @@ func new_voter(voter):
 		new_voter_instance.political_pos = voter.political_pos
 		new_voter_instance.votes = voter.votes
 		new_voter_instance.popularity = voter.popularity
+
 		new_voter_instance.mafia_points = voter.mafia_points
-		
-		new_voter_instance.position = Vector2(-14 + 32*(n_of_voters - 1), 16)
-		
+		voter_list.append(new_voter_instance)
+		new_voter_instance.position = Vector2(32 * (n_of_voters % 4) + 5, 40 * (n_of_voters / 4) + 18)
+		n_of_voters += 1
 		voters_container.add_child(new_voter_instance)
-		print(new_voter_instance)

@@ -45,12 +45,14 @@ func set_damage_area(dm: Array):
 	damage_area.polygon = dm
 
 
-func hide_damage_area():
-	damage_area.visible = false
+#func hide_damage_area():
+#	get_tree().debug_collisions_hint = false
+#	damage_area.visible = false
 
 
-func show_damage_area():
-	damage_area.visible = true
+func show_damage_area(vis: bool):
+	get_tree().debug_collisions_hint = vis
+#	damage_area.visible = true
 
 
 func set_line(initial_pos: Vector2, x: float, y: float):

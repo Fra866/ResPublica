@@ -21,9 +21,6 @@ margin_top = -2.0
 margin_right = 2.0
 margin_bottom = 2.0
 color = Color( 0, 0, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Pointer2" type="ColorRect" parent="."]
 margin_left = -33.0

@@ -1,6 +1,5 @@
 extends Node2D
 
-
 onready var scenemanager = get_node(NodePath('/root/SceneManager/'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var dialogue_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
@@ -38,6 +37,7 @@ onready var priority = true
 onready var attacks_list: Array
 var id = 0
 var next_scene = ""
+var next_pos: Vector2
 var player_pos = Vector2(0, 0)
 
 onready var p_attack: Vector2
@@ -166,6 +166,7 @@ func _process(_delta):
 				var slog = menu.slogan_list[id]
 				id = handle_input(id, n_of_slogans, selector)
 				# political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
+				political_compass.show_damage_area(true)
 				political_compass.set_damage_area(slog.damage_area)
 				
 				if Input.is_action_just_pressed("ui_accept"):
@@ -207,11 +208,11 @@ func switch_visibility(slogans: bool):
 	objectlist.visible = !slogans
 
 
-func get_rand():
-	var tmp = ResourceLoader.load("res://NPC/tmp.tres")
-	var dim = len(tmp.slogans_for_battle)
-	var n = randi() % dim
-	return tmp.slogans_for_battle[n]
+#func get_rand():
+#	var tmp = ResourceLoader.load("res://NPC/tmp.tres")
+#	var dim = len(tmp.slogans_for_battle)
+#	var n = randi() % dim
+#	return tmp.slogans_for_battle[n]
 
 
 func set_attacks(attack_ids_list):
@@ -220,7 +221,7 @@ func set_attacks(attack_ids_list):
 
 func set_next_scene(scene: String, p_pos: Vector2):
 	next_scene = scene
-	player_pos = p_pos
+	next_pos = p_pos
 
 
 func set_npc(current_npc):
@@ -239,6 +240,7 @@ func playerAttack(slogan):
 	
 		attacking = true
 		political_compass.visible = false
+		political_compass.show_damage_area(false)
 		political_compass.set_main_pointer(player_pos.x, -player_pos.y)
 		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
 		political_compass.hide_line()
@@ -270,19 +272,19 @@ func npcAttack():
 	turn = TURN.PLAYER
 
 
-func damageable(slogan: Vector2):
+#func damageable(slogan: Vector2):
 #	If area will instead be a circle -- [[x0, y0], radius]
 #	var center = Vector2(enemy_area[0][0], enemy_area[0][1])
 #	return abs(slogan - center) < enemy_area[1]
-	var check_x: bool
-	var check_y: bool
+#	var check_x: bool
+#	var check_y: bool
 	
-	if slogan.x <= enemy_area[0][1] and slogan.x >= enemy_area[0][0]:
-		check_x = true
-	if slogan.y <= enemy_area[1][1] and slogan.y >= enemy_area[1][0]:
-		check_y = true
+#	if slogan.x <= enemy_area[0][1] and slogan.x >= enemy_area[0][0]:
+#		check_x = true
+#	if slogan.y <= enemy_area[1][1] and slogan.y >= enemy_area[1][0]:
+#		check_y = true
 
-	return check_x and check_y
+#	return check_x and check_y
 
 
 func extra_damage():
@@ -294,11 +296,12 @@ func extra_damage():
 func damage(p_pos: Vector2):
 	
 	if Geometry.is_point_in_polygon(enemy_sprite.political_pos, political_compass.damage_area.polygon):
-		var d = 20 - sqrt(float(pow((enemy_sprite.political_pos.x - p_pos.x), 2) + pow((enemy_sprite.political_pos.y - p_pos.y), 2)))
+#		var d = 20 - sqrt(float(pow((enemy_sprite.political_pos.x - p_pos.x), 2) + pow((enemy_sprite.political_pos.y - p_pos.y), 2)))
+		var d = 10 - (enemy_sprite.political_pos - p_pos).length()
+		print("Damage: ", 10 - (enemy_sprite.political_pos - p_pos).length() + extra_damage())
 		d += extra_damage()
 		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
 		
-
 		npcBar.value -= d
 	
 	# print("Enemy PolPos: ", enemy_sprite.political_pos)
@@ -306,17 +309,19 @@ func damage(p_pos: Vector2):
 
 
 func capture_enemy():
+#	Voter and votes addition have been moved to battle_ends since there might happen a case
+#	such that the last slogan carries a damage greater than 15 (e.g. fighting Sempronio with humani/impero/riforma).
+
 	if npcBar.value <= 15:
-		menu.new_voter(enemy_sprite)
 		ui.loadVotes(enemy_sprite.votes)
 		
 		action_log.text = enemy_sprite.npc_name + " è entrato nel tuo partito."
 		margincontainer.visible = true
 		battlemenu.visible = false
 		yield(get_tree().create_timer(0.5), "timeout")
-		
-		menu.party.votes += enemy_sprite.votes
-		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
+		action_log.text = "Hai ottenuto " + str(enemy_sprite.votes) + " voti."
+		yield(get_tree().create_timer(0.5), "timeout")
+
 		battle_ends(true)
 	else:
 		action_log.text = enemy_sprite.npc_name + " non è entrato nel tuo partito."
@@ -348,14 +353,15 @@ func battle_ends(victory):
 	yield(timer, "timeout")
 	
 	if victory:
-		action_log.text = "Hai ottenuto " + str(enemy_sprite.votes) + " voti."
-		yield(get_tree().create_timer(1.5), "timeout")
-
+		menu.new_voter(enemy_sprite)
+		menu.party.votes += enemy_sprite.votes
+		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
+	
 	end(next_scene)
 	
 	# scenemanager.start_transition("scene_path", Vector2(0,0))
 
 
 func end(scene):
-	scenemanager.start_transition("res://Scenes/" + scene + ".tscn", player_pos)
+	scenemanager.start_transition("res://Scenes/" + scene + ".tscn", next_pos)
 	# current_enemy.battle_won = true

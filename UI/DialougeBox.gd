@@ -16,7 +16,6 @@ onready var player
 onready var npc_name
 
 var d_list: Array = []
-#var s_list: Array = [] # Useless
 var att_ids_list: Array = []
 var finished_dialouge: bool = true
 var n_lines: int
@@ -48,10 +47,11 @@ func display_dialouge(npc):
 	npc_name = npc.name
 	
 	d_list = npc.dialouge_list
-#	s_list = npc.slogans_for_battle
 	att_ids_list = npc.attack_ids
 	open_shop = npc.is_seller
 	has_won_battle = npc.battle_won
+	
+	print(menu.voter_list)
 
 
 func end_dialouge_box():
@@ -90,16 +90,19 @@ func _process(_delta):
 					open_shop = false
 					shop_box.priority_to_menu()
 				elif len(att_ids_list):
-					# print(scenemanager.list_npc)
 					if !len(menu.slogan_list):
 						# yield(display_text_line("Non hai slogan per combattere."), "completed")
 						$MarginContainer.visible = false
 						emit_signal("priority_to_player")
 					else:
 						if !has_won_battle:
-							if not npc_name in scenemanager.list_npc:
-								scenemanager.list_npc.append(npc_name)
-							
+							var b: bool
+							for sprite in menu.voter_list:
+								if npc_name == sprite.npc_name:
+									b = true
+#							if not npc_name in scenemanager.list_npc:
+#								scenemanager.list_npc.append(npc_name)
+							if !b:
 								scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 								emit_signal("send_npc", current_npc)
 								emit_signal("npc_attacks", att_ids_list)

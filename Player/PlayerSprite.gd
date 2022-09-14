@@ -24,7 +24,6 @@ func set_battle_raycast(rc: RayCast2D):
 
 
 func hit(damage):
-	print("OUCH ", damage)
 # Dummy damage computation
 	hp.value -= damage
 	hp.get_child(0).text = str(hp.value)

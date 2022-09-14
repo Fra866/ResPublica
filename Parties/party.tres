@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource( 1 )
 party_name = ""
-total_votes = 0
+votes = 0
 political_pos = Vector2( 0, 0 )
