@@ -18,12 +18,14 @@ export(int) var cutscene_code
 func _ready():
 	player = scenemanager.get_child(0).get_children().back().find_node("Player")
 
+
 func start_cutscene_dialouge(npc):
 	dialouge_box.display_dialouge(npc)
 	
 	for _j in range(len(npc.dialouge_list) + 1):
 		yield(get_tree().create_timer(1.5), "timeout")
 		dialouge_box.start_dialouge = true
+
 
 func virgilio_cutscene():
 	var virgilio = currentscene.get_child(1).get_child(3)
@@ -75,16 +77,21 @@ func machiavelli_cutscene():
 		"che noi non ci troveremmo a fare le medesime cose."
 	]
 	machiavelli.attack_ids = [1]
+	
+	print(machiavelli.position)
 
 
 func start_cutscene():
-	cutscene = true
-	match cutscene_code:
-		0:
-			machiavelli_cutscene()
-		1:
-			virgilio_cutscene()
-
+	cutscene = not cutscene_code in scenemanager.ended_cutscenes
+	if not cutscene_code in scenemanager.ended_cutscenes:
+		match cutscene_code:
+			0:
+				machiavelli_cutscene()
+			1:
+				virgilio_cutscene()
+	
+		scenemanager.ended_cutscenes.append(cutscene_code)
+	print(scenemanager.ended_cutscenes)
 
 func _process(_delta):
 	if player and enabled:

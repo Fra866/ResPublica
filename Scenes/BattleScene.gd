@@ -294,12 +294,16 @@ func extra_damage():
 
 
 func damage(p_pos: Vector2):
+	var pos_in_compass = Vector2(-2 + 4*enemy_sprite.political_pos.x, -2 + 4*enemy_sprite.political_pos.x)
 	
-	if Geometry.is_point_in_polygon(enemy_sprite.political_pos, political_compass.damage_area.polygon):
+	print('pos: ', pos_in_compass)
+	print('polygon: ', political_compass.damage_area.polygon)
+	if Geometry.is_point_in_polygon(pos_in_compass, political_compass.damage_area.polygon):
 #		var d = 20 - sqrt(float(pow((enemy_sprite.political_pos.x - p_pos.x), 2) + pow((enemy_sprite.political_pos.y - p_pos.y), 2)))
 		var d = 10 - (enemy_sprite.political_pos - p_pos).length()
 		print("Damage: ", 10 - (enemy_sprite.political_pos - p_pos).length() + extra_damage())
 		d += extra_damage()
+		print("Extra dam: ", extra_damage())
 		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
 		
 		npcBar.value -= d

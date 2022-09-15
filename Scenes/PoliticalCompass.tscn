@@ -23,11 +23,14 @@ margin_bottom = 2.0
 color = Color( 0, 0, 0, 1 )
 
 [node name="Pointer2" type="ColorRect" parent="."]
-margin_left = -33.0
-margin_top = -34.0
-margin_right = -29.0
-margin_bottom = -30.0
+margin_left = 32.0
+margin_top = 10.0
+margin_right = 36.0
+margin_bottom = 14.0
 color = Color( 0.729412, 0.529412, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="AttacksContainers" type="Node2D" parent="."]
 

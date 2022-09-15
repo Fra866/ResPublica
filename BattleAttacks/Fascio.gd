@@ -3,6 +3,7 @@ extends StaticBody2D
 onready var raycast = $RayCast2D
 var damage: int = 10
 
+
 func _ready():
 	rotation_degrees = 0
 	yield(get_tree().create_timer(1), "timeout")
@@ -18,6 +19,7 @@ func _ready():
 		yield(get_tree().create_timer(0.0001), "timeout")
 	
 	self.queue_free()
+
 
 # Test-only function, since collision is now handled by battlebox
 #func collision():

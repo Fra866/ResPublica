@@ -12,7 +12,7 @@ onready var scene_container = $CurrentScene
 
 #onready var list_npc: Array
 onready var list_visited_scenes: Array
-onready var list_ended_cutscenes: Array
+onready var ended_cutscenes: Array
 
 onready var save_file # Saved data File
 onready var slot: int # Id of file_saved slot (can be 1, 2 or 3)
@@ -31,13 +31,13 @@ func _ready():
 	
 	scene_container.add_child(scene.instance())
 #	list_npc = save_file.list_npc
-	list_ended_cutscenes = save_file.ended_cutscenes
+	ended_cutscenes = save_file.ended_cutscenes
 	current_scene = get_child(0).get_child(0)
 	transition_animation.play("FadeToTransparent")
 
 
 func cutscene_over(id):
-	list_ended_cutscenes.append(id)
+	ended_cutscenes.append(id)
 
 
 func start_transition(scene: String, player_pos):
