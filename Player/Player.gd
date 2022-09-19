@@ -106,23 +106,27 @@ func process_player_input():
 
 
 func openClose(m):
-	if m.get("state") == 0: # MenuState.OPENED:
-		close_menu(m)
-	elif player_state != PlayerState.IN_PAUSE:
+#	if m.get("state") == 0: # MenuState.OPENED:
+#		close_menu(m)
+#	elif player_state != PlayerState.IN_PAUSE:
+#		open_menu(m)
+	if player_state != PlayerState.IN_PAUSE:
 		open_menu(m)
+	else:
+		close_menu(m)
 
 
 func open_menu(m):
 	cutscene = true
 	m.priority_to_menu()
-	m.set("state", 0) #MenuState.OPENED
+#	m.set("state", 0) #MenuState.OPENED
 
 
 func close_menu(m):
 	cutscene = false
 	player_state = PlayerState.IDLE
 	m.priority_to_player()
-	m.set("state", 1) # MenuState.CLOSED
+#	m.set("state", 1) # MenuState.CLOSED
 
 
 func collided_with_npc(npc):

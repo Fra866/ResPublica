@@ -12,7 +12,6 @@ signal player_hit
 
 func _ready():
 	pass
-#	$Walls/AttackContainer.connect()
 
 
 func reset_pointer():

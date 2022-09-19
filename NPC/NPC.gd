@@ -27,6 +27,7 @@ export(int) var lvl
 export(int) var max_hp
 export(float, -100, 100, 10) var popularity 
 export(float, -100, 100, 10) var mafia_points
+export(float, 0, 100, 10) var mafia_target
 
 #export(int) var attack
 

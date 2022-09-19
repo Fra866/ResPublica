@@ -12,14 +12,19 @@ export(int) var votes
 export(int) var max_hp
 export(float, -100, 100, 10) var popularity #Extra votes at the elections when appointing the voter as a candidate
 export(float, -100, 100, 10) var mafia_points # How capturing the enemy will influence the Mafiometer
+export(float, 0, 100, 10) var mafia_target
 
 
 func _ready():
 	pass
 
-func init(enemy: Sprite):
-	npc_name = enemy.npc_name
-	npc_desc = enemy.npc_desc
+func init(enemy, battle:= false):
+	if battle:
+		npc_name = enemy.name
+		npc_desc = enemy.description
+		texture = load(enemy.battle_sprite_path)
+	else:
+		npc_name = enemy.npc_name
 	sex = enemy.sex
 	political_pos = enemy.political_pos
 	lvl = enemy.lvl
@@ -27,3 +32,9 @@ func init(enemy: Sprite):
 	max_hp = enemy.max_hp
 	popularity = enemy.popularity
 	mafia_points = enemy.mafia_points
+	mafia_target = enemy.mafia_target
+
+
+func set_mafia_target(val: int):
+	if mafia_target > 0:
+		mafia_target -= val

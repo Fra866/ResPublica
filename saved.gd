@@ -18,7 +18,7 @@ func initialize():
 	voters = []
 	ended_cutscenes = []
 	current_scene = load("res://Scenes/Level1.tscn")
-	# player_party = PoliticalParty.new()
+	player_party = PoliticalParty.new()
 	player_pos = Vector2(80, 16)
 	money = 1000
 	votes = 0

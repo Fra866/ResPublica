@@ -38,7 +38,7 @@ func virgilio_cutscene():
 	yield(get_tree().create_timer(1), "timeout")
 	virgilio.animplayer.play('IdleDown')
 	
-	start_cutscene_dialouge(virgilio)
+	yield(start_cutscene_dialouge(virgilio), "completed")
 	
 	dialouge_box.has_obtained(virgilio.get_child(5))
 	
@@ -46,7 +46,7 @@ func virgilio_cutscene():
 	scenemanager.cutscene_over(cutscene_code)
 	
 	var object = virgilio.get_child(5).get_child(0).game_object_resource
-	print(virgilio.get_child(5))
+#	print(virgilio.get_child(5))
 	
 	menu.new_object(object)
 	virgilio.input_direction = Vector2(0, 0)
@@ -56,19 +56,19 @@ func machiavelli_cutscene():
 	var machiavelli = currentscene.get_child(0).get_child(3)
 	player.animstate.travel("Idle")
 	
-	print(machiavelli.animplayer)
 	machiavelli.animplayer.play('RunRight')
 	machiavelli.input_direction = Vector2(1, 0)
 	yield(get_tree().create_timer(1.07), "timeout")
 	machiavelli.input_direction = Vector2(0, 0)
 	machiavelli.animplayer.play('IdleRight')
 	
-	menu.party = load("res://Parties/party.tres")
+	menu.party = PoliticalParty.new()
 	
-	dialouge_box.display_dialouge(machiavelli)
+#	dialouge_box.display_dialouge(machiavelli)
 	
 	start_cutscene_dialouge(machiavelli)
 	cutscene = false
+	scenemanager.cutscene_over(cutscene_code)
 	
 	machiavelli.dialouge_list = [
 		"Nel mondo tornano i medesimi uomini",
@@ -78,12 +78,12 @@ func machiavelli_cutscene():
 	]
 	machiavelli.attack_ids = [1]
 	
-	print(machiavelli.position)
+#	print(machiavelli.position)
 
 
 func start_cutscene():
 	cutscene = not cutscene_code in scenemanager.ended_cutscenes
-	if not cutscene_code in scenemanager.ended_cutscenes:
+	if cutscene:
 		match cutscene_code:
 			0:
 				machiavelli_cutscene()
@@ -91,7 +91,7 @@ func start_cutscene():
 				virgilio_cutscene()
 	
 		scenemanager.ended_cutscenes.append(cutscene_code)
-	print(scenemanager.ended_cutscenes)
+#	print(scenemanager.ended_cutscenes)
 
 func _process(_delta):
 	if player and enabled:

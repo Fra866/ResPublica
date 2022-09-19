@@ -59,6 +59,7 @@ func _ready():
 	randomize()
 	enemy_sprite.texture = load("res://UI/andreotti/battle.png")
 	
+	pBar.get_child(0).text = str(pBar.value)
 	battlebox.visible = true
 	
 	dialogue_box.connect("npc_attacks", self, "set_attacks")
@@ -141,21 +142,18 @@ func _process(_delta):
 			whattodo.visible = true
 			
 			if Input.is_action_just_pressed("ui_accept"):
-				# switch_visibility(false)
 				
 				if slogButton.has_focus() == true:
-					switch_visibility(false)
 					political_compass.visibility(true)
 					battle_ui = BATTLE_UI.SLOGANS
 				elif objButton.has_focus():
-					switch_visibility(false)
 					battle_ui = BATTLE_UI.OBJECTS
 				elif captureButton.has_focus():
-					switch_visibility(false)
 					capture_enemy()
 				elif quitButton.has_focus():
-					switch_visibility(false)
 					battle_ui = BATTLE_UI.EXIT
+					
+				switch_visibility(false)
 				
 		elif battle_ui == BATTLE_UI.SLOGANS:
 			political_compass.visible = true
@@ -225,13 +223,19 @@ func set_next_scene(scene: String, p_pos: Vector2):
 
 
 func set_npc(current_npc):
+	enemy_sprite.init(current_npc, true)
 	enemy_sprite.npc_name = current_npc.name
-	enemy_sprite.npc_desc = current_npc.description
+#	enemy_sprite.npc_desc = current_npc.description
 	enemy_sprite.sex = current_npc.sex
 	enemy_sprite.max_hp = current_npc.max_hp
 	enemy_sprite.votes = current_npc.votes
 	enemy_sprite.texture = load(current_npc.battle_sprite_path)
 	enemy_sprite.political_pos = current_npc.political_pos
+	enemy_sprite.mafia_points = current_npc.mafia_points
+	enemy_sprite.mafia_target = current_npc.mafia_target
+	
+	npcBar.value = enemy_sprite.max_hp
+	npcBar.max_value = enemy_sprite.max_hp
 
 
 func playerAttack(slogan):
@@ -294,28 +298,20 @@ func extra_damage():
 
 
 func damage(p_pos: Vector2):
-	var pos_in_compass = Vector2(-2 + 4*enemy_sprite.political_pos.x, -2 + 4*enemy_sprite.political_pos.x)
+	var pos_in_compass = Vector2(-2 + 4*enemy_sprite.political_pos.x, -2 + 4*(-enemy_sprite.political_pos.y))
 	
 	print('pos: ', pos_in_compass)
 	print('polygon: ', political_compass.damage_area.polygon)
 	if Geometry.is_point_in_polygon(pos_in_compass, political_compass.damage_area.polygon):
-#		var d = 20 - sqrt(float(pow((enemy_sprite.political_pos.x - p_pos.x), 2) + pow((enemy_sprite.political_pos.y - p_pos.y), 2)))
 		var d = 10 - (enemy_sprite.political_pos - p_pos).length()
-		print("Damage: ", 10 - (enemy_sprite.political_pos - p_pos).length() + extra_damage())
 		d += extra_damage()
 		print("Extra dam: ", extra_damage())
 		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
 		
 		npcBar.value -= d
-	
-	# print("Enemy PolPos: ", enemy_sprite.political_pos)
-	# print("Damage Area: ",political_compass.damage_area.polygon)
 
 
 func capture_enemy():
-#	Voter and votes addition have been moved to battle_ends since there might happen a case
-#	such that the last slogan carries a damage greater than 15 (e.g. fighting Sempronio with humani/impero/riforma).
-
 	if npcBar.value <= 15:
 		ui.loadVotes(enemy_sprite.votes)
 		
@@ -359,9 +355,11 @@ func battle_ends(victory):
 	if victory:
 		menu.new_voter(enemy_sprite)
 		menu.party.votes += enemy_sprite.votes
+		ui.votes.text = menu.party.votes
 		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
-	
+		menu.slide_mafia_line(enemy_sprite.mafia_points)
 	end(next_scene)
+	
 	
 	# scenemanager.start_transition("scene_path", Vector2(0,0))
 

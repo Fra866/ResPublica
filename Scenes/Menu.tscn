@@ -232,13 +232,11 @@ __meta__ = {
 }
 
 [node name="Party" type="Control" parent="MenuLayers"]
+visible = false
 margin_left = -96.0
 margin_top = -80.0
 margin_right = 94.0
 margin_bottom = 80.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Background" type="Sprite" parent="MenuLayers/Party"]
 position = Vector2( 96, 78 )
@@ -246,7 +244,6 @@ scale = Vector2( 2, 1.28125 )
 texture = ExtResource( 3 )
 
 [node name="MainContainer" type="Node2D" parent="MenuLayers/Party"]
-visible = false
 
 [node name="Selector" type="ColorRect" parent="MenuLayers/Party/MainContainer"]
 margin_left = -16.0
@@ -264,6 +261,80 @@ margin_top = 64.0
 margin_right = 192.0
 margin_bottom = 104.0
 text = "Recati da Machiavelli per avere un partito tutto tuo."
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="Mafia" type="Control" parent="MenuLayers"]
+visible = false
+margin_left = -96.0
+margin_top = -80.0
+margin_right = -56.0
+margin_bottom = -40.0
+rect_min_size = Vector2( 196, 160 )
+
+[node name="Background" type="Sprite" parent="MenuLayers/Mafia"]
+position = Vector2( 96, 78 )
+scale = Vector2( 2, 1.3 )
+texture = ExtResource( 3 )
+
+[node name="MainContainer" type="Node2D" parent="MenuLayers/Mafia"]
+
+[node name="Selector" type="ColorRect" parent="MenuLayers/Mafia/MainContainer"]
+visible = false
+margin_left = -16.0
+margin_top = 16.0
+margin_right = 16.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 32, 32 )
+color = Color( 0.94902, 0.203922, 0.203922, 1 )
+
+[node name="DescriptionDisplayer" type="Control" parent="MenuLayers/Mafia"]
+visible = false
+margin_left = 140.0
+margin_top = 45.0
+margin_right = 180.0
+margin_bottom = 85.0
+
+[node name="Background" type="ColorRect" parent="MenuLayers/Mafia/DescriptionDisplayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 76, 60 )
+color = Color( 0.294118, 0.0901961, 0.0901961, 1 )
+
+[node name="InnerBackground" type="ColorRect" parent="MenuLayers/Mafia/DescriptionDisplayer/Background"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 72.0
+margin_bottom = 56.0
+rect_min_size = Vector2( 68, 52 )
+color = Color( 0.47451, 0.168627, 0.168627, 1 )
+
+[node name="Text" type="RichTextLabel" parent="MenuLayers/Mafia/DescriptionDisplayer/Background/InnerBackground"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 68, 52 )
+
+[node name="Mafiometer" type="ColorRect" parent="MenuLayers/Mafia"]
+visible = false
+margin_left = 48.0
+margin_top = 120.0
+margin_right = 148.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 100, 10 )
+
+[node name="Line2D" type="Line2D" parent="MenuLayers/Mafia/Mafiometer"]
+points = PoolVector2Array( 48, -2, 48, 12 )
+width = 1.5
+default_color = Color( 0.94902, 0.203922, 0.203922, 1 )
+
+[node name="Label" type="Label" parent="MenuLayers/Mafia/Mafiometer"]
+margin_left = -40.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 40, 0 )
+rect_scale = Vector2( 0.8, 0.8 )
+text = "Falcone"
+
+[node name="Label2" type="Label" parent="MenuLayers/Mafia/Mafiometer"]
+margin_left = 100.0
+margin_right = 140.0
+margin_bottom = 14.0
+rect_scale = Vector2( 0.8, 0.8 )
+text = "Cuffaro"

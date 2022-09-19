@@ -38,8 +38,8 @@ func _ready():
 	$MarginContainer.visible = false
 
 
-func activate_dialouge():
-	return true
+#func activate_dialouge():
+#	return true
 
 
 func display_dialouge(npc):
@@ -51,7 +51,7 @@ func display_dialouge(npc):
 	open_shop = npc.is_seller
 	has_won_battle = npc.battle_won
 	
-	print(menu.voter_list)
+#	print(menu.voter_list)
 
 
 func end_dialouge_box():
@@ -102,7 +102,7 @@ func _process(_delta):
 									b = true
 #							if not npc_name in scenemanager.list_npc:
 #								scenemanager.list_npc.append(npc_name)
-							if !b:
+							if !b and menu.party:
 								scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 								emit_signal("send_npc", current_npc)
 								emit_signal("npc_attacks", att_ids_list)

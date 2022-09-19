@@ -21,7 +21,7 @@ func add_money(m: int):
 func add_votes(v: int):
 	# print(menu.party.total_votes)
 	# menu.party.total_votes += v
-	loadVotes(menu.party.total_votes)
+	loadVotes(menu.party.votes)
 
 
 func loadLira(val):
