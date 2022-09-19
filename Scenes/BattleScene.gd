@@ -59,6 +59,7 @@ func _ready():
 	randomize()
 	enemy_sprite.texture = load("res://UI/andreotti/battle.png")
 	
+	pBar.value = int(ui.hp.text)
 	pBar.get_child(0).text = str(pBar.value)
 	battlebox.visible = true
 	
@@ -164,6 +165,7 @@ func _process(_delta):
 				var slog = menu.slogan_list[id]
 				id = handle_input(id, n_of_slogans, selector)
 				# political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
+				political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
 				political_compass.show_damage_area(true)
 				political_compass.set_damage_area(slog.damage_area)
 				
@@ -313,15 +315,19 @@ func damage(p_pos: Vector2):
 
 func capture_enemy():
 	if npcBar.value <= 15:
-		ui.loadVotes(enemy_sprite.votes)
-		
 		action_log.text = enemy_sprite.npc_name + " è entrato nel tuo partito."
 		margincontainer.visible = true
 		battlemenu.visible = false
-		yield(get_tree().create_timer(0.5), "timeout")
+		yield(get_tree().create_timer(1), "timeout")
 		action_log.text = "Hai ottenuto " + str(enemy_sprite.votes) + " voti."
-		yield(get_tree().create_timer(0.5), "timeout")
-
+		yield(get_tree().create_timer(1), "timeout")
+		
+		menu.new_voter(enemy_sprite)
+		menu.party.votes += enemy_sprite.votes
+		ui.loadVotes(menu.party.votes)
+		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
+		menu.slide_mafia_line(enemy_sprite.mafia_points)
+		
 		battle_ends(true)
 	else:
 		action_log.text = enemy_sprite.npc_name + " non è entrato nel tuo partito."
@@ -343,6 +349,7 @@ func capture_enemy():
 
 
 func battle_ends(victory):
+	ui.hp.text = str(pBar.value)
 	action_log.text = "Battaglia finita."
 	margincontainer.visible = true
 	battlemenu.visible = false
@@ -353,11 +360,7 @@ func battle_ends(victory):
 	yield(timer, "timeout")
 	
 	if victory:
-		menu.new_voter(enemy_sprite)
-		menu.party.votes += enemy_sprite.votes
-		ui.votes.text = menu.party.votes
-		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
-		menu.slide_mafia_line(enemy_sprite.mafia_points)
+		pass
 	end(next_scene)
 	
 	

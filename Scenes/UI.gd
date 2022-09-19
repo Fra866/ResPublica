@@ -3,6 +3,7 @@ extends CanvasLayer
 onready var shop = get_node(NodePath("../ShopBox"))
 onready var liracoin = $Liracoin/RichTextLabel
 onready var votes = $Votes/RichTextLabel
+onready var hp = $HP/RichTextLabel
 onready var screentransition = get_node(NodePath('/root/SceneManager'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 
