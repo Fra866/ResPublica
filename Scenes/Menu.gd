@@ -147,6 +147,7 @@ func _process(_delta):
 	
 	
 	if menu_main:
+		visible = true
 		if Input.is_action_just_pressed("ui_down"):
 			if sprite.frame != 3:
 				sprite.frame += 1
@@ -186,7 +187,7 @@ func priority_to_party_options():
 	no_party_text.visible = !party
 	political_compass_party.visibility(party!=null)
 	if party:
-		political_compass_party.set_main_pointer(party.political_pos.x, party.political_pos.y)
+		political_compass_party.set_main_pointer(party.political_pos.x, -party.political_pos.y)
 
 
 func priority_to_objects():

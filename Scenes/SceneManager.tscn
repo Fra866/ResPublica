@@ -72,6 +72,7 @@ script = ExtResource( 1 )
 [node name="CurrentScene" type="Node2D" parent="."]
 
 [node name="Menu" parent="." instance=ExtResource( 5 )]
+visible = false
 
 [node name="DialougeBox" parent="." instance=ExtResource( 6 )]
 

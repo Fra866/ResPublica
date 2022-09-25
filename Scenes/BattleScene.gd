@@ -57,6 +57,7 @@ onready var battle_ui = BATTLE_UI.MENU
 
 func _ready():
 	randomize()
+	ui.visibility(false)
 	enemy_sprite.texture = load("res://UI/andreotti/battle.png")
 	
 	pBar.value = int(ui.hp.text)
@@ -359,6 +360,7 @@ func battle_ends(victory):
 	timer.start(2)
 	yield(timer, "timeout")
 	
+	ui.visibility(true)
 	if victory:
 		pass
 	end(next_scene)

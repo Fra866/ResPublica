@@ -36,6 +36,10 @@ func loadVotes(val:int):
 func get_money():
 	return int(liracoin.text)
 
+func visibility(v: bool):
+	$Liracoin.visible = v
+	$Votes.visible = v
+	$HP.visible = v
 
 func get_votes():
 	return int(votes.text)
