@@ -188,7 +188,7 @@ func priority_to_party_options():
 	political_compass_party.visibility(party!=null)
 	if party:
 		political_compass_party.set_main_pointer(party.political_pos.x, -party.political_pos.y)
-
+		political_compass_party.show_damage_area(false)
 
 func priority_to_objects():
 	political_compass_slog.visibility(false)

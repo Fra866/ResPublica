@@ -8,9 +8,14 @@ onready var menu = scene_manager.get_child(1)
 
 onready var sprite = $ImageContainer/Sprite
 onready var text_label = $TextContainer/RichTextLabel
+onready var input_name_edit = $AskForName/LineEdit
+
+enum STATE_CUTSCENE {INTRO, ASKING_NAME, ASKING_GENDER}
+onready var state = STATE_CUTSCENE.INTRO
 
 
 func _ready():
+	input_name_edit.visible = false
 	ui.visibility(false)
 	yield(get_tree().create_timer(1), "timeout")
 	
@@ -34,12 +39,23 @@ func animation():
 
 
 func ask_name_and_gender():
+	state = STATE_CUTSCENE.ASKING_NAME
 	sprite.visible = false
 	text_label.rect_position.y = -16
 	
 	text_label.text = "Come ti chiami?"
 	
-	start_game()
+	
+	input_name_edit.visible = true
+	input_name_edit.grab_focus()
+	# start_game()
+
+
+func _process(_delta):
+	if state == STATE_CUTSCENE.ASKING_NAME:
+		if Input.is_action_just_pressed("ui_accept"):
+			scene_manager.save_file.name = input_name_edit.text
+			start_game()
 
 
 func start_game():

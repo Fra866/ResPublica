@@ -12,12 +12,13 @@ political_pos = Vector2( 0, 0 )
 
 [resource]
 script = ExtResource( 1 )
+name = ""
 slogans = [  ]
 objects = [  ]
 voters = [  ]
-ended_cutscenes = [  ]
+ended_cutscenes = [ 0, 0 ]
 current_scene = ExtResource( 3 )
 player_party = SubResource( 1 )
-player_pos = Vector2( 96, 64 )
+player_pos = Vector2( 80, 80 )
 money = 1000
 votes = 0

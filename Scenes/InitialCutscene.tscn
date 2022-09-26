@@ -26,9 +26,24 @@ margin_left = -16.0
 margin_top = 16.0
 margin_right = 240.0
 margin_bottom = 64.0
-visible_characters = 1
+visible_characters = 0
 percent_visible = 0.1
 text = "In Italia "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AskForName" type="Node2D" parent="."]
+
+[node name="LineEdit" type="LineEdit" parent="AskForName"]
+anchor_right = 1.0
+margin_left = 96.0
+margin_top = 116.0
+margin_right = 224.0
+margin_bottom = 140.0
+text = "Mario Rossi"
+align = 1
+max_length = 16
 __meta__ = {
 "_edit_use_anchors_": false
 }
