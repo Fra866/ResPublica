@@ -66,6 +66,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Name" type="RichTextLabel" parent="MenuLayers/MainMenu/Control"]
+anchor_left = 0.625
+anchor_top = 0.775
+anchor_right = 1.0
+anchor_bottom = 0.875
+margin_top = -7.62939e-06
+margin_bottom = -1.52588e-05
+
 [node name="Slogans" type="Control" parent="MenuLayers"]
 visible = false
 margin_left = -96.0
