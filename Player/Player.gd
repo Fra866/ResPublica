@@ -25,6 +25,7 @@ onready var cutscene_activator
 enum PlayerState { IDLE, RUNNING, TURNING, IN_PAUSE }
 enum FacingDirection { LEFT, UP, RIGHT, DOWN }
 
+onready var current_open_menu = null
 onready var cutscene = false
 
 var is_moving = false
@@ -102,29 +103,29 @@ func process_player_input():
 		openClose(menu)
 	
 	if Input.is_action_just_pressed("ui_save"):
-		open_menu(saveMenu)
+		openClose(saveMenu)
 
 
 func openClose(m):
-#	if m.get("state") == 0: # MenuState.OPENED:
-#		close_menu(m)
-#	elif player_state != PlayerState.IN_PAUSE:
-#		open_menu(m)
 	if player_state != PlayerState.IN_PAUSE:
 		open_menu(m)
-	else:
+	elif current_open_menu == m:
 		close_menu(m)
+	print(current_open_menu)
 
 
 func open_menu(m):
 	cutscene = true
+	current_open_menu = m
 	m.priority_to_menu()
 #	m.set("state", 0) #MenuState.OPENED
 
 
 func close_menu(m):
 	cutscene = false
+	current_open_menu = null
 	player_state = PlayerState.IDLE
+	
 	m.priority_to_player()
 #	m.set("state", 1) # MenuState.CLOSED
 

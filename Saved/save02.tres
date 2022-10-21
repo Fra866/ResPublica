@@ -1,17 +1,24 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
+[ext_resource path="res://Parties/party.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Parties/party.tres" type="Resource" id=7]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+party_name = ""
+votes = 0
+political_pos = Vector2( 0, 0 )
 
 [resource]
 script = ExtResource( 1 )
+name = ""
 slogans = [  ]
 objects = [  ]
 voters = [  ]
 ended_cutscenes = [  ]
 current_scene = ExtResource( 6 )
-player_party = ExtResource( 7 )
-player_pos = Vector2( 80, 16 )
+player_party = SubResource( 1 )
+player_pos = Vector2( 64, 48 )
 money = 1000
 votes = 0

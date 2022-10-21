@@ -19,17 +19,19 @@ func priority_to_menu():
 	var player = get_node(NodePath("../CurrentScene")).get_children().back().find_node("Player")
 	self.visible = true
 	yes.grab_focus()
-	self.rect_position.x = player.position.x
-	self.rect_position.y = player.position.y
+	self.rect_position.x = player.position.x -60
+	self.rect_position.y = player.position.y -20
 
 
 func priority_to_player():
+	print('Priority to P1')
 	self.visible = false
 	state = 1
 
 
 func _process(_delta):
 	var player = get_node(NodePath("../CurrentScene")).get_children().back().find_node("Player")
+	
 	if self.visible:
 		if Input.is_action_just_pressed("ui_accept"):
 			if yes.has_focus():

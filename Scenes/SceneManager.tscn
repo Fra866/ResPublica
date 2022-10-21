@@ -93,3 +93,7 @@ anims/RESET = SubResource( 2 )
 [node name="UI" parent="." instance=ExtResource( 4 )]
 
 [node name="Control" parent="." instance=ExtResource( 8 )]
+margin_left = 96.0
+margin_top = 64.0
+margin_right = 216.0
+margin_bottom = 104.0

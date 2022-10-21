@@ -51,7 +51,8 @@ func set_damage_area(dm: Array):
 
 
 func show_damage_area(vis: bool):
-	get_tree().debug_collisions_hint = vis
+	pass
+#	get_tree().debug_collisions_hint = vis
 #	damage_area.visible = true
 
 

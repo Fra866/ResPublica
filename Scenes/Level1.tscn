@@ -74,7 +74,7 @@ vf = 3
 f = 2
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 80, 16 )
+position = Vector2( 80, 32 )
 
 [node name="House" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 80, 0 )
