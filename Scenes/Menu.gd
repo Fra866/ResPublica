@@ -37,6 +37,7 @@ onready var current_slogan_desc = $MenuLayers/Slogans/DescriptionDisplayer/Backg
 onready var current_object_desc = $MenuLayers/Objects/DescriptionDisplayer/Background/InnerBackground/Text
 onready var current_voter_mafia_desc = $MenuLayers/Mafia/DescriptionDisplayer/Background/InnerBackground/Text
 
+
 onready var ui = get_node("/root/SceneManager/UI")
 
 onready var player = get_node(NodePath('..')).find_node('Player')
@@ -50,7 +51,7 @@ onready var n_of_voters: int
 onready var current_slog
 onready var current_object
 
-enum MENU_STATE {PARTY, MAFIA, SLOGANS, OBJECTS}
+enum MENU_STATE {SLOGANS, OBJECTS, PARTY, MAFIA}
 var menu_state: int = 4
 
 var menu_main: bool = false
@@ -64,12 +65,23 @@ onready var slogan_list: Array = []
 onready var object_list: Array = []
 onready var voter_list: Array = []
 
+onready var i=0
+onready var buttons = [
+	$MenuLayers/MainMenu/Control/RichTextLabel,
+	$MenuLayers/MainMenu/Control/RichTextLabel2,
+	$MenuLayers/MainMenu/Control/RichTextLabel3,
+	$MenuLayers/MainMenu/Control/RichTextLabel4
+]
+
+onready var name_text = $MenuLayers/MainMenu/Control/Name
 
 func _ready():
 	screentransition.connect("new_main_scene", self, "new_p")
 	no_slog_text.visible = false
 	
 	var save_file = screentransition.save_file
+	name_text.text = save_file.name
+	
 	party = save_file.player_party
 	
 	for slogan_res in save_file.slogans:
@@ -147,40 +159,49 @@ func _process(_delta):
 	
 	
 	if menu_main:
+		buttons[i].grab_focus()
 		visible = true
+		
+		slogan_container.visible = false
+		objects_container.visible = false
+		voters_container.visible = false
+		mafia_container.visible = false
+		
 		if Input.is_action_just_pressed("ui_down"):
-			if sprite.frame != 3:
-				sprite.frame += 1
+			if i != 3:
+				i += 1
 		if Input.is_action_just_pressed("ui_up"):
-			if sprite.frame != 0:
-				sprite.frame -= 1
+			if i != 0:
+				i -= 1
 		if Input.is_action_just_pressed("ui_accept"):
-			to_menu(menus[sprite.frame])
-			match sprite.frame:
+			to_menu(menus[i])
+			match menu_state:
 				0:
-					priority_to_party_options()
-				1:
-					priority_to_mafia()
-				2:
 					priority_to_slogans()
-				3:
+				1:
 					priority_to_objects()
-
-
+				2:
+					priority_to_party_options()
+				3:
+					priority_to_mafia()
 	if Input.is_action_just_pressed("ui_end") and menu_state < len(menus):
 		to_main(menus[menu_state])
 
 
 func to_menu(dest: Node):
+	print('to_menu')
 	menu_main = false
 	dest.visible = true
-	menu_state = sprite.frame
+	menu_state = i
 
 
 func to_main(src: Node):
+	print('to_main')
 	menu_main = true
 	src.visible = false
 	menu_state = 4
+	
+	print(src, ": ", src.visible)
 
 
 func priority_to_party_options():
@@ -189,6 +210,7 @@ func priority_to_party_options():
 	if party:
 		political_compass_party.set_main_pointer(party.political_pos.x, -party.political_pos.y)
 		political_compass_party.show_damage_area(false)
+
 
 func priority_to_objects():
 	political_compass_slog.visibility(false)

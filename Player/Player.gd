@@ -21,6 +21,7 @@ onready var saveMenu = get_node(NodePath("/root/SceneManager/Control"))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
 onready var cutscene_activator
 
+onready var p_name = scenemanager.save_file.name
 
 enum PlayerState { IDLE, RUNNING, TURNING, IN_PAUSE }
 enum FacingDirection { LEFT, UP, RIGHT, DOWN }

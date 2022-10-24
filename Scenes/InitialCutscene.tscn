@@ -6,7 +6,7 @@
 
 [node name="InitialCutscene" type="Node2D"]
 script = ExtResource( 1 )
-list_texts = [ "Tanti anni fa', l'Italia viveva in pace ed armonia", "Ma tutto cambiò quando la nazione del fuoco decise di attaccare", "Solo il Veltro potrà fermare la crisi e salvare il Bel Paese." ]
+list_texts = [ "LoremIpsum" ]
 
 [node name="Background" type="ColorRect" parent="."]
 margin_right = 320.0

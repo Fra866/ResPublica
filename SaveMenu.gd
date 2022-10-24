@@ -24,9 +24,9 @@ func priority_to_menu():
 
 
 func priority_to_player():
-	print('Priority to P1')
+#	print('Priority to P1')
 	self.visible = false
-	state = 1
+#	state = 1
 
 
 func _process(_delta):
@@ -48,6 +48,7 @@ func save_all():
 	file_save.take_over_path(scene_manager.save_file.get_path())
 	
 	if player:
+		file_save.name = player.p_name
 		file_save.player_pos = player.position
 		file_save.slogans = menu.slogan_list
 		file_save.objects = menu.object_list
