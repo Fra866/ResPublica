@@ -15,7 +15,7 @@ onready var animstate = animtree.get('parameters/playback')
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var shop_box = get_node(NodePath('/root/SceneManager/ShopBox'))
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
-onready var door = get_node(NodePath('..')).find_node('Door')
+#onready var door = get_node(NodePath('..')).find_node('Door')
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var saveMenu = get_node(NodePath("/root/SceneManager/Control"))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
@@ -36,7 +36,7 @@ var percent_to_next_tile = 0.0
 var player_state = PlayerState.IDLE
 var direction = FacingDirection.DOWN
 
-signal enter_door(door)
+signal enter_door()
 
 func _ready():
 	cutscene_activator = scenemanager.get_child(0).get_children().back().find_node("CutsceneActivator")
@@ -52,8 +52,8 @@ func _ready():
 		position = save_file.player_pos
 	else:
 		initial_position = position
-	door = get_node(NodePath('..')).find_node('Door')
-	door.connect('entered_door', self, 'new_scene')
+#	door = get_node(NodePath('..')).find_node('Door')
+#	door.connect('entered_door', self, 'new_scene')
 
 
 func _physics_process(delta):
@@ -110,9 +110,8 @@ func process_player_input():
 func openClose(m):
 	if player_state != PlayerState.IN_PAUSE:
 		open_menu(m)
-	elif current_open_menu == m:
-		close_menu(m)
-	print(current_open_menu)
+	elif (current_open_menu == m) and m.priority_to_player():
+		close_menu()
 
 
 func open_menu(m):
@@ -122,12 +121,10 @@ func open_menu(m):
 #	m.set("state", 0) #MenuState.OPENED
 
 
-func close_menu(m):
+func close_menu():
 	cutscene = false
 	current_open_menu = null
 	player_state = PlayerState.IDLE
-	
-	m.priority_to_player()
 #	m.set("state", 1) # MenuState.CLOSED
 
 
@@ -139,7 +136,7 @@ func entered_door():
 	cutscene = true
 	visible = false
 	camera.clear_current()
-	emit_signal("enter_door", position, DoorRayCast.get_collider())
+	emit_signal("enter_door")
 
 
 func new_scene():

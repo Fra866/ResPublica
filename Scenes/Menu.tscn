@@ -19,27 +19,21 @@ scale = Vector2( 1, 1.125 )
 texture = ExtResource( 1 )
 vframes = 4
 
-[node name="Control" type="Control" parent="MenuLayers/MainMenu"]
+[node name="Control" type="Container" parent="MenuLayers/MainMenu"]
 margin_left = -128.0
 margin_top = -80.0
 margin_right = 128.0
 margin_bottom = 80.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="RichTextLabel" type="Button" parent="MenuLayers/MainMenu/Control"]
+[node name="SlogBtn" type="Button" parent="MenuLayers/MainMenu/Control"]
 margin_left = 16.0
 margin_top = 32.0
 margin_right = 112.0
 margin_bottom = 56.0
 theme = SubResource( 1 )
 text = "Slogans"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="RichTextLabel2" type="Button" parent="MenuLayers/MainMenu/Control"]
+[node name="ObjBtn" type="Button" parent="MenuLayers/MainMenu/Control"]
 margin_left = 16.0
 margin_top = 62.0
 margin_right = 112.0
@@ -47,7 +41,7 @@ margin_bottom = 80.0
 theme = SubResource( 1 )
 text = "Oggetti"
 
-[node name="RichTextLabel3" type="Button" parent="MenuLayers/MainMenu/Control"]
+[node name="PartyBtn" type="Button" parent="MenuLayers/MainMenu/Control"]
 margin_left = 16.0
 margin_top = 87.0
 margin_right = 112.0
@@ -55,7 +49,7 @@ margin_bottom = 104.0
 theme = SubResource( 1 )
 text = "Partito"
 
-[node name="RichTextLabel4" type="Button" parent="MenuLayers/MainMenu/Control"]
+[node name="MafiaBtn" type="Button" parent="MenuLayers/MainMenu/Control"]
 margin_left = 16.0
 margin_top = 112.0
 margin_right = 112.0
@@ -343,3 +337,8 @@ margin_right = 140.0
 margin_bottom = 14.0
 rect_scale = Vector2( 0.8, 0.8 )
 text = "Cuffaro"
+
+[connection signal="pressed" from="MenuLayers/MainMenu/Control/SlogBtn" to="." method="_on_SlogBtn_pressed"]
+[connection signal="pressed" from="MenuLayers/MainMenu/Control/ObjBtn" to="." method="_on_ObjBtn_pressed"]
+[connection signal="pressed" from="MenuLayers/MainMenu/Control/PartyBtn" to="." method="_on_PartyBtn_pressed"]
+[connection signal="pressed" from="MenuLayers/MainMenu/Control/MafiaBtn" to="." method="_on_MafiaBtn_pressed"]

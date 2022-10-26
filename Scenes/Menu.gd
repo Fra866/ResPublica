@@ -7,7 +7,7 @@ onready var menulayers = $MenuLayers
 onready var sprite = $MenuLayers/MainMenu/Sprite
 onready var control = $MenuLayers/MainMenu/Control
 
-onready var menus = [$MenuLayers/Party, $MenuLayers/Mafia, $MenuLayers/Slogans, $MenuLayers/Objects]
+onready var menus = [$MenuLayers/Slogans, $MenuLayers/Objects, $MenuLayers/Party,  $MenuLayers/Mafia]
 
 onready var slogan_container = $MenuLayers/Slogans/MainContainer
 onready var objects_container = $MenuLayers/Objects/MainContainer
@@ -48,18 +48,18 @@ onready var n_of_slogans: int
 onready var n_of_objects: int
 onready var n_of_voters: int
 
-onready var current_slog
-onready var current_object
+onready var current_el = null
 
 enum MENU_STATE {SLOGANS, OBJECTS, PARTY, MAFIA}
 var menu_state: int = 4
 
 var menu_main: bool = false
 
-var slogan_index: int = 0
-var object_index: int = 0
-var voter_index: int = 0
-var mafia_index: int = 0
+#var slogan_index: int = 0
+#var object_index: int = 0
+#var voter_index: int = 0
+#var mafia_index: int = 0
+var index: int = 0
 
 onready var slogan_list: Array = []
 onready var object_list: Array = []
@@ -67,10 +67,10 @@ onready var voter_list: Array = []
 
 onready var i=0
 onready var buttons = [
-	$MenuLayers/MainMenu/Control/RichTextLabel,
-	$MenuLayers/MainMenu/Control/RichTextLabel2,
-	$MenuLayers/MainMenu/Control/RichTextLabel3,
-	$MenuLayers/MainMenu/Control/RichTextLabel4
+	$MenuLayers/MainMenu/Control/SlogBtn,
+	$MenuLayers/MainMenu/Control/ObjBtn,
+	$MenuLayers/MainMenu/Control/PartyBtn,
+	$MenuLayers/MainMenu/Control/MafiaBtn
 ]
 
 onready var name_text = $MenuLayers/MainMenu/Control/Name
@@ -93,9 +93,9 @@ func _ready():
 
 
 func _process(_delta):
-	n_of_slogans = slogan_container.get_child_count() - 1
-	n_of_objects = objects_container.get_child_count() - 1
-	n_of_voters = voters_container.get_child_count() - 1
+	n_of_slogans = len(slogan_list)
+	n_of_objects = len(object_list)
+	n_of_voters = len(voter_list)
 	
 	player = get_node(NodePath('..')).get_child(0).get_children().back().find_node("Player")
 	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene')).get_child(0)
@@ -107,65 +107,46 @@ func _process(_delta):
 		menulayers.position = player.position
 
 	if menu_state == MENU_STATE.SLOGANS:
-		if n_of_slogans == 0:
-			no_slog_text.visible = true
-			slogan_selector.visible = false
-		else:
-			no_slog_text.visible = false
-			slogan_selector.visible = true
-			current_slog = slogan_list[slogan_index]
+		if n_of_slogans:
+			current_el = slogan_list[index]
 			
-			political_compass_slog.set_main_pointer(current_slog.political_pos.x, -current_slog.political_pos.y)
-			political_compass_slog.set_damage_area(current_slog.damage_area)
-			slogan_index = handle_input(slogan_index, n_of_slogans, slogan_selector)
+			political_compass_slog.set_main_pointer(current_el.political_pos.x, -current_el.political_pos.y)
+			political_compass_slog.set_damage_area(current_el.damage_area)
+			handle_input(n_of_slogans, slogan_selector)
 			
 			if Input.is_action_just_pressed("ui_accept"):
-				print(current_slog.name, current_slog.political_pos)
+				print(current_el.name, current_el.political_pos)
 
-			current_slogan_desc.text = current_slog.name
+			current_slogan_desc.text = current_el.name
 
 	
 	if menu_state == MENU_STATE.MAFIA:
-		mafia_displayer.visible = n_of_voters
-		mafiometer.visible = n_of_voters
-		mafia_selector.visible = mafia_displayer.visible
-		
 		if n_of_voters:
-			var current_mv = mafia_container.get_child(mafia_index + 1)
-			mafia_index = handle_input(mafia_index, n_of_voters, mafia_selector)
-			current_voter_mafia_desc.text = current_mv.npc_name + "\n" + str(current_mv.mafia_target)
+			current_el = mafia_container.get_child(index + 1)
+			handle_input(n_of_voters, mafia_selector)
+			current_voter_mafia_desc.text = current_el.npc_name + "\n" + str(current_el.mafia_target)
 # Test-only function
 			if Input.is_action_just_pressed("ui_accept"):
-				current_mv.set_mafia_target(-10)
+				current_el.set_mafia_target(-10)
 			
 	
 	if menu_state == MENU_STATE.OBJECTS:
-		if n_of_objects == 0:
-			no_slog_text.visible = true
-			objects_selector.visible = false
-		else:
-			no_obj_text.visible = false
-			objects_selector.visible = true
-			current_object = object_list[object_index]
-			current_object_desc.text = current_object.description
-			object_index = handle_input(object_index, n_of_objects, objects_selector)
+		if n_of_objects:
+			current_el = object_list[index]
+			current_object_desc.text = current_el.description
+			handle_input(n_of_objects, objects_selector)
 			
 			if Input.is_action_just_pressed("ui_accept"):
-				objects_container.get_child(object_index+1).foo(current_object.id) # Temporary Solution
+				objects_container.get_child(index+1).foo(current_el.id) # Temporary Solution
 	
 	
 	if menu_state == MENU_STATE.PARTY:
-		voter_index = handle_input(voter_index, n_of_voters, voters_selector)
+		handle_input(n_of_voters, voters_selector)
 	
 	
 	if menu_main:
 		buttons[i].grab_focus()
 		visible = true
-		
-		slogan_container.visible = false
-		objects_container.visible = false
-		voters_container.visible = false
-		mafia_container.visible = false
 		
 		if Input.is_action_just_pressed("ui_down"):
 			if i != 3:
@@ -175,53 +156,22 @@ func _process(_delta):
 				i -= 1
 		if Input.is_action_just_pressed("ui_accept"):
 			to_menu(menus[i])
-			match menu_state:
-				0:
-					priority_to_slogans()
-				1:
-					priority_to_objects()
-				2:
-					priority_to_party_options()
-				3:
-					priority_to_mafia()
-	if Input.is_action_just_pressed("ui_end") and menu_state < len(menus):
+			
+	elif Input.is_action_just_pressed("ui_end"):#menu_state < len(menus):
 		to_main(menus[menu_state])
 
 
 func to_menu(dest: Node):
-	print('to_menu')
 	menu_main = false
 	dest.visible = true
 	menu_state = i
+	index = 0
 
 
 func to_main(src: Node):
-	print('to_main')
 	menu_main = true
 	src.visible = false
 	menu_state = 4
-	
-	print(src, ": ", src.visible)
-
-
-func priority_to_party_options():
-	no_party_text.visible = !party
-	political_compass_party.visibility(party!=null)
-	if party:
-		political_compass_party.set_main_pointer(party.political_pos.x, -party.political_pos.y)
-		political_compass_party.show_damage_area(false)
-
-
-func priority_to_objects():
-	political_compass_slog.visibility(false)
-
-
-func priority_to_slogans():
-	political_compass_slog.visibility(n_of_slogans)
-
-
-func priority_to_mafia():
-	political_compass_slog.visibility(false)
 
 
 func priority_to_menu():
@@ -233,6 +183,8 @@ func priority_to_player():
 	if menu_main:
 		menu_main = false
 		state = 1
+		return true
+	return false
 
 
 func new_p():
@@ -245,7 +197,7 @@ func slide_mafia_line(mafia_points: float):
 	m_line.points[1][0] += mafia_points
 
 
-func handle_input(index: int, maxv: int, selector):
+func handle_input(maxv: int, selector):
 	if Input.is_action_just_pressed("ui_right"):
 		if index < maxv - 1:
 			index += 1
@@ -256,7 +208,7 @@ func handle_input(index: int, maxv: int, selector):
 		selector.rect_position = Vector2(32 * (index % 6) + 3, 40 * (index / 6) + 9)
 	else:
 		selector.rect_position = Vector2(32 * (index % 4) + 3, 40 * (index / 4) + 16)
-	return index
+#	return index
 
 
 func new_slogan(slogan):
@@ -303,3 +255,30 @@ func new_voter(voter):
 		n_of_voters += 1
 		voters_container.add_child(new_voter_instance)
 		mafia_container.add_child(new_voter_instance.duplicate())
+
+
+func _on_SlogBtn_pressed():
+	political_compass_slog.visibility(n_of_slogans)
+	no_slog_text.visible = !n_of_slogans
+	slogan_selector.visible = n_of_slogans
+
+
+func _on_ObjBtn_pressed():
+	political_compass_slog.visibility(false)
+	no_slog_text.visible = !n_of_objects
+	objects_selector.visible = n_of_objects
+
+
+func _on_PartyBtn_pressed():
+	no_party_text.visible = !party
+	political_compass_party.visibility(party!=null)
+	if party:
+		political_compass_party.set_main_pointer(party.political_pos.x, -party.political_pos.y)
+		political_compass_party.show_damage_area(false)
+
+
+func _on_MafiaBtn_pressed():
+	political_compass_slog.visibility(false)
+	mafia_displayer.visible = n_of_voters
+	mafiometer.visible = n_of_voters
+	mafia_selector.visible = mafia_displayer.visible

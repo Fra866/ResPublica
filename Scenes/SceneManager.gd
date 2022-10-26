@@ -1,6 +1,6 @@
 extends Node2D
 
-var next_scene = null
+#var next_scene = null
 
 
 onready var current_scene = get_child(0).get_child(0)
@@ -26,7 +26,6 @@ var first_scene_path = "res://Scenes/Level1.tscn"
 
 
 func _ready():
-	print("Ready SceneManager")
 	ended_cutscenes = save_file.ended_cutscenes
 #	scene_container.get_child(0).queue_free()
 	for i in scene_container.get_children():
@@ -37,7 +36,6 @@ func _ready():
 	if !scene:
 		starting_game()
 	
-	print(scene)
 	scene_container.add_child(scene.instance())
 #	list_npc = save_file.list_npc
 	ended_cutscenes = save_file.ended_cutscenes
@@ -49,9 +47,9 @@ func cutscene_over(id):
 	ended_cutscenes.append(id)
 
 
-func start_transition(scene: String, player_pos):
+func start_transition(next_scene: String, player_pos):
 	loading_count += 1
-	next_scene = scene
+	scene = next_scene
 	transition_animation.play("FadeToBlack")
 	scene_container.get_child(0).queue_free()
 	for i in scene_container.get_children():
@@ -61,19 +59,18 @@ func start_transition(scene: String, player_pos):
 
 
 func end_transition(player_pos):
-	scene_container.add_child(load(next_scene).instance())
+	scene_container.add_child(load(scene).instance())
 	transition_animation.play("FadeToTransparent")
 	var p = scene_container.get_children().back().find_node("Player")
 	if p:
 		p.position = player_pos
 
+	p.new_scene()
 	emit_signal("new_main_scene")
 
 
 func starting_game():
-	print('Game started')
 	scene = load("res://Scenes/InitialCutscene.tscn")
-	print(scene)
 
 
 #func loadAll():
