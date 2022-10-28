@@ -3,9 +3,9 @@ extends Node2D
 onready var main_pointer = $Pointer
 onready var enemy_pointer = $Pointer2
 onready var next_position = $Line2D
-onready var damage_area = $ExtraDamageArea
+onready var damage_area = $Node2D/DamageArea
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	visible = false
 	main_pointer.visible = false
@@ -41,19 +41,19 @@ func set_enemy_pointer(x: float, y: float):
 	enemy_pointer.rect_position = Vector2(x*4 - 2, y*4 - 2)
 
 
-func set_damage_area(dm: Array):
-	damage_area.polygon = dm
+func set_damage_area(d_range: int):
+	damage_area.position = main_pointer.rect_position - Vector2(-2, -2)
+	print(damage_area.shape.radius)
+	damage_area.shape.radius = d_range*2
 
 
-#func hide_damage_area():
-#	get_tree().debug_collisions_hint = false
-#	damage_area.visible = false
+func hide_damage_area():
+	get_tree().debug_collisions_hint = false
+	damage_area.visible = false
 
 
 func show_damage_area(vis: bool):
-	pass
-#	get_tree().debug_collisions_hint = vis
-#	damage_area.visible = true
+	damage_area.visible = true
 
 
 func set_line(initial_pos: Vector2, x: float, y: float):
@@ -68,7 +68,3 @@ func hide_line():
 
 func enemy_pointer_visible(vis: bool):
 	enemy_pointer.visible = vis
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

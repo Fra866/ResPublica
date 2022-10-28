@@ -7,7 +7,7 @@ onready var menulayers = $MenuLayers
 onready var sprite = $MenuLayers/MainMenu/Sprite
 onready var control = $MenuLayers/MainMenu/Control
 
-onready var menus = [$MenuLayers/Party, $MenuLayers/Mafia, $MenuLayers/Slogans, $MenuLayers/Objects]
+onready var menus = [$MenuLayers/Slogans, $MenuLayers/Objects, $MenuLayers/Party, $MenuLayers/Mafia]
 
 onready var slogan_container = $MenuLayers/Slogans/MainContainer
 onready var objects_container = $MenuLayers/Objects/MainContainer

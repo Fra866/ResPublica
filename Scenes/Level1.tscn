@@ -74,12 +74,19 @@ vf = 3
 f = 2
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 80, 32 )
+position = Vector2( 192, 16 )
 
 [node name="House" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 80, 0 )
 
-[node name="Door" parent="YSort/House" instance=ExtResource( 5 )]
+[node name="Door1" parent="YSort/House" instance=ExtResource( 5 )]
+next_player_pos = Vector2( 144, 176 )
+
+[node name="Bar" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 192, 0 )
+
+[node name="Door2" parent="YSort/Bar" instance=ExtResource( 5 )]
+next_scene_path = "res://Scenes/BarScene.tscn"
 next_player_pos = Vector2( 144, 176 )
 
 [node name="CutsceneActivator" parent="YSort" instance=ExtResource( 3 )]

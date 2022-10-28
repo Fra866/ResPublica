@@ -66,7 +66,7 @@ func _process(_delta):
 			tmp_slogan = get_instance(slogan_list, id_slogan).slogan_res
 			description.text = tmp_slogan.name
 			political_compass.set_main_pointer(tmp_slogan.political_pos.x / 1.25, -tmp_slogan.political_pos.y / 1.25)
-			political_compass.set_damage_area(tmp_slogan.damage_area)
+			political_compass.set_damage_area(tmp_slogan.damage_range)
 			
 			if Input.is_action_just_pressed("ui_accept"):
 				if not first_accept:

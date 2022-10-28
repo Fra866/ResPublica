@@ -165,10 +165,15 @@ func _process(_delta):
 			if turn == TURN.PLAYER:
 				var slog = menu.slogan_list[id]
 				id = handle_input(id, n_of_slogans, selector)
-				# political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
+				#political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
 				political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
+				political_compass.set_main_pointer(slog.political_pos.x, -slog.political_pos.y)
+				political_compass.set_damage_area(slog.damage_range)
+				
 				political_compass.show_damage_area(true)
-				political_compass.set_damage_area(slog.damage_area)
+				
+				margincontainer.visible = true
+				action_log.text = slog.name
 				
 				if Input.is_action_just_pressed("ui_accept"):
 					playerAttack(menu.slogan_list[id])
@@ -268,6 +273,7 @@ func playerAttack(slogan):
 
 
 func npcAttack():
+	political_compass.hide_damage_area()
 	turn = TURN.ATTACKING
 	battlebox.reset_pointer()
 	battlebox.visible = true
@@ -303,8 +309,6 @@ func extra_damage():
 func damage(p_pos: Vector2):
 	var pos_in_compass = Vector2(-2 + 4*enemy_sprite.political_pos.x, -2 + 4*(-enemy_sprite.political_pos.y))
 	
-	print('pos: ', pos_in_compass)
-	print('polygon: ', political_compass.damage_area.polygon)
 	if Geometry.is_point_in_polygon(pos_in_compass, political_compass.damage_area.polygon):
 		var d = 10 - (enemy_sprite.political_pos - p_pos).length()
 		d += extra_damage()

@@ -10,9 +10,17 @@ export(Vector2) var next_player_pos
 signal entered_door
 
 func _ready():
+	if player.doors == null:
+		player.doors = []
+	
+	print("Doors: ", player.doors)
+	player.doors.append(self)
 	player.connect("enter_door", self, "entering")
 
 
 func entering(_player_pos, _door):
-	emit_signal("entered_door")
-	scenemanager.start_transition(next_scene_path, next_player_pos)
+	if _door == self:
+		print('Entered on door: ', next_scene_path)
+		emit_signal("entered_door")
+		print(next_scene_path)
+		scenemanager.start_transition(next_scene_path, next_player_pos)

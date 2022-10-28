@@ -15,7 +15,7 @@ onready var animstate = animtree.get('parameters/playback')
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var shop_box = get_node(NodePath('/root/SceneManager/ShopBox'))
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
-onready var door = get_node(NodePath('..')).find_node('Door')
+# onready var door = get_node(NodePath('..')).find_node('Door')
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var saveMenu = get_node(NodePath("/root/SceneManager/Control"))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
@@ -29,6 +29,11 @@ enum FacingDirection { LEFT, UP, RIGHT, DOWN }
 onready var current_open_menu = null
 onready var cutscene = false
 
+# Lists all doors in the current scene
+# All doors are loaded before ready() starts
+
+onready var doors = []
+
 var is_moving = false
 var initial_position = Vector2(0, 0)
 var input_direction = Vector2(0, 0)
@@ -39,6 +44,7 @@ var direction = FacingDirection.DOWN
 signal enter_door(door)
 
 func _ready():
+	# doors = [] -> the initialization had to be done in Door.gd
 	cutscene_activator = scenemanager.get_child(0).get_children().back().find_node("CutsceneActivator")
 	var current_scene = scenemanager.get_child(0).get_child(0)
 	
@@ -52,8 +58,9 @@ func _ready():
 		position = save_file.player_pos
 	else:
 		initial_position = position
-	door = get_node(NodePath('..')).find_node('Door')
-	door.connect('entered_door', self, 'new_scene')
+	
+	for door in doors:
+		door.connect('entered_door', self, 'new_scene')
 
 
 func _physics_process(delta):

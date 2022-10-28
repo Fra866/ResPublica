@@ -19,6 +19,6 @@ voters = [  ]
 ended_cutscenes = [  ]
 current_scene = ExtResource( 6 )
 player_party = SubResource( 1 )
-player_pos = Vector2( 64, 48 )
+player_pos = Vector2( 192, 16 )
 money = 1000
 votes = 0
