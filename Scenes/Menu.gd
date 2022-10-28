@@ -1,6 +1,6 @@
 extends Node2D
-
-export(int) var state = 1
+#Moron-safe.
+#export(int) var state = 1
 export(Resource) var party
 
 onready var menulayers = $MenuLayers
@@ -96,54 +96,7 @@ func _process(_delta):
 	n_of_slogans = len(slogan_list)
 	n_of_objects = len(object_list)
 	n_of_voters = len(voter_list)
-	
-	player = get_node(NodePath('..')).get_child(0).get_children().back().find_node("Player")
-	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene')).get_child(0)
-	
-	
-	if player:
-		control.visible = menu_main
-		sprite.visible = menu_main
-		menulayers.position = player.position
 
-	if menu_state == MENU_STATE.SLOGANS:
-		if n_of_slogans:
-			current_el = slogan_list[index]
-			
-			political_compass_slog.set_main_pointer(current_el.political_pos.x, -current_el.political_pos.y)
-			political_compass_slog.set_damage_area(current_el.damage_area)
-			handle_input(n_of_slogans, slogan_selector)
-			
-			if Input.is_action_just_pressed("ui_accept"):
-				print(current_el.name, current_el.political_pos)
-
-			current_slogan_desc.text = current_el.name
-
-	
-	if menu_state == MENU_STATE.MAFIA:
-		if n_of_voters:
-			current_el = mafia_container.get_child(index + 1)
-			handle_input(n_of_voters, mafia_selector)
-			current_voter_mafia_desc.text = current_el.npc_name + "\n" + str(current_el.mafia_target)
-# Test-only function
-			if Input.is_action_just_pressed("ui_accept"):
-				current_el.set_mafia_target(-10)
-			
-	
-	if menu_state == MENU_STATE.OBJECTS:
-		if n_of_objects:
-			current_el = object_list[index]
-			current_object_desc.text = current_el.description
-			handle_input(n_of_objects, objects_selector)
-			
-			if Input.is_action_just_pressed("ui_accept"):
-				objects_container.get_child(index+1).foo(current_el.id) # Temporary Solution
-	
-	
-	if menu_state == MENU_STATE.PARTY:
-		handle_input(n_of_voters, voters_selector)
-	
-	
 	if menu_main:
 		buttons[i].grab_focus()
 		visible = true
@@ -157,8 +110,49 @@ func _process(_delta):
 		if Input.is_action_just_pressed("ui_accept"):
 			to_menu(menus[i])
 			
-	elif Input.is_action_just_pressed("ui_end"):#menu_state < len(menus):
-		to_main(menus[menu_state])
+	else:
+		if Input.is_action_just_pressed("ui_end"):
+			to_main(menus[menu_state])
+	
+		if menu_state == MENU_STATE.SLOGANS:
+			if n_of_slogans:
+				current_el = slogan_list[index]
+				
+				political_compass_slog.set_main_pointer(current_el.political_pos.x, -current_el.political_pos.y)
+				political_compass_slog.set_damage_area(current_el.damage_area)
+				handle_input(n_of_slogans, slogan_selector)
+				
+				if Input.is_action_just_pressed("ui_accept"):
+					print(current_el.name, current_el.political_pos)
+
+				current_slogan_desc.text = current_el.name
+
+
+		if menu_state == MENU_STATE.MAFIA:
+			if n_of_voters:
+				current_el = mafia_container.get_child(index + 1)
+				handle_input(n_of_voters, mafia_selector)
+				current_voter_mafia_desc.text = current_el.npc_name + "\n" + str(current_el.mafia_target)
+		# Test-only function
+				if Input.is_action_just_pressed("ui_accept"):
+					current_el.set_mafia_target(-10)
+
+
+		if menu_state == MENU_STATE.OBJECTS:
+			if n_of_objects:
+				current_el = object_list[index]
+				current_object_desc.text = current_el.description
+				handle_input(n_of_objects, objects_selector)
+				
+				if Input.is_action_just_pressed("ui_accept"):
+					objects_container.get_child(index+1).foo(current_el.id) # Temporary Solution
+
+
+		if menu_state == MENU_STATE.PARTY:
+			handle_input(n_of_voters, voters_selector)
+
+	control.visible = menu_main
+	sprite.visible = menu_main
 
 
 func to_menu(dest: Node):
@@ -171,24 +165,23 @@ func to_menu(dest: Node):
 func to_main(src: Node):
 	menu_main = true
 	src.visible = false
-	menu_state = 4
 
 
 func priority_to_menu():
 	menu_main = true
-	state = 0
+	menulayers.position = player.position
 
 
 func priority_to_player():
 	if menu_main:
 		menu_main = false
-		state = 1
 		return true
 	return false
 
 
 func new_p():
-	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene'))
+#	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene')).get_children().back()
+	player = currentscene.get_children().back().find_node("Player")
 
 
 func slide_mafia_line(mafia_points: float):

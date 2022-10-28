@@ -3,7 +3,7 @@ extends Node2D
 #var next_scene = null
 
 
-onready var current_scene = get_child(0).get_child(0)
+onready var current_scene# = get_child(0).get_child(0)
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var menu = $Menu
 onready var ui = $UI
@@ -18,7 +18,7 @@ onready var save_file # Saved data File
 onready var slot: int # Id of file_saved slot (can be 1, 2 or 3)
 onready var loading_count: int = 1
 
-signal new_main_scene
+signal new_main_scene()
 # signal config
 
 var scene
@@ -41,6 +41,7 @@ func _ready():
 	ended_cutscenes = save_file.ended_cutscenes
 	current_scene = get_child(0).get_child(0)
 	transition_animation.play("FadeToTransparent")
+	menu.new_p()
 
 
 func cutscene_over(id):
@@ -64,8 +65,8 @@ func end_transition(player_pos):
 	var p = scene_container.get_children().back().find_node("Player")
 	if p:
 		p.position = player_pos
-
-	p.new_scene()
+		p.new_scene()
+	
 	emit_signal("new_main_scene")
 
 

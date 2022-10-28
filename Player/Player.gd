@@ -61,7 +61,8 @@ func _physics_process(delta):
 		if cutscene_activator.cutscene:
 			cutscene = true
 	
-	if menu.state != 1 or cutscene: #!= MenuState.CLOSE
+#	if menu.state != 1 or cutscene: #!= MenuState.CLOSE
+	if cutscene:
 		player_state = PlayerState.IN_PAUSE
 	if player_state == PlayerState.TURNING:
 		return
@@ -163,13 +164,13 @@ func move(delta):
 	else:
 		percent_to_next_tile = 0.0
 		is_moving = false
-		if Input.is_action_just_pressed('ui_accept') and menu.state != 0:#MenuState.OPENED:
+#		if Input.is_action_just_pressed('ui_accept') and menu.state != 0:#MenuState.OPENED:
+		if Input.is_action_just_pressed("ui_accept"):
 			if NPCraycast.is_colliding():
 				cutscene = true
 				var npc = NPCraycast.get_collider()
 				collided_with_npc(npc)
-			else:
-				if DoorRayCast.is_colliding():
+			elif DoorRayCast.is_colliding():
 					entered_door()
 
 

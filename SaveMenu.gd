@@ -1,5 +1,5 @@
 extends Control
-export(int) var state = 1
+#export(int) var state = 1
 export(Resource) var game_save_obj
 
 onready var yes = $Panel/Container/Yes

@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://SaveMenu.gd" type="Script" id=1]
 [ext_resource path="res://saved.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Fonts/Noto_Sans_TC/NotoSansTC-Regular.otf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+use_filter = true
+font_data = ExtResource( 3 )
 
 [node name="Control" type="Control"]
 margin_left = -60.0
@@ -27,6 +33,7 @@ margin_top = 2.0
 margin_right = 110.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 100, 14 )
+custom_fonts/font = SubResource( 1 )
 text = "Wanna save?"
 autowrap = true
 
