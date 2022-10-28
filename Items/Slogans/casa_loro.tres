@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 xp = 30
 political_pos = Vector2( 5, 2 )
-damage_area = PoolVector2Array( 0, -12, 34, -12, 34, 24, 0, 24 )
+damage_range = 6
 name = "Aiutiamoli a casa loro"
 id = 0
 prize = 50

@@ -87,5 +87,5 @@ func _process(_delta):
 
 
 func start_game():
-	scene_manager.start_transition("res://Scenes/Level1.tscn", Vector2(80, 16))
+	scene_manager.start_transition(scene_manager.first_scene_path, Vector2(80, 16))
 	ui.visibility(true)

@@ -29,6 +29,11 @@ enum FacingDirection { LEFT, UP, RIGHT, DOWN }
 onready var current_open_menu = null
 onready var cutscene = false
 
+# Lists all doors in the current scene
+# All doors are loaded before ready() starts
+
+onready var doors = []
+
 var is_moving = false
 var initial_position = Vector2(0, 0)
 var input_direction = Vector2(0, 0)
@@ -39,6 +44,7 @@ var direction = FacingDirection.DOWN
 signal enter_door()
 
 func _ready():
+	# doors = [] -> the initialization had to be done in Door.gd
 	cutscene_activator = scenemanager.get_child(0).get_children().back().find_node("CutsceneActivator")
 	var current_scene = scenemanager.get_child(0).get_child(0)
 	

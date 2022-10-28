@@ -1,8 +1,14 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
 [ext_resource path="res://Parties/party.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/InsideHouse.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=4]
+[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=5]
+[ext_resource path="res://Items/Slogans/cose_buone.tres" type="Resource" id=6]
+[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=7]
+[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=8]
+[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=9]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -12,13 +18,13 @@ political_pos = Vector2( 0, 0 )
 
 [resource]
 script = ExtResource( 1 )
-name = "Umberto"
-slogans = [  ]
-objects = [  ]
+name = "No"
+slogans = [ ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 6 ) ]
+objects = [ ExtResource( 9 ) ]
 voters = [  ]
-ended_cutscenes = [  ]
+ended_cutscenes = [ 1, 1 ]
 current_scene = ExtResource( 3 )
 player_party = SubResource( 1 )
-player_pos = Vector2( 80, 64 )
-money = 1000
+player_pos = Vector2( 0, 160 )
+money = 750
 votes = 0

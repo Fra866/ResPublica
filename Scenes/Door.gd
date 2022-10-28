@@ -10,6 +10,11 @@ export(Vector2) var next_player_pos
 #signal entered_door
 
 func _ready():
+	if player.doors == null:
+		player.doors = []
+	
+	print("Doors: ", player.doors)
+	player.doors.append(self)
 	player.connect("enter_door", self, "entering")
 
 

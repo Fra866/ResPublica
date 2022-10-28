@@ -81,6 +81,11 @@ func machiavelli_cutscene():
 #	print(machiavelli.position)
 
 
+func bar_start_scene():
+	print("Bar Starting Scene")
+	cutscene = false
+
+
 func start_cutscene():
 	cutscene = not cutscene_code in scenemanager.ended_cutscenes
 	if cutscene:
@@ -89,9 +94,12 @@ func start_cutscene():
 				machiavelli_cutscene()
 			1:
 				virgilio_cutscene()
+			2:
+				bar_start_scene()
 	
 		scenemanager.ended_cutscenes.append(cutscene_code)
 #	print(scenemanager.ended_cutscenes)
+
 
 func _process(_delta):
 	if player and enabled:

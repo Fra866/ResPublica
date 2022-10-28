@@ -6,7 +6,7 @@
 script = ExtResource( 2 )
 xp = 30
 political_pos = Vector2( 3, 8 )
-damage_area = PoolVector2Array( 4, -4, 34, -4, 34, -34, 4, -34 )
+damage_range = 8
 name = "Ha fatto anche cose buone"
 id = 1
 prize = 50
