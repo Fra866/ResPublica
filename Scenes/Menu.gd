@@ -61,9 +61,16 @@ var object_index: int = 0
 var voter_index: int = 0
 var mafia_index: int = 0
 
+var objects_open = false
+
 onready var slogan_list: Array = []
 onready var object_list: Array = []
 onready var voter_list: Array = []
+
+onready var use_script_obj
+onready var obj_type
+onready var obj_node
+onready var open_obj_id: int = -1
 
 onready var i=0
 onready var buttons = [
@@ -74,6 +81,7 @@ onready var buttons = [
 ]
 
 onready var name_text = $MenuLayers/MainMenu/Control/Name
+
 
 func _ready():
 	screentransition.connect("new_main_scene", self, "new_p")
@@ -113,10 +121,11 @@ func _process(_delta):
 		else:
 			no_slog_text.visible = false
 			slogan_selector.visible = true
+			slogan_container.visible = true
 			current_slog = slogan_list[slogan_index]
 			
 			political_compass_slog.set_main_pointer(current_slog.political_pos.x, -current_slog.political_pos.y)
-			political_compass_slog.set_damage_area(current_slog.damage_area)
+			political_compass_slog.set_damage_area(current_slog.damage_range)
 			slogan_index = handle_input(slogan_index, n_of_slogans, slogan_selector)
 			
 			if Input.is_action_just_pressed("ui_accept"):
@@ -150,9 +159,26 @@ func _process(_delta):
 			current_object_desc.text = current_object.description
 			object_index = handle_input(object_index, n_of_objects, objects_selector)
 			
+			var obj_node = objects_container.get_child(object_index+1)
 			if Input.is_action_just_pressed("ui_accept"):
-				objects_container.get_child(object_index+1).foo(current_object.id) # Temporary Solution
-	
+				if (open_obj_id != current_object.id):
+					# Gets the script of the current node directly
+					use_script_obj = obj_node.object.game_object_resource.use_script
+					
+					# Loads the script (I had to call the _ready function manually for some reason)
+					obj_type = load(use_script_obj.get_path()).new()
+					obj_type._ready()
+					
+					# Standard object's function foo() returns an effect
+					# In this specific case it's the mail wrapper
+					# May also be null for battle objects or stuff like that
+					# The effect becomes part of the tree node
+					add_child(obj_type.foo(current_object.id))
+					
+					open_obj_id = current_object.id
+				else:
+					remove_child(get_child(1))
+					open_obj_id = -1
 	
 	if menu_state == MENU_STATE.PARTY:
 		voter_index = handle_input(voter_index, n_of_voters, voters_selector)
@@ -184,7 +210,18 @@ func _process(_delta):
 					priority_to_party_options()
 				3:
 					priority_to_mafia()
+	
+	elif !player.current_open_menu:
+		for menu in menus:
+			menu.visible = false
+		
+		# If there is an object effect still visible, remove it while closing the menu
+		if (get_child(1)):
+			remove_child(get_child(1))
+		print(menu_main)
+	
 	if Input.is_action_just_pressed("ui_end") and menu_state < len(menus):
+		print("menus[menu_state] == ", menus[menu_state])
 		to_main(menus[menu_state])
 
 
@@ -230,9 +267,9 @@ func priority_to_menu():
 
 
 func priority_to_player():
-	if menu_main:
-		menu_main = false
-		state = 1
+	#if menu_main:
+	menu_main = false
+	state = 1
 
 
 func new_p():

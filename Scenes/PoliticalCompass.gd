@@ -43,7 +43,6 @@ func set_enemy_pointer(x: float, y: float):
 
 func set_damage_area(d_range: int):
 	damage_area.position = main_pointer.rect_position - Vector2(-2, -2)
-	print(damage_area.shape.radius)
 	damage_area.shape.radius = d_range*2
 
 

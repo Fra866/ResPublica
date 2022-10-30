@@ -1,12 +1,13 @@
 extends CanvasLayer
 
 onready var label = $MarginContainer/Panel/RichTextLabel
-onready var container
+onready var container = $MarginContainer
 var m_text: String
 var maxchar: int
 var rect_x : int
 var words = []
 var line_id = 0
+onready var open: bool = false
 
 
 func _ready():
@@ -24,7 +25,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("ui_up") and line_id > 2:
 		line_id -= 3
 		label.scroll_to_line(line_id)
-	if Input.is_action_just_pressed("ui_end"):
+	if Input.is_action_just_pressed("ui_accept") and open:
 		self_close()
 
 
@@ -48,11 +49,37 @@ func split(text: String):
 
 	words.append(word)
 
-func display():
+
+func display(content: String):
+	var word = ""
+	for i in len(content):
+		if content[i] != ' ' or '\n':
+			word += content[i]
+		else:
+			word += content[i]
+			words.append(word)
+			word = ""
+
+	words.append(word)
+	
 	var c = 0
+	var label = $MarginContainer/Panel/RichTextLabel
+	var container = $MarginContainer
+#	container.visible = true
+	
 	for wd in words:
+		print(wd)
 		if c + len(wd) > maxchar:
 			label.newline()
 			c = 0
 		label.add_text(wd)
 		c += len(wd)
+	
+	print(label.text)
+	$MarginContainer.visible = true
+
+	print(container.visible)
+
+
+func hide():
+	container.visible = false

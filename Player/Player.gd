@@ -15,7 +15,6 @@ onready var animstate = animtree.get('parameters/playback')
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var shop_box = get_node(NodePath('/root/SceneManager/ShopBox'))
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
-# onready var door = get_node(NodePath('..')).find_node('Door')
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var saveMenu = get_node(NodePath("/root/SceneManager/Control"))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
@@ -119,7 +118,8 @@ func openClose(m):
 		open_menu(m)
 	elif current_open_menu == m:
 		close_menu(m)
-	print(current_open_menu)
+	print("Current open menu: ", current_open_menu)
+	print("m: ", m)
 
 
 func open_menu(m):
