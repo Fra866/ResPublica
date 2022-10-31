@@ -61,9 +61,16 @@ var menu_main: bool = false
 #var mafia_index: int = 0
 var index: int = 0
 
+var objects_open = false
+
 onready var slogan_list: Array = []
 onready var object_list: Array = []
 onready var voter_list: Array = []
+
+onready var use_script_obj
+onready var obj_type
+onready var obj_node
+onready var open_obj_id: int = -1
 
 onready var i=0
 onready var buttons = [
@@ -74,6 +81,7 @@ onready var buttons = [
 ]
 
 onready var name_text = $MenuLayers/MainMenu/Control/Name
+
 
 func _ready():
 	screentransition.connect("new_main_scene", self, "new_p")
@@ -93,10 +101,96 @@ func _ready():
 
 
 func _process(_delta):
+<<<<<<< HEAD
 	n_of_slogans = len(slogan_list)
 	n_of_objects = len(object_list)
 	n_of_voters = len(voter_list)
 
+=======
+	n_of_slogans = slogan_container.get_child_count() - 1
+	n_of_objects = objects_container.get_child_count() - 1
+	n_of_voters = voters_container.get_child_count() - 1
+	
+	player = get_node(NodePath('..')).get_child(0).get_children().back().find_node("Player")
+	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene')).get_child(0)
+	
+	
+	if player:
+		control.visible = menu_main
+		sprite.visible = menu_main
+		menulayers.position = player.position
+
+	if menu_state == MENU_STATE.SLOGANS:
+		if n_of_slogans == 0:
+			no_slog_text.visible = true
+			slogan_selector.visible = false
+		else:
+			no_slog_text.visible = false
+			slogan_selector.visible = true
+			slogan_container.visible = true
+			current_slog = slogan_list[slogan_index]
+			
+			political_compass_slog.set_main_pointer(current_slog.political_pos.x, -current_slog.political_pos.y)
+			political_compass_slog.set_damage_area(current_slog.damage_range)
+			slogan_index = handle_input(slogan_index, n_of_slogans, slogan_selector)
+			
+			if Input.is_action_just_pressed("ui_accept"):
+				print(current_slog.name, current_slog.political_pos)
+
+			current_slogan_desc.text = current_slog.name
+
+	
+	if menu_state == MENU_STATE.MAFIA:
+		mafia_displayer.visible = n_of_voters
+		mafiometer.visible = n_of_voters
+		mafia_selector.visible = mafia_displayer.visible
+		
+		if n_of_voters:
+			var current_mv = mafia_container.get_child(mafia_index + 1)
+			mafia_index = handle_input(mafia_index, n_of_voters, mafia_selector)
+			current_voter_mafia_desc.text = current_mv.npc_name + "\n" + str(current_mv.mafia_target)
+# Test-only function
+			if Input.is_action_just_pressed("ui_accept"):
+				current_mv.set_mafia_target(-10)
+			
+	
+	if menu_state == MENU_STATE.OBJECTS:
+		if n_of_objects == 0:
+			no_slog_text.visible = true
+			objects_selector.visible = false
+		else:
+			no_obj_text.visible = false
+			objects_selector.visible = true
+			current_object = object_list[object_index]
+			current_object_desc.text = current_object.description
+			object_index = handle_input(object_index, n_of_objects, objects_selector)
+			
+			var obj_node = objects_container.get_child(object_index+1)
+			if Input.is_action_just_pressed("ui_accept"):
+				if (open_obj_id != current_object.id):
+					# Gets the script of the current node directly
+					use_script_obj = obj_node.object.game_object_resource.use_script
+					
+					# Loads the script (I had to call the _ready function manually for some reason)
+					obj_type = load(use_script_obj.get_path()).new()
+					obj_type._ready()
+					
+					# Standard object's function foo() returns an effect
+					# In this specific case it's the mail wrapper
+					# May also be null for battle objects or stuff like that
+					# The effect becomes part of the tree node
+					add_child(obj_type.foo(current_object.id))
+					
+					open_obj_id = current_object.id
+				else:
+					remove_child(get_child(1))
+					open_obj_id = -1
+	
+	if menu_state == MENU_STATE.PARTY:
+		voter_index = handle_input(voter_index, n_of_voters, voters_selector)
+	
+	
+>>>>>>> refs/remotes/origin/main
 	if menu_main:
 		buttons[i].grab_focus()
 		visible = true
@@ -109,6 +203,7 @@ func _process(_delta):
 				i -= 1
 		if Input.is_action_just_pressed("ui_accept"):
 			to_menu(menus[i])
+<<<<<<< HEAD
 			
 	else:
 		if Input.is_action_just_pressed("ui_end"):
@@ -124,6 +219,30 @@ func _process(_delta):
 				
 				if Input.is_action_just_pressed("ui_accept"):
 					print(current_el.name, current_el.political_pos)
+=======
+			match menu_state:
+				0:
+					priority_to_slogans()
+				1:
+					priority_to_objects()
+				2:
+					priority_to_party_options()
+				3:
+					priority_to_mafia()
+	
+	elif !player.current_open_menu:
+		for menu in menus:
+			menu.visible = false
+		
+		# If there is an object effect still visible, remove it while closing the menu
+		if (get_child(1)):
+			remove_child(get_child(1))
+		print(menu_main)
+	
+	if Input.is_action_just_pressed("ui_end") and menu_state < len(menus):
+		print("menus[menu_state] == ", menus[menu_state])
+		to_main(menus[menu_state])
+>>>>>>> refs/remotes/origin/main
 
 				current_slogan_desc.text = current_el.name
 
