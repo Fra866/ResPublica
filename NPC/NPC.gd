@@ -69,6 +69,7 @@ func setting_up_sprite():
 
 func interaction(player):
 	animtree.set("parameters/blend_position", (player.position - position) / 16)
+	print(self)
 	dialouge_box.display_dialouge(self)
 
 

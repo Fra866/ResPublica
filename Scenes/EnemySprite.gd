@@ -18,7 +18,9 @@ export(float, 0, 100, 10) var mafia_target
 func _ready():
 	pass
 
+
 func init(enemy, battle:= false):
+	print(enemy)
 	if battle:
 		npc_name = enemy.name
 		npc_desc = enemy.description

@@ -108,11 +108,17 @@ func _process(_delta):
 	player = get_node(NodePath('..')).get_child(0).get_children().back().find_node("Player")
 	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene')).get_child(0)
 	
-	
 	if player:
 		control.visible = menu_main
 		sprite.visible = menu_main
 		menulayers.position = player.position
+		
+		if !player.current_open_menu:
+			for menu in menus:
+				menu.visible = false
+			
+			menu_state = 4
+			remove_obj_effect()
 
 	if menu_state == MENU_STATE.SLOGANS:
 		if n_of_slogans == 0:
@@ -132,7 +138,6 @@ func _process(_delta):
 				print(current_slog.name, current_slog.political_pos)
 
 			current_slogan_desc.text = current_slog.name
-
 	
 	if menu_state == MENU_STATE.MAFIA:
 		mafia_displayer.visible = n_of_voters
@@ -143,7 +148,7 @@ func _process(_delta):
 			var current_mv = mafia_container.get_child(mafia_index + 1)
 			mafia_index = handle_input(mafia_index, n_of_voters, mafia_selector)
 			current_voter_mafia_desc.text = current_mv.npc_name + "\n" + str(current_mv.mafia_target)
-# Test-only function
+		# Test-only function
 			if Input.is_action_just_pressed("ui_accept"):
 				current_mv.set_mafia_target(-10)
 			
@@ -161,7 +166,9 @@ func _process(_delta):
 			
 			var obj_node = objects_container.get_child(object_index+1)
 			if Input.is_action_just_pressed("ui_accept"):
+				print(menu_state == MENU_STATE.OBJECTS)
 				if (open_obj_id != current_object.id):
+					remove_obj_effect()
 					# Gets the script of the current node directly
 					use_script_obj = obj_node.object.game_object_resource.use_script
 					
@@ -174,10 +181,9 @@ func _process(_delta):
 					# May also be null for battle objects or stuff like that
 					# The effect becomes part of the tree node
 					add_child(obj_type.foo(current_object.id))
-					
 					open_obj_id = current_object.id
 				else:
-					remove_child(get_child(1))
+					remove_obj_effect()
 					open_obj_id = -1
 	
 	if menu_state == MENU_STATE.PARTY:
@@ -185,6 +191,7 @@ func _process(_delta):
 	
 	
 	if menu_main:
+		remove_obj_effect()
 		buttons[i].grab_focus()
 		visible = true
 		
@@ -201,6 +208,7 @@ func _process(_delta):
 				i -= 1
 		if Input.is_action_just_pressed("ui_accept"):
 			to_menu(menus[i])
+			remove_obj_effect()
 			match menu_state:
 				0:
 					priority_to_slogans()
@@ -210,15 +218,6 @@ func _process(_delta):
 					priority_to_party_options()
 				3:
 					priority_to_mafia()
-	
-	elif !player.current_open_menu:
-		for menu in menus:
-			menu.visible = false
-		
-		# If there is an object effect still visible, remove it while closing the menu
-		if (get_child(1)):
-			remove_child(get_child(1))
-		print(menu_main)
 	
 	if Input.is_action_just_pressed("ui_end") and menu_state < len(menus):
 		print("menus[menu_state] == ", menus[menu_state])
@@ -240,6 +239,9 @@ func to_main(src: Node):
 	
 	print(src, ": ", src.visible)
 
+func remove_obj_effect():
+	if get_children().size() != 1:
+		remove_child(get_child(1))
 
 func priority_to_party_options():
 	no_party_text.visible = !party

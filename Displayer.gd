@@ -63,23 +63,17 @@ func display(content: String):
 	words.append(word)
 	
 	var c = 0
-	var label = $MarginContainer/Panel/RichTextLabel
-	var container = $MarginContainer
+	var local_label = $MarginContainer/Panel/RichTextLabel
 #	container.visible = true
 	
 	for wd in words:
-		print(wd)
 		if c + len(wd) > maxchar:
-			label.newline()
+			local_label.newline()
 			c = 0
-		label.add_text(wd)
+		local_label.add_text(wd)
 		c += len(wd)
 	
-	print(label.text)
 	$MarginContainer.visible = true
-
-	print(container.visible)
-
 
 func hide():
 	container.visible = false

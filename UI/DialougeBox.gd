@@ -44,6 +44,8 @@ func _ready():
 
 func display_dialouge(npc):
 	current_npc = npc
+	
+	print(current_npc)
 	npc_name = npc.name
 	
 	d_list = npc.dialouge_list

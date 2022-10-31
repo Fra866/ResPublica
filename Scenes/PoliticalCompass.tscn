@@ -42,6 +42,6 @@ __meta__ = {
 [node name="Node2D" type="StaticBody2D" parent="."]
 
 [node name="DamageArea" type="CollisionShape2D" parent="Node2D"]
-modulate = Color( 1, 0, 0, 1 )
+modulate = Color( 0.101961, 0.129412, 0.901961, 1 )
 scale = Vector2( 0.6, 0.6 )
 shape = SubResource( 1 )

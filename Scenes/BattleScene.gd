@@ -193,7 +193,7 @@ func _process(_delta):
 			slogButton.grab_focus()
 
 
-func handle_input(index, maxv, selector):
+func handle_input(index, maxv, select):
 	if Input.is_action_just_pressed("ui_left") and index:
 		index -= 1
 	if Input.is_action_just_pressed("ui_right") and index < maxv - 1:
@@ -203,7 +203,7 @@ func handle_input(index, maxv, selector):
 	if Input.is_action_just_pressed("ui_up") and index > 6:
 		index -= 7
 	
-	selector.rect_position = Vector2(32 * (index % maxv), 40*(index / maxv))
+	select.rect_position = Vector2(32 * (index % maxv), 40*(index / maxv))
 	return index
 
 
@@ -307,15 +307,16 @@ func extra_damage():
 
 
 func damage(p_pos: Vector2):
-	var pos_in_compass = Vector2(-2 + 4*enemy_sprite.political_pos.x, -2 + 4*(-enemy_sprite.political_pos.y))
+	npcBar.value -= political_compass.hit(p_pos, enemy_sprite.political_pos)
+#	var pos_in_compass = Vector2(-2 + 4*enemy_sprite.political_pos.x, -2 + 4*(-enemy_sprite.political_pos.y))
 	
-	if Geometry.is_point_in_polygon(pos_in_compass, political_compass.damage_area.polygon):
-		var d = 10 - (enemy_sprite.political_pos - p_pos).length()
-		d += extra_damage()
-		print("Extra dam: ", extra_damage())
-		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
-		
-		npcBar.value -= d
+#	if Geometry.is_point_in_polygon(pos_in_compass, political_compass.damage_area.polygon):
+#		var d = 10 - (enemy_sprite.political_pos - p_pos).length()
+#		d += extra_damage()
+#		print("Extra dam: ", extra_damage())
+#		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
+#
+#		npcBar.value -= d
 
 
 func capture_enemy():

@@ -26,7 +26,6 @@ var first_scene_path = "res://Scenes/Level1.tscn"
 
 
 func _ready():
-	print("Ready SceneManager")
 	ended_cutscenes = save_file.ended_cutscenes
 #	scene_container.get_child(0).queue_free()
 	for i in scene_container.get_children():
@@ -37,7 +36,6 @@ func _ready():
 	if !scene:
 		starting_game()
 	
-	print(scene)
 	scene_container.add_child(scene.instance())
 #	list_npc = save_file.list_npc
 	ended_cutscenes = save_file.ended_cutscenes
@@ -73,7 +71,6 @@ func end_transition(player_pos):
 func starting_game():
 	print('Game started')
 	scene = load("res://Scenes/InitialCutscene.tscn")
-	print(scene)
 
 
 #func loadAll():

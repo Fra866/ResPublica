@@ -22,5 +22,4 @@ func entering(_player_pos, _door):
 	if _door == self:
 		print('Entered on door: ', next_scene_path)
 		emit_signal("entered_door")
-		print(next_scene_path)
 		scenemanager.start_transition(next_scene_path, next_player_pos)

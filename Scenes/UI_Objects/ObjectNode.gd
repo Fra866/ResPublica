@@ -14,7 +14,7 @@ func _ready():
 #	sprite.texture = load('res://Images/Objects/' + path_texture)
 
 
-func foo(id: int):
+func foo(_id: int):
 	print("Foo (object_node)")
 	# print(get_child(0).game_object_resource.use_script.open)
 	var script = load(object_res.use_script.get_path()).new()

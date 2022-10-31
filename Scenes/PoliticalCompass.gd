@@ -43,7 +43,7 @@ func set_enemy_pointer(x: float, y: float):
 
 func set_damage_area(d_range: int):
 	damage_area.position = main_pointer.rect_position - Vector2(-2, -2)
-	damage_area.shape.radius = d_range*2
+	damage_area.shape.radius = d_range*4
 
 
 func hide_damage_area():
@@ -52,7 +52,7 @@ func hide_damage_area():
 
 
 func show_damage_area(vis: bool):
-	damage_area.visible = true
+	damage_area.visible = vis
 
 
 func set_line(initial_pos: Vector2, x: float, y: float):
@@ -67,3 +67,13 @@ func hide_line():
 
 func enemy_pointer_visible(vis: bool):
 	enemy_pointer.visible = vis
+
+func distance_between_pointers(a: Vector2, b: Vector2):
+	return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2))
+
+func hit(a: Vector2, b: Vector2):
+	print(a, b)
+	print(damage_area.shape.radius, " - ", distance_between_pointers(a, b))
+	if distance_between_pointers(a, b) <= damage_area.shape.radius:
+		return ((damage_area.shape.radius - distance_between_pointers(a, b))*20)/damage_area.shape.radius
+	return -1

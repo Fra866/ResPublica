@@ -47,9 +47,9 @@ func generate(attacks_list):
 	yield(get_tree().create_timer(3), "timeout")
 
 
-func start_attack(attack, time_of_action: float):
-	attack_container.add_child(attack)
-	player_pointer.set_battle_raycast(attack.raycast)
+func start_attack(att, time_of_action: float):
+	attack_container.add_child(att)
+	player_pointer.set_battle_raycast(att.raycast)
 	yield(get_tree().create_timer(time_of_action), "timeout")
 
 
