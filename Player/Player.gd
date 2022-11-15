@@ -40,7 +40,7 @@ var percent_to_next_tile = 0.0
 var player_state = PlayerState.IDLE
 var direction = FacingDirection.DOWN
 
-signal enter_door()
+signal enter_door(door)
 
 func _ready():
 	# doors = [] -> the initialization had to be done in Door.gd
@@ -138,11 +138,12 @@ func collided_with_npc(npc):
 	npc.interaction(self)
 
 
-func entered_door():
+func entered_door(door):
 	cutscene = true
 	visible = false
 	camera.clear_current()
-	emit_signal("enter_door")
+#Or: door.entering()
+	emit_signal("enter_door", door)
 
 
 func new_scene():
@@ -176,7 +177,7 @@ func move(delta):
 				var npc = NPCraycast.get_collider()
 				collided_with_npc(npc)
 			elif DoorRayCast.is_colliding():
-					entered_door()
+					entered_door(DoorRayCast.get_collider())
 
 
 func need_to_turn():
