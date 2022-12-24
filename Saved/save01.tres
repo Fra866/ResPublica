@@ -6,6 +6,8 @@
 [ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=5]
 [ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=6]
 [ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=7]
+[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=4]
+[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=5]
 [ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=9]
 
 [sub_resource type="Resource" id=1]
@@ -26,4 +28,3 @@ current_scene = ExtResource( 3 )
 player_party = SubResource( 1 )
 player_pos = Vector2( -64, 48 )
 money = 850
-votes = 200

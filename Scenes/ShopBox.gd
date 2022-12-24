@@ -48,6 +48,7 @@ func priority_to_menu():
 	objectbg.visible = false
 	text_box.visible = true
 	political_compass.visibility(true)
+	political_compass.show_damage_area(true)
 	open = true
 	first_accept = true
 
@@ -127,5 +128,6 @@ func handle_input(index, maxv, selector):
 func priority_to_player():
 	background.visible = false
 	text_box.visible = false
+	political_compass.show_damage_area(false)
 	political_compass.visibility(false)
 	player.get_priority()

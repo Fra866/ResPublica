@@ -253,8 +253,9 @@ func playerAttack(slogan):
 		slogan.xp -= 1
 	
 		attacking = true
-		political_compass.visible = false
-		political_compass.show_damage_area(false)
+#		political_compass.visible = false
+#		political_compass.show_damage_area(false)
+		political_compass.visibility(false)
 		political_compass.set_main_pointer(player_pos.x, -player_pos.y)
 		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
 		political_compass.hide_line()
@@ -275,7 +276,8 @@ func playerAttack(slogan):
 
 
 func npcAttack():
-	political_compass.hide_damage_area()
+#	political_compass.hide_damage_area()
+	political_compass.show_damage_area(false)
 	turn = TURN.ATTACKING
 	battlebox.reset_pointer()
 	battlebox.visible = true
@@ -310,15 +312,6 @@ func extra_damage():
 
 func damage(p_pos: Vector2):
 	npcBar.value -= political_compass.hit(p_pos, enemy_sprite.political_pos)
-#	var pos_in_compass = Vector2(-2 + 4*enemy_sprite.political_pos.x, -2 + 4*(-enemy_sprite.political_pos.y))
-	
-#	if Geometry.is_point_in_polygon(pos_in_compass, political_compass.damage_area.polygon):
-#		var d = 10 - (enemy_sprite.political_pos - p_pos).length()
-#		d += extra_damage()
-#		print("Extra dam: ", extra_damage())
-#		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
-#
-#		npcBar.value -= d
 
 
 func capture_enemy():

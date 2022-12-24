@@ -5,7 +5,6 @@ onready var enemy_pointer = $Pointer2
 onready var next_position = $Line2D
 onready var damage_area = $Node2D/DamageArea
 
-
 func _ready():
 	visible = false
 	main_pointer.visible = false
@@ -16,6 +15,7 @@ func _ready():
 func visibility(vis: bool):
 	visible = vis
 	main_pointer.visible = vis
+	show_damage_area(false)
 
 
 func reset_pointer():
@@ -47,8 +47,9 @@ func set_damage_area(d_range: int):
 
 
 func hide_damage_area():
-	get_tree().debug_collisions_hint = false
-	damage_area.visible = false
+	pass
+#	get_tree().debug_collisions_hint = false
+#	damage_area.visible = false
 
 
 func show_damage_area(vis: bool):
@@ -71,9 +72,11 @@ func enemy_pointer_visible(vis: bool):
 func distance_between_pointers(a: Vector2, b: Vector2):
 	return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2))
 
+
 func hit(a: Vector2, b: Vector2):
-	print(a, b)
-	print(damage_area.shape.radius, " - ", distance_between_pointers(a, b))
-	if distance_between_pointers(a, b) <= damage_area.shape.radius:
-		return ((damage_area.shape.radius - distance_between_pointers(a, b))*20)/damage_area.shape.radius
-	return -1
+	var dist = sqrt(distance_between_pointers(a, b))
+	if dist < damage_area.shape.radius:
+		return 20 * (1 - (dist / damage_area.shape.radius))
+	elif dist > damage_area.shape.radius:
+		return -1
+	return 0

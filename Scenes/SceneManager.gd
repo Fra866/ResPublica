@@ -1,9 +1,9 @@
 extends Node2D
 
-var next_scene = null
+#var next_scene = null
 
 
-onready var current_scene = get_child(0).get_child(0)
+onready var current_scene# = get_child(0).get_child(0)
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
 onready var menu = $Menu
 onready var ui = $UI
@@ -18,7 +18,7 @@ onready var save_file # Saved data File
 onready var slot: int # Id of file_saved slot (can be 1, 2 or 3)
 onready var loading_count: int = 1
 
-signal new_main_scene
+signal new_main_scene()
 # signal config
 
 var scene
@@ -41,16 +41,17 @@ func _ready():
 	ended_cutscenes = save_file.ended_cutscenes
 	current_scene = get_child(0).get_child(0)
 	transition_animation.play("FadeToTransparent")
+	menu.new_p()
 
 
 func cutscene_over(id):
 	ended_cutscenes.append(id)
 
 
-# warning-ignore:shadowed_variable
-func start_transition(scene: String, player_pos):
+
+func start_transition(next_scene: String, player_pos):
 	loading_count += 1
-	next_scene = scene
+	scene = next_scene
 	transition_animation.play("FadeToBlack")
 	scene_container.get_child(0).queue_free()
 	for i in scene_container.get_children():
@@ -60,17 +61,17 @@ func start_transition(scene: String, player_pos):
 
 
 func end_transition(player_pos):
-	scene_container.add_child(load(next_scene).instance())
+	scene_container.add_child(load(scene).instance())
 	transition_animation.play("FadeToTransparent")
 	var p = scene_container.get_children().back().find_node("Player")
 	if p:
 		p.position = player_pos
-
+		p.new_scene()
+	
 	emit_signal("new_main_scene")
 
 
 func starting_game():
-	print('Game started')
 	scene = load("res://Scenes/InitialCutscene.tscn")
 
 

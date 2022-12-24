@@ -56,9 +56,8 @@ func _ready():
 		position = save_file.player_pos
 	else:
 		initial_position = position
-	
-	for door in doors:
-		door.connect('entered_door', self, 'new_scene')
+#	door = get_node(NodePath('..')).find_node('Door')
+#	door.connect('entered_door', self, 'new_scene')
 
 
 func _physics_process(delta):
@@ -66,7 +65,8 @@ func _physics_process(delta):
 		if cutscene_activator.cutscene:
 			cutscene = true
 	
-	if menu.state != 1 or cutscene: #!= MenuState.CLOSE
+#	if menu.state != 1 or cutscene: #!= MenuState.CLOSE
+	if cutscene:
 		player_state = PlayerState.IN_PAUSE
 	if player_state == PlayerState.TURNING:
 		return
@@ -115,10 +115,8 @@ func process_player_input():
 func openClose(m):
 	if player_state != PlayerState.IN_PAUSE:
 		open_menu(m)
-	elif current_open_menu == m:
-		close_menu(m)
-	print("Current open menu: ", current_open_menu)
-	print("m: ", m)
+	elif (current_open_menu == m) and m.priority_to_player():
+		close_menu()
 
 
 func open_menu(m):
@@ -128,12 +126,10 @@ func open_menu(m):
 #	m.set("state", 0) #MenuState.OPENED
 
 
-func close_menu(m):
+func close_menu():
 	cutscene = false
 	current_open_menu = null
 	player_state = PlayerState.IDLE
-	
-	m.priority_to_player()
 #	m.set("state", 1) # MenuState.CLOSED
 
 
@@ -142,11 +138,12 @@ func collided_with_npc(npc):
 	npc.interaction(self)
 
 
-func entered_door():
+func entered_door(door):
 	cutscene = true
 	visible = false
 	camera.clear_current()
-	emit_signal("enter_door", position, DoorRayCast.get_collider())
+#Or: door.entering()
+	emit_signal("enter_door", door)
 
 
 func new_scene():
@@ -173,14 +170,14 @@ func move(delta):
 	else:
 		percent_to_next_tile = 0.0
 		is_moving = false
-		if Input.is_action_just_pressed('ui_accept') and menu.state != 0:#MenuState.OPENED:
+#		if Input.is_action_just_pressed('ui_accept') and menu.state != 0:#MenuState.OPENED:
+		if Input.is_action_just_pressed("ui_accept"):
 			if NPCraycast.is_colliding():
 				cutscene = true
 				var npc = NPCraycast.get_collider()
 				collided_with_npc(npc)
-			else:
-				if DoorRayCast.is_colliding():
-					entered_door()
+			elif DoorRayCast.is_colliding():
+					entered_door(DoorRayCast.get_collider())
 
 
 func need_to_turn():

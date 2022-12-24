@@ -40,6 +40,3 @@ rect_min_size = Vector2( 100, 100 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 2 )
 scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}

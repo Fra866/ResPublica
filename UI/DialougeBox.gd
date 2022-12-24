@@ -8,7 +8,7 @@ onready var current_npc
 onready var shop_box = get_node(NodePath('/root/SceneManager/ShopBox'))
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
-onready var current_scene = scenemanager.get_child(0).get_child(0)
+onready var current_scene# = scenemanager.get_child(0).get_child(0)
 
 onready var initiator
 onready var player

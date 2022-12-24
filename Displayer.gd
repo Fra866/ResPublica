@@ -2,18 +2,16 @@ extends CanvasLayer
 
 onready var label = $MarginContainer/Panel/RichTextLabel
 onready var container = $MarginContainer
-var m_text: String
+#var m_text: String
 var maxchar: int
-var rect_x : int
 var words = []
 var line_id = 0
 onready var open: bool = false
 
 
 func _ready():
-	rect_x = label.rect_size.x
-#	Should be rect_x / font's width. Got to find a way to compute the latter, as Godot only shows the height.
-	maxchar = 16
+	var rect_x = label.rect_size.x
+	maxchar = rect_x / label.get_font("normal_font").get_string_size("a").x
 #	split(m_text)
 #	display()
 
@@ -65,15 +63,20 @@ func display(content: String):
 	var c = 0
 	var local_label = $MarginContainer/Panel/RichTextLabel
 #	container.visible = true
+#	container.visible = true
 	
 	for wd in words:
+#		print(wd)
 		if c + len(wd) > maxchar:
 			local_label.newline()
 			c = 0
 		local_label.add_text(wd)
 		c += len(wd)
 	
+#	print(label.text)
 	$MarginContainer.visible = true
+
+#	print(container.visible)
 
 func hide():
 	container.visible = false

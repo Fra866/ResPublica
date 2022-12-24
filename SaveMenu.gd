@@ -1,5 +1,5 @@
 extends Control
-export(int) var state = 1
+#export(int) var state = 1
 export(Resource) var game_save_obj
 
 onready var yes = $Panel/Container/Yes
@@ -26,6 +26,7 @@ func priority_to_menu():
 func priority_to_player():
 #	print('Priority to P1')
 	self.visible = false
+	return true
 #	state = 1
 
 
@@ -36,9 +37,9 @@ func _process(_delta):
 		if Input.is_action_just_pressed("ui_accept"):
 			if yes.has_focus():
 				save_all()
+				player.openClose(self)
 			if no.has_focus():
 				get_tree().quit()
-			player.close_menu(self)
 
 
 func save_all():

@@ -83,7 +83,7 @@ position = Vector2( 192, 0 )
 
 [node name="Door2" parent="YSort/Bar" instance=ExtResource( 5 )]
 next_scene_path = "res://Scenes/BarScene.tscn"
-next_player_pos = Vector2( 144, 176 )
+next_player_pos = Vector2( 144, 192 )
 
 [node name="CutsceneActivator" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 80, 80 )
