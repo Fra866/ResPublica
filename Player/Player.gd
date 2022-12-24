@@ -1,6 +1,5 @@
 extends KinematicBody2D
 
-
 export(float) var walk_speed = 4.0
 
 const TILE_SIZE = 16
@@ -139,6 +138,7 @@ func close_menu(m):
 
 
 func collided_with_npc(npc):
+	print(npc.name)
 	npc.interaction(self)
 
 

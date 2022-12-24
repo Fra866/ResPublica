@@ -326,17 +326,9 @@ func new_object(object):
 
 func new_voter(voter):
 	if not voter in voter_list:
-		
 		var new_voter_instance = load("res://Scenes/EnemySprite.tscn").instance()
 		new_voter_instance.init(voter)
-#		new_voter_instance.texture = voter.texture
-#		new_voter_instance.npc_name = voter.npc_name
-#		new_voter_instance.npc_desc = voter.npc_desc
-#		new_voter_instance.lvl = voter.lvl
-#		new_voter_instance.political_pos = voter.political_pos
-#		new_voter_instance.votes = voter.votes
-#		new_voter_instance.popularity = voter.popularity
-#		new_voter_instance.mafia_points = voter.mafia_points
+		print(new_voter_instance)
 		voter_list.append(new_voter_instance)
 		new_voter_instance.position = Vector2(32 * (n_of_voters % 4) + 5, 40 * (n_of_voters / 4) + 18)
 		n_of_voters += 1

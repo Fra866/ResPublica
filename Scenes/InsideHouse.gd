@@ -1,7 +1,11 @@
 extends Node2D
 
+onready var list_npc = [
+	$YSort/Seller,
+	$YSort/Virgilio
+]
 
-onready var virgilio = $YSort/Virgilio
+onready var virgilio = list_npc[1]
 onready var cutscene_activator = $CutsceneActivator
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
 

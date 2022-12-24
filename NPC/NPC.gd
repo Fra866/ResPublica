@@ -12,11 +12,12 @@ onready var texture
 
 onready var raycast = $RayCast2D
 
+export(int) var id
 export(Array, String) var dialouge_list
 export(Array, int) var attack_ids
 export(Array) var influence_area = [[],[]]
 export(bool) var is_seller
-export(bool) var battle_won
+export(bool) var start_battle
 
 export(String) var battle_sprite_path
 export(String) var description = ""
@@ -53,7 +54,6 @@ export(int) var hf
 export(int) var vf
 export(int) var f
 
-
 func _ready():
 	setting_up_sprite()
 	# animplayer.play("IdleRight")
@@ -69,8 +69,8 @@ func setting_up_sprite():
 
 func interaction(player):
 	animtree.set("parameters/blend_position", (player.position - position) / 16)
-	print(self)
-	dialouge_box.display_dialouge(self)
+	print("Interaction: ", self)
+	dialouge_box.display_dialouge(id)
 
 
 func _physics_process(delta):

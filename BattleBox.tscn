@@ -18,6 +18,9 @@ script = ExtResource( 2 )
 margin_right = 181.0
 margin_bottom = 154.0
 custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Walls" type="StaticBody2D" parent="."]
 

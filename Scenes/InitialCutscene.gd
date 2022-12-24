@@ -71,7 +71,7 @@ func ask_gender():
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_accept"):
-		if state == STATE_CUTSCENE.ASKING_NAME:
+		if state == STATE_CUTSCENE.ASKING_NAME and len(input_name_edit.text) >= 3:
 			name_label.text = input_name_edit.text
 			scene_manager.save_file.name = name_label.text
 			input_name_edit.visible = false
@@ -87,5 +87,5 @@ func _process(_delta):
 
 
 func start_game():
-	scene_manager.start_transition(scene_manager.first_scene_path, Vector2(80, 16))
+	scene_manager.start_transition(scene_manager.first_scene_path, Vector2(144, 176))
 	ui.visibility(true)

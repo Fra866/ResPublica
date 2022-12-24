@@ -31,6 +31,7 @@ signal priority_to_player
 signal send_npc(npc)
 signal npc_attacks(attack_ids_list)
 signal next_scene(scene, p_pos)
+
 #signal next_player_pos(player_pos)
 
 
@@ -41,17 +42,21 @@ func _ready():
 #func activate_dialouge():
 #	return true
 
+var npc_global_id: int
 
-func display_dialouge(npc):
-	current_npc = npc
+
+func display_dialouge(npc_id):
+	npc_global_id = npc_id
+	print("SceneManager: ", scenemanager.get_child(0).get_child(0))
+	current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_id]
+	print("Display Dial: ", current_npc)
+	npc_name = current_npc.name
 	
-	print(current_npc)
-	npc_name = npc.name
+	d_list = current_npc.dialouge_list
+	att_ids_list = current_npc.attack_ids
+	open_shop = current_npc.is_seller
 	
-	d_list = npc.dialouge_list
-	att_ids_list = npc.attack_ids
-	open_shop = npc.is_seller
-	has_won_battle = npc.battle_won
+	has_won_battle = current_npc.start_battle
 	
 #	print(menu.voter_list)
 
@@ -97,23 +102,21 @@ func _process(_delta):
 						$MarginContainer.visible = false
 						emit_signal("priority_to_player")
 					else:
+						print(has_won_battle)
 						if !has_won_battle:
 							var b: bool
 							for sprite in menu.voter_list:
 								if npc_name == sprite.npc_name:
 									b = true
-#							if not npc_name in scenemanager.list_npc:
-#								scenemanager.list_npc.append(npc_name)
 							if !b and menu.party:
+								current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_global_id]
+								print("CURRENT_NPC DisplayBox process: ", current_npc)
 								scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 								emit_signal("send_npc", current_npc)
 								emit_signal("npc_attacks", att_ids_list)
 								emit_signal("next_scene", current_scene.name, player.position)
-								
 							else:
 								emit_signal("priority_to_player")
-#						else:
-#							pass
 				else:
 					emit_signal("priority_to_player")
 

@@ -22,7 +22,7 @@ signal new_main_scene
 # signal config
 
 var scene
-var first_scene_path = "res://Scenes/Level1.tscn"
+var first_scene_path = "res://Scenes/InsideHouse.tscn"
 
 
 func _ready():
@@ -47,6 +47,7 @@ func cutscene_over(id):
 	ended_cutscenes.append(id)
 
 
+# warning-ignore:shadowed_variable
 func start_transition(scene: String, player_pos):
 	loading_count += 1
 	next_scene = scene

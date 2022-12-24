@@ -20,7 +20,7 @@ func _ready():
 
 
 func start_cutscene_dialouge(npc):
-	dialouge_box.display_dialouge(npc)
+	dialouge_box.display_dialouge(npc.id)
 	
 	for _j in range(len(npc.dialouge_list) + 1):
 		yield(get_tree().create_timer(1.5), "timeout")
@@ -56,7 +56,7 @@ func machiavelli_cutscene():
 	var machiavelli = currentscene.get_child(0).get_child(3)
 	player.animstate.travel("Idle")
 	
-	machiavelli.animplayer.play('RunRight')
+#	machiavelli.animplayer.play('RunRight')
 	machiavelli.input_direction = Vector2(1, 0)
 	yield(get_tree().create_timer(1.07), "timeout")
 	machiavelli.input_direction = Vector2(0, 0)

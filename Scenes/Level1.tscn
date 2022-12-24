@@ -25,12 +25,11 @@ popularity = 30.0
 mafia_points = 20.0
 mafia_target = 10.0
 sprite_path = "res://UI/andreotti ow.png"
-hf = 3
-vf = 4
 f = 7
 
 [node name="Sempronio" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -96, 80 )
+id = 1
 dialouge_list = [ "Questo sprite va buttato" ]
 attack_ids = [ 1 ]
 battle_sprite_path = "res://UI/andreotti/battle.png"
@@ -39,12 +38,11 @@ lvl = 1
 max_hp = 30
 popularity = -20.0
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"
-hf = 3
-vf = 3
 f = 2
 
 [node name="DummyCommie" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -48, 80 )
+id = 2
 dialouge_list = [ "Rivoluzione Now!" ]
 attack_ids = [ 1, 0 ]
 battle_sprite_path = "res://UI/andreotti/battle.png"
@@ -52,13 +50,13 @@ political_pos = Vector2( -6, 6 )
 lvl = 1
 max_hp = 60
 popularity = -20.0
+mafia_points = 30.0
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"
-hf = 3
-vf = 3
 f = 2
 
 [node name="Machiavelli" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 0, 80 )
+id = 3
 dialouge_list = [ "Crea un partito", "Ma mi raccomando", "Senza fare mionnome." ]
 battle_sprite_path = "res://UI/machiavelli.png"
 description = "Un politico molto pragmatico."
@@ -69,8 +67,6 @@ max_hp = 40
 popularity = 10.0
 mafia_points = -30.0
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"
-hf = 3
-vf = 3
 f = 2
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]

@@ -189,6 +189,7 @@ func _process(_delta):
 	
 		if Input.is_action_just_pressed("ui_end"):
 			battle_ui = BATTLE_UI.MENU
+			margincontainer.visible = false
 			id = 0
 			slogButton.grab_focus()
 
@@ -231,6 +232,7 @@ func set_next_scene(scene: String, p_pos: Vector2):
 
 
 func set_npc(current_npc):
+	print(current_npc)
 	enemy_sprite.init(current_npc, true)
 	enemy_sprite.npc_name = current_npc.name
 #	enemy_sprite.npc_desc = current_npc.description
@@ -354,7 +356,7 @@ func capture_enemy():
 		battle_ui = BATTLE_UI.MENU
 
 
-func battle_ends(victory):
+func battle_ends(_victory):
 	ui.hp.text = str(pBar.value)
 	action_log.text = "Battaglia finita."
 	margincontainer.visible = true
@@ -366,8 +368,7 @@ func battle_ends(victory):
 	yield(timer, "timeout")
 	
 	ui.visibility(true)
-	if victory:
-		pass
+	
 	end(next_scene)
 	
 	

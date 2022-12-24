@@ -68,16 +68,14 @@ position = Vector2( 0, 128 )
 dialouge_list = [ "Benvenuto", "Cosa io potere fare per te?" ]
 is_seller = true
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"
-hf = 3
 vf = 3
 f = 2
 
 [node name="Virgilio" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 144, 80 )
+id = 1
 dialouge_list = [ "Io sono Virgilio" ]
 sprite_path = "res://UI/andreotti ow.png"
-hf = 3
-vf = 4
 f = 1
 
 [node name="VirgilioMail" parent="YSort/Virgilio" instance=ExtResource( 7 )]

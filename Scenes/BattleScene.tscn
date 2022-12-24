@@ -26,6 +26,9 @@ script = ExtResource( 3 )
 margin_right = 320.0
 margin_bottom = 192.0
 color = Color( 0.027451, 0.360784, 0.45098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="EnemySprite" parent="." instance=ExtResource( 1 )]
 position = Vector2( 144, 16 )
