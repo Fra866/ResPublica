@@ -34,6 +34,7 @@ signal priority_to_player
 #signal closed
 
 func _ready():
+	menu.connect("just_bought", self, "error")
 	prize_sign.visible = false
 	open = false
 	background.visible = false
@@ -109,6 +110,8 @@ func bought(type: String):
 			selected_el = get_instance(object_list, id_object)
 			menu.new_object(selected_el.object_res)
 
+func error(slogan: SloganResource):
+	print("Va' che l'hai già comprato, il " + slogan.name)
 
 func handle_input(index, maxv, selector):
 	if Input.is_action_just_pressed("ui_left") and index > 0:

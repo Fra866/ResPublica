@@ -89,7 +89,7 @@ func slogan_setup():
 		var x = 12 + 32 * (n_of_slogans % max_slogans)
 		if x == 12:
 			x += 32 # + (32 * n_of_slogans/max_slogans)
-		var y = 112 + 40*(int(n_of_slogans / (max_slogans+1)))
+		var y = 106 + 40*(int(n_of_slogans / (max_slogans+1)))
 
 		new_slog_instance.position = Vector2(x, y)
 		new_slog_instance.scale = Vector2(1.3, 1.3)
@@ -108,7 +108,7 @@ func object_setup():
 			var x = 12 + 32 * (n_of_objects % max_objects)
 			if x == 12:
 				x += 32 # + (32 * n_of_slogans/max_slogans)
-			var y = 112 + 40*(int(n_of_objects / (max_objects + 1)))
+			var y = 106 + 40*(int(n_of_objects / (max_objects + 1)))
 
 			new_obj_instance.position = Vector2(x, y)
 			new_obj_instance.scale = Vector2(1.3, 1.3)
@@ -232,7 +232,7 @@ func set_next_scene(scene: String, p_pos: Vector2):
 
 
 func set_npc(current_npc):
-	print(current_npc)
+#	print(current_npc)
 	enemy_sprite.init(current_npc, true)
 	enemy_sprite.npc_name = current_npc.name
 #	enemy_sprite.npc_desc = current_npc.description

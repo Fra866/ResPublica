@@ -346,7 +346,7 @@ margin_bottom = 14.0
 rect_scale = Vector2( 0.8, 0.8 )
 text = "Cuffaro"
 
-[connection signal="pressed" from="MenuLayers/MainMenu/Control/SlogBtn" to="." method="_on_SlogBtn_pressed"]
-[connection signal="pressed" from="MenuLayers/MainMenu/Control/ObjBtn" to="." method="_on_ObjBtn_pressed"]
-[connection signal="pressed" from="MenuLayers/MainMenu/Control/PartyBtn" to="." method="_on_PartyBtn_pressed"]
-[connection signal="pressed" from="MenuLayers/MainMenu/Control/MafiaBtn" to="." method="_on_MafiaBtn_pressed"]
+[connection signal="pressed" from="MenuLayers/MainMenu/Control/SlogBtn" to="." method="_on_SlogBtn_pressed" binds= [ "MenuLayers/Slogans" ]]
+[connection signal="pressed" from="MenuLayers/MainMenu/Control/ObjBtn" to="." method="_on_ObjBtn_pressed" binds= [ "MenuLayers/Objects" ]]
+[connection signal="pressed" from="MenuLayers/MainMenu/Control/PartyBtn" to="." method="_on_PartyBtn_pressed" binds= [ "MenuLayers/Party" ]]
+[connection signal="pressed" from="MenuLayers/MainMenu/Control/MafiaBtn" to="." method="_on_MafiaBtn_pressed" binds= [ "MenuLayers/Mafia" ]]

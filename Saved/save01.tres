@@ -1,14 +1,8 @@
-[gd_resource type="Resource" load_steps=9 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
 [ext_resource path="res://Parties/party.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=5]
-[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=6]
-[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=7]
-[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=4]
-[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=5]
-[ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=9]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -18,13 +12,13 @@ political_pos = Vector2( 2.5, 3 )
 
 [resource]
 script = ExtResource( 1 )
-name = "Marco"
-slogans = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ]
-objects = [ ExtResource( 9 ) ]
-voters = [ Object(Sprite,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 5, 18 ),"rotation":0.0,"scale":Vector2( 0.528301, 0.516129 ),"z_index":0,"z_as_relative":true,"texture":Resource( "res://UI/andreotti/battle.png" ),"normal_map":null,"centered":false,"offset":Vector2( 0, 0 ),"flip_h":false,"flip_v":false,"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2( 0, 0, 0, 0 ),"region_filter_clip":false,"script":Resource( "res://Scenes/EnemySprite.gd" ),"npc_name":"Machiavelli","npc_desc":"Politico della prima repubblica, esponente di Democrazia Cristiana. Non guardarlo negli occhi","sex":"","political_pos":Vector2( 5, 6 ),"lvl":1,"votes":200,"max_hp":40,"popularity":10.0,"mafia_points":-30.0,"mafia_target":0.0)
- ]
-ended_cutscenes = [ 1, 1, 0, 0, 2 ]
+name = "iii"
+slogans = [  ]
+objects = [  ]
+voters = [  ]
+ended_cutscenes = [ 0, 0 ]
 current_scene = ExtResource( 3 )
 player_party = SubResource( 1 )
-player_pos = Vector2( -64, 48 )
-money = 850
+player_pos = Vector2( 80, 48 )
+money = 1000
+votes = 0

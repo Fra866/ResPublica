@@ -20,7 +20,7 @@ func initialize():
 	voters = []
 	ended_cutscenes = []
 	current_scene = null
-	player_party = PoliticalParty.new()
+	player_party = null
 	player_pos = Vector2(80, 16)
 	money = 1000
 	votes = 0

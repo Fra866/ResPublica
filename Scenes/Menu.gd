@@ -74,6 +74,8 @@ onready var buttons = [
 
 onready var name_text = $MenuLayers/MainMenu/Control/Name
 
+signal just_bought(slogan)
+
 
 func _ready():
 	screentransition.connect("new_main_scene", self, "new_p")
@@ -107,8 +109,8 @@ func _process(_delta):
 		if Input.is_action_just_pressed("ui_up"):
 			if i != 0:
 				i -= 1
-		if Input.is_action_just_pressed("ui_accept"):
-			to_menu(menus[i])
+#		if Input.is_action_just_pressed("ui_accept"):
+#			to_menu(menus[i])
 			
 	else:
 		if Input.is_action_just_pressed("ui_end"):
@@ -228,16 +230,18 @@ func handle_input(maxv: int, selector):
 
 func new_slogan(slogan):
 	if slogan in slogan_list:
-		print("Già comprato: ", slogan_list)
-	else:
-		slogan_list.append(slogan)
-		ui.add_money(-slogan.prize)
+#		print("Già comprato: ", slogan_list)
+		emit_signal("just_bought", slogan)
+		return
 	
-		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
-		new_slog_instance.slogan_res = slogan
-		new_slog_instance.position = Vector2(32 * (n_of_slogans % 6) + 15, 40*(int(n_of_slogans / 6))+ 20)
-		n_of_slogans += 1
-		slogan_container.add_child(new_slog_instance)
+	slogan_list.append(slogan)
+	ui.add_money(-slogan.prize)
+
+	var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
+	new_slog_instance.slogan_res = slogan
+	new_slog_instance.position = Vector2(32 * (n_of_slogans % 6) + 15, 40*(int(n_of_slogans / 6))+ 20)
+	n_of_slogans += 1
+	slogan_container.add_child(new_slog_instance)
 
 
 func new_object(object):
@@ -272,20 +276,23 @@ func new_voter(voter):
 		voters_container.add_child(new_voter_instance)
 		mafia_container.add_child(new_voter_instance.duplicate())
 
-
-func _on_SlogBtn_pressed():
+# These 4 calls are to be further generalized.
+func _on_SlogBtn_pressed(node):
+	to_menu(get_node(node))
 	political_compass_slog.visibility(n_of_slogans)
 	no_slog_text.visible = !n_of_slogans
 	slogan_selector.visible = n_of_slogans
 
 
-func _on_ObjBtn_pressed():
+func _on_ObjBtn_pressed(node):
+	to_menu(get_node(node))
 	political_compass_slog.visibility(false)
-	no_slog_text.visible = !n_of_objects
+	no_obj_text.visible = !n_of_objects
 	objects_selector.visible = n_of_objects
 
 
-func _on_PartyBtn_pressed():
+func _on_PartyBtn_pressed(node):
+	to_menu(get_node(node))
 	no_party_text.visible = !party
 	political_compass_party.visibility(party!=null)
 	if party:
@@ -293,7 +300,8 @@ func _on_PartyBtn_pressed():
 		political_compass_party.show_damage_area(false)
 
 
-func _on_MafiaBtn_pressed():
+func _on_MafiaBtn_pressed(node):
+	to_menu(get_node(node))
 	political_compass_slog.visibility(false)
 	mafia_displayer.visible = n_of_voters
 	mafiometer.visible = n_of_voters

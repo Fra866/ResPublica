@@ -67,9 +67,6 @@ margin_right = 320.0
 margin_bottom = 15.0
 rect_min_size = Vector2( 100, 15 )
 rounded = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Background2" type="ColorRect" parent="."]
 visible = false
@@ -81,7 +78,7 @@ margin_bottom = 180.0
 [node name="BattleMenu" type="Node2D" parent="."]
 
 [node name="Selector" type="Node2D" parent="BattleMenu"]
-position = Vector2( 29, 101 )
+position = Vector2( 29, 95 )
 
 [node name="SelectorBackground" type="ColorRect" parent="BattleMenu/Selector"]
 visible = false
@@ -100,9 +97,6 @@ margin_left = 16.0
 margin_top = 130.0
 margin_right = 304.0
 margin_bottom = 180.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Container" type="Container" parent="BattleMenu/WhatToDo/Panel"]
 anchor_left = 0.5
@@ -150,15 +144,15 @@ anchor_left = 0.05
 anchor_top = 0.533
 anchor_right = 0.95
 anchor_bottom = 0.978
-margin_top = 20.06
-margin_bottom = 0.960007
+margin_top = 34.06
+margin_bottom = 3.96001
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="ActionLog/MarginContainer"]
 margin_right = 288.0
-margin_bottom = 61.0
+margin_bottom = 50.0
 custom_styles/panel = SubResource( 1 )
 
 [node name="Label" type="Label" parent="ActionLog/MarginContainer/Panel"]
