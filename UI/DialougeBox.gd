@@ -21,7 +21,7 @@ var finished_dialouge: bool = true
 var n_lines: int
 var i = 0
 var open_shop: bool = false
-var has_won_battle: bool
+var start_battle: bool
 
 var start_dialouge: bool = false
 
@@ -37,6 +37,7 @@ signal next_scene(scene, p_pos)
 
 func _ready():
 	$MarginContainer.visible = false
+	$TextureRect.visible = false
 
 
 #func activate_dialouge():
@@ -56,14 +57,18 @@ func display_dialouge(npc_id):
 	att_ids_list = current_npc.attack_ids
 	open_shop = current_npc.is_seller
 	
-	has_won_battle = current_npc.start_battle
+	start_battle = current_npc.start_battle
 	
 #	print(menu.voter_list)
+
+func visibility(vis: bool):
+	$MarginContainer.visible = vis
+	$TextureRect.visible = vis
 
 
 func end_dialouge_box():
 	i = 0
-	$MarginContainer.visible = false
+	visibility(false)
 	d_list = []
 
 
@@ -84,7 +89,8 @@ func _process(_delta):
 #	print(has_won_battle)
 	player = get_parent().get_child(0).get_child(0).find_node('Player')
 	current_scene = scenemanager.get_child(0).get_child(0)
-	
+
+
 	if player:
 		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialouge:
 			start_dialouge = false
@@ -98,29 +104,35 @@ func _process(_delta):
 					shop_box.priority_to_menu()
 				elif len(att_ids_list):
 					if !len(menu.slogan_list):
+						print("Gets to if !len(menu.slogan_list)")
 						# yield(display_text_line("Non hai slogan per combattere."), "completed")
-						$MarginContainer.visible = false
+						visibility(false)
 						emit_signal("priority_to_player")
-					elif !has_won_battle:
-						var b: bool
-						for sprite in menu.voter_list:
-							if npc_name == sprite.npc_name:
-								b = true
-						if !b and menu.party:
-							current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_global_id]
-#								print("CURRENT_NPC DisplayBox process: ", current_npc)
-							scenemanager.start_transition(battle_scene_path, Vector2(0,0))
-							emit_signal("send_npc", current_npc)
-							emit_signal("npc_attacks", att_ids_list)
-							emit_signal("next_scene", current_scene.name, player.position)
+					else:
+						print("Gets to second else: ")
+						if start_battle:
+							print("BATTLE START")
+							var b: bool = false
+							for sprite in menu.voter_list:
+								if npc_name == sprite.npc_name:
+									b = true
+							print(menu.party, " && ", !b)
+							if !b and menu.party:
+								current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_global_id]
+								scenemanager.start_transition(battle_scene_path, Vector2(0,0))
+								emit_signal("send_npc", current_npc)
+								emit_signal("npc_attacks", att_ids_list)
+								emit_signal("next_scene", current_scene.name, player.position)
+							else:
+								emit_signal("priority_to_player")
 						else:
-							emit_signal("priority_to_player")
+								emit_signal("priority_to_player")
 				else:
 					emit_signal("priority_to_player")
 
 
 func display_text_line(line):
-	$MarginContainer.visible = true
+	visibility(true)
 	text_label.set_text(line)
 	text_label.percent_visible = 0.0
 	for counter in len(line)+1:

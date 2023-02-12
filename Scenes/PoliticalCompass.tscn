@@ -45,3 +45,4 @@ __meta__ = {
 modulate = Color( 0.1, 0.13, 0.9, 1 )
 scale = Vector2( 0.6, 0.6 )
 shape = SubResource( 1 )
+disabled = true
