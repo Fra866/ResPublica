@@ -20,7 +20,7 @@ func _ready():
 	if cutscene_activator.cutscene_code in scenemanager.ended_cutscenes:
 		machiavelli.position = machiavelli_pos
 		
-		machiavelli.dialouge_list = [
+		machiavelli.dialog_list = [
 		"Nel mondo tornano i medesimi uomini",
 		"come tornano i medesimi casi...",
 		"Non passeranno mai cento anni",

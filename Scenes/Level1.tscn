@@ -15,7 +15,7 @@ script = ExtResource( 6 )
 
 [node name="Andreotti" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -96, 32 )
-dialouge_list = [ "Lavorare m'è sempre piaciuto.", "È una... utile deformazione." ]
+dialog_list = [ "Lavorare m'è sempre piaciuto.", "È una... utile deformazione." ]
 attack_ids = [ 0, 1 ]
 influence_area = [ [ 0, 8 ], [ 0, 8 ] ]
 start_battle = true
@@ -32,7 +32,7 @@ f = 7
 [node name="Sempronio" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -96, 80 )
 id = 1
-dialouge_list = [ "Questo sprite va buttato" ]
+dialog_list = [ "Questo sprite va buttato" ]
 attack_ids = [ 1 ]
 battle_sprite_path = "res://UI/andreotti/battle.png"
 political_pos = Vector2( -4, -2 )
@@ -45,7 +45,7 @@ f = 2
 [node name="DummyCommie" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -48, 80 )
 id = 2
-dialouge_list = [ "Rivoluzione Now!" ]
+dialog_list = [ "Rivoluzione Now!" ]
 attack_ids = [ 1, 0 ]
 start_battle = true
 battle_sprite_path = "res://UI/andreotti/battle.png"
@@ -60,7 +60,7 @@ f = 2
 [node name="Machiavelli" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 0, 80 )
 id = 3
-dialouge_list = [ "Crea un partito", "Ma mi raccomando", "Senza fare mionnome." ]
+dialog_list = [ "Crea un partito", "Ma mi raccomando...", "Senza fare mionnome." ]
 battle_sprite_path = "res://UI/machiavelli.png"
 description = "Un politico molto pragmatico."
 political_pos = Vector2( 5, 6 )

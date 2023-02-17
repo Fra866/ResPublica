@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-onready var dialouge_box = self
+#onready var dialouge_box = self
 
 onready var characters = $MarginContainer/Panel/Label.visible_characters
 onready var text_label = $MarginContainer/Panel/Label
@@ -23,7 +23,7 @@ var i = 0
 var open_shop: bool = false
 var start_battle: bool
 
-var start_dialouge: bool = false
+var start_dialog: bool = false
 
 var battle_scene_path = 'res://Scenes/BattleScene.tscn'
 
@@ -46,14 +46,14 @@ func _ready():
 var npc_global_id: int
 
 
-func display_dialouge(npc_id):
+func display_dialog(npc_id):
 	npc_global_id = npc_id
 #	print("SceneManager: ", scenemanager.get_child(0).get_child(0))
 	current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_id]
 #	print("Display Dial: ", current_npc)
 	npc_name = current_npc.name
 	
-	d_list = current_npc.dialouge_list
+	d_list = current_npc.dialog_list
 	att_ids_list = current_npc.attack_ids
 	open_shop = current_npc.is_seller
 	
@@ -66,7 +66,7 @@ func visibility(vis: bool):
 	$TextureRect.visible = vis
 
 
-func end_dialouge_box():
+func end_dialog_box():
 	i = 0
 	visibility(false)
 	d_list = []
@@ -78,9 +78,9 @@ func has_obtained(object):
 	att_ids_list = []
 	i = 0
 	
-	start_dialouge = true
+	start_dialog = true
 	yield(get_tree().create_timer(1), "timeout")
-	end_dialouge_box()
+	end_dialog_box()
 	
 	emit_signal("priority_to_player")
 
@@ -92,31 +92,31 @@ func _process(_delta):
 
 
 	if player:
-		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialouge:
-			start_dialouge = false
+		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialog:
+			start_dialog = false
 			if i < len(d_list):
 				display_text_line(d_list[i])
 				i += 1
 			else:
-				end_dialouge_box()
+				end_dialog_box()
 				if open_shop:
 					open_shop = false
 					shop_box.priority_to_menu()
 				elif len(att_ids_list):
 					if !len(menu.slogan_list):
-						print("Gets to if !len(menu.slogan_list)")
+#						print("Gets to if !len(menu.slogan_list)")
 						# yield(display_text_line("Non hai slogan per combattere."), "completed")
 						visibility(false)
 						emit_signal("priority_to_player")
 					else:
-						print("Gets to second else: ")
+#						print("Gets to second else: ")
 						if start_battle:
-							print("BATTLE START")
+#							print("BATTLE START")
 							var b: bool = false
 							for sprite in menu.voter_list:
 								if npc_name == sprite.npc_name:
 									b = true
-							print(menu.party, " && ", !b)
+#							print(menu.party, " && ", !b)
 							if !b and menu.party:
 								current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_global_id]
 								scenemanager.start_transition(battle_scene_path, Vector2(0,0))

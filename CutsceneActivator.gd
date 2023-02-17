@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
-onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
+onready var dialog_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var player
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var collisionshape = $Area2D/CollisionShape2D
@@ -19,12 +19,12 @@ func _ready():
 	player = scenemanager.get_child(0).get_children().back().find_node("Player")
 
 
-func start_cutscene_dialouge(npc):
-	dialouge_box.display_dialouge(npc.id)
+func start_cutscene_dialog(npc):
+	dialog_box.display_dialog(npc.id)
 	
-	for _j in range(len(npc.dialouge_list) + 1):
+	for _j in range(len(npc.dialog_list) + 1):
 		yield(get_tree().create_timer(1.5), "timeout")
-		dialouge_box.start_dialouge = true
+		dialog_box.start_dialog = true
 
 
 func virgilio_cutscene():
@@ -38,9 +38,9 @@ func virgilio_cutscene():
 	yield(get_tree().create_timer(1), "timeout")
 	virgilio.animplayer.play('IdleDown')
 	
-	yield(start_cutscene_dialouge(virgilio), "completed")
+	yield(start_cutscene_dialog(virgilio), "completed")
 	
-	dialouge_box.has_obtained(virgilio.get_child(5))
+	dialog_box.has_obtained(virgilio.get_child(5))
 	
 	cutscene = false
 	scenemanager.cutscene_over(cutscene_code)
@@ -66,13 +66,13 @@ func machiavelli_cutscene():
 #
 #	menu.party = PoliticalParty.new()
 #
-##	dialouge_box.display_dialouge(machiavelli)
+##	dialog_box.display_dialouge(machiavelli)
 #
 #	start_cutscene_dialouge(machiavelli)
 #	cutscene = false
 #	scenemanager.cutscene_over(cutscene_code)
 #
-#	machiavelli.dialouge_list = [
+#	machiavelli.dialog_list = [
 #		"Nel mondo tornano i medesimi uomini",
 #		"come tornano i medesimi casi...",
 #		"Non passeranno mai cento anni",

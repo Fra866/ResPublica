@@ -2,7 +2,7 @@ extends Node2D
 
 onready var scenemanager = get_node(NodePath('/root/SceneManager/'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
-onready var dialogue_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
+onready var dialogue_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
 
 onready var whattodo = $BattleMenu/WhatToDo/

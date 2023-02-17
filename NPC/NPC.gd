@@ -7,13 +7,13 @@ onready var sprite = $Sprite
 
 const TILE_SIZE = 16
 
-onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialougeBox'))
+onready var dialog_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var texture
 
 onready var raycast = $RayCast2D
 
 export(int) var id
-export(Array, String) var dialouge_list
+export(Array, String) var dialog_list
 export(Array, int) var attack_ids
 export(Array) var influence_area = [[],[]]
 export(bool) var is_seller
@@ -70,7 +70,7 @@ func setting_up_sprite():
 func interaction(player):
 	animtree.set("parameters/blend_position", (player.position - position) / 16)
 	print("Interaction: ", self)
-	dialouge_box.display_dialouge(id)
+	dialog_box.display_dialog(id)
 
 
 func _physics_process(delta):
