@@ -53,36 +53,38 @@ func virgilio_cutscene():
 
 
 func machiavelli_cutscene():
-	var machiavelli = currentscene.get_child(0).get_child(3)
-	player.animstate.travel("Idle")
+#	var machiavelli = currentscene.get_child(0).get_child(3)
+	var machiavelli = currentscene.find_node("Machiavelli")
+	machiavelli.cutscene(self)
+#	player.animstate.travel("Idle")
 	
 #	machiavelli.animplayer.play('RunRight')
-	machiavelli.input_direction = Vector2(1, 0)
-	yield(get_tree().create_timer(1.07), "timeout")
-	machiavelli.input_direction = Vector2(0, 0)
-	machiavelli.animplayer.play('IdleRight')
-	
-	menu.party = PoliticalParty.new()
-	
-#	dialouge_box.display_dialouge(machiavelli)
-	
-	start_cutscene_dialouge(machiavelli)
-	cutscene = false
-	scenemanager.cutscene_over(cutscene_code)
-	
-	machiavelli.dialouge_list = [
-		"Nel mondo tornano i medesimi uomini",
-		"come tornano i medesimi casi...",
-		"Non passeranno mai cento anni",
-		"che noi non ci troveremmo a fare le medesime cose."
-	]
-	machiavelli.attack_ids = [1]
+#	machiavelli.input_direction = Vector2(1, 0)
+#	yield(get_tree().create_timer(1.07), "timeout")
+#	machiavelli.input_direction = Vector2(0, 0)
+#	machiavelli.animplayer.play('IdleRight')
+#
+#	menu.party = PoliticalParty.new()
+#
+##	dialouge_box.display_dialouge(machiavelli)
+#
+#	start_cutscene_dialouge(machiavelli)
+#	cutscene = false
+#	scenemanager.cutscene_over(cutscene_code)
+#
+#	machiavelli.dialouge_list = [
+#		"Nel mondo tornano i medesimi uomini",
+#		"come tornano i medesimi casi...",
+#		"Non passeranno mai cento anni",
+#		"che noi non ci troveremmo a fare le medesime cose."
+#	]
+#	machiavelli.attack_ids = [1]
 	
 #	print(machiavelli.position)
 
 
 func bar_start_scene():
-	print("Bar Starting Scene")
+#	print("Bar Starting Scene")
 	cutscene = false
 
 

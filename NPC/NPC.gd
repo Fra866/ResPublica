@@ -32,7 +32,7 @@ export(float, 0, 100, 10) var mafia_target
 
 #export(int) var attack
 
-
+export(Script) var cutscene_src
 export(String) var sprite_path
 
 enum FacingDirection { LEFT, UP, RIGHT, DOWN }
@@ -82,6 +82,10 @@ func _physics_process(delta):
 	else:
 		# animstate.travel("Idle")
 		is_moving = false
+
+
+func cutscene(scene: Node2D):
+	load(cutscene_src.get_path()).new().start(self, scene)
 
 
 func process_player_input():
