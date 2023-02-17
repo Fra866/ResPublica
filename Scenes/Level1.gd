@@ -16,8 +16,9 @@ onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 var machiavelli_pos: Vector2 = Vector2(64, 80)
 
 func _ready():
-	print(scenemanager.ended_cutscenes)
-	if cutscene_activator.cutscene_code in scenemanager.ended_cutscenes:
+#	print(scenemanager.ended_cutscenes)
+#	if cutscene_activator.cutscene_code in scenemanager.ended_cutscenes:
+	if cutscene_activator.path in scenemanager.ended_cutscenes:
 		machiavelli.position = machiavelli_pos
 		
 		machiavelli.dialog_list = [

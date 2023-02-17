@@ -91,4 +91,4 @@ next_player_pos = Vector2( 144, 176 )
 
 [node name="CutsceneActivator" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 80, 80 )
-cutscene_code = 0
+activator = "Machiavelli"

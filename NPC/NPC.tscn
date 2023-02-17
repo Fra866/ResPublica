@@ -146,7 +146,6 @@ blend_mode = 1
 [node name="NPC" type="StaticBody2D"]
 collision_layer = 2
 script = ExtResource( 2 )
-dialouge_list = [ "Sono tutti distratti", "Reclamiamo la Corsica adesso" ]
 votes = 10
 hf = 3
 vf = 4

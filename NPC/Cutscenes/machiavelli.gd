@@ -1,6 +1,5 @@
 extends Node
 
-export(int) var code := 0
 
 func start(character: StaticBody2D, scene: Node2D):
 	var player = scene.player
@@ -18,7 +17,6 @@ func start(character: StaticBody2D, scene: Node2D):
 	
 	scene.start_cutscene_dialog(character)
 	scene.cutscene = false
-	scene.scenemanager.cutscene_over(code)
 	
 	character.dialog_list = [
 		"Nel mondo tornano i medesimi uomini",

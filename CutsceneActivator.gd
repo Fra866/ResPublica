@@ -9,13 +9,16 @@ onready var scenecontainer = scenemanager.get_child(0)
 onready var enabled: bool = true
 onready var currentscene
 onready var cutscene: bool = false
+onready var path: NodePath
 
 var i: int = 0
 
-export(int) var cutscene_code
+export(String) var activator
+#export(int) var cutscene_code
 
 
 func _ready():
+	path = self.get_path()
 	player = scenemanager.get_child(0).get_children().back().find_node("Player")
 
 
@@ -27,79 +30,23 @@ func start_cutscene_dialog(npc):
 		dialog_box.start_dialog = true
 
 
-func virgilio_cutscene():
-	var virgilio = currentscene.get_child(1).get_child(3)
-	
-	player.animstate.travel("Idle")
-	player.animplayer.play('IdleUp')
-	
-	virgilio.animplayer.play('RunDown')
-	virgilio.input_direction = Vector2(0, 1)
-	yield(get_tree().create_timer(1), "timeout")
-	virgilio.animplayer.play('IdleDown')
-	
-	yield(start_cutscene_dialog(virgilio), "completed")
-	
-	dialog_box.has_obtained(virgilio.get_child(5))
-	
-	cutscene = false
-	scenemanager.cutscene_over(cutscene_code)
-	
-	var object = virgilio.get_child(5).get_child(0).game_object_resource
-#	print(virgilio.get_child(5))
-	
-	menu.new_object(object)
-	virgilio.input_direction = Vector2(0, 0)
-
-
-func machiavelli_cutscene():
-#	var machiavelli = currentscene.get_child(0).get_child(3)
-	var machiavelli = currentscene.find_node("Machiavelli")
-	machiavelli.cutscene(self)
-#	player.animstate.travel("Idle")
-	
-#	machiavelli.animplayer.play('RunRight')
-#	machiavelli.input_direction = Vector2(1, 0)
-#	yield(get_tree().create_timer(1.07), "timeout")
-#	machiavelli.input_direction = Vector2(0, 0)
-#	machiavelli.animplayer.play('IdleRight')
-#
-#	menu.party = PoliticalParty.new()
-#
-##	dialog_box.display_dialouge(machiavelli)
-#
-#	start_cutscene_dialouge(machiavelli)
-#	cutscene = false
-#	scenemanager.cutscene_over(cutscene_code)
-#
-#	machiavelli.dialog_list = [
-#		"Nel mondo tornano i medesimi uomini",
-#		"come tornano i medesimi casi...",
-#		"Non passeranno mai cento anni",
-#		"che noi non ci troveremmo a fare le medesime cose."
-#	]
-#	machiavelli.attack_ids = [1]
-	
-#	print(machiavelli.position)
-
-
 func bar_start_scene():
 #	print("Bar Starting Scene")
 	cutscene = false
 
 
 func start_cutscene():
-	cutscene = not cutscene_code in scenemanager.ended_cutscenes
+	cutscene = not path in scenemanager.ended_cutscenes
 	if cutscene:
-		match cutscene_code:
-			0:
-				machiavelli_cutscene()
-			1:
-				virgilio_cutscene()
-			2:
-				bar_start_scene()
+		currentscene.find_node(activator).start_cutscene(self)
+		scenemanager.ended_cutscenes.append(path)
+#		match cutscene_code:
+#			0, 1:
+#				npc_cutscene(cutscene_code)
+#			2:
+#				bar_start_scene()
 	
-		scenemanager.ended_cutscenes.append(cutscene_code)
+#		scenemanager.ended_cutscenes.append(cutscene_code)
 #	print(scenemanager.ended_cutscenes)
 
 

@@ -84,7 +84,7 @@ func _physics_process(delta):
 		is_moving = false
 
 
-func cutscene(scene: Node2D):
+func start_cutscene(scene: Node2D):
 	load(cutscene_src.get_path()).new().start(self, scene)
 
 
