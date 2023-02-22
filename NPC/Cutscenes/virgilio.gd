@@ -14,7 +14,7 @@ func start(character: StaticBody2D, scene: Node2D):
 	yield(scene.start_cutscene_dialog(character), "completed")
 	scene.dialog_box.has_obtained(character.get_child(5))
 
-	scene.cutscene = false
+#	scene.cutscene = false
 
 	var object = character.get_children().back().object_res
 	scene.menu.new_object(object)

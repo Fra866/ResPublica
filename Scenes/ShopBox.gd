@@ -133,4 +133,5 @@ func priority_to_player():
 	text_box.visible = false
 	political_compass.show_damage_area(false)
 	political_compass.visibility(false)
-	player.get_priority()
+#	player.get_priority()
+	emit_signal("priority_to_player")

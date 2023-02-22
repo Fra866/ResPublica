@@ -118,8 +118,8 @@ func _process(_delta):
 				to_main(menus[menu_state])
 	
 		if menu_state == MENU_STATE.SLOGANS:
-			slogan_selector.visible = bool(n_of_objects)
-			no_slog_text.visible = !n_of_objects
+#			slogan_selector.visible = bool(n_of_objects)
+#			no_slog_text.visible = !n_of_objects
 			if n_of_slogans:
 				current_el = slogan_list[index]
 				current_slogan_desc.text = current_el.name
@@ -145,8 +145,8 @@ func _process(_delta):
 
 
 		if menu_state == MENU_STATE.OBJECTS:
-			no_obj_text.visible = !n_of_objects
-			objects_selector.visible = bool(n_of_objects)
+#			no_obj_text.visible = !n_of_objects
+#			objects_selector.visible = bool(n_of_objects)
 			if n_of_objects:
 #				Reading from list so to directly get object's script (line 153)
 				obj_node = object_list[index]

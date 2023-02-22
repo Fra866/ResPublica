@@ -11,13 +11,13 @@ onready var camera = $Camera2D
 onready var animtree = $AnimationTree
 onready var animplayer = $AnimationPlayer
 onready var animstate = animtree.get('parameters/playback')
-onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialogBox'))
+onready var dialog_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var shop_box = get_node(NodePath('/root/SceneManager/ShopBox'))
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var saveMenu = get_node(NodePath("/root/SceneManager/Control"))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
-onready var cutscene_activator
+#onready var cutscene_activator
 
 onready var p_name = scenemanager.save_file.name
 
@@ -30,7 +30,7 @@ onready var cutscene = false
 # Lists all doors in the current scene
 # All doors are loaded before ready() starts
 
-onready var doors = []
+#onready var doors = []
 
 var is_moving = false
 var initial_position = Vector2(0, 0)
@@ -43,27 +43,29 @@ signal enter_door(door)
 
 func _ready():
 	# doors = [] -> the initialization had to be done in Door.gd
-	cutscene_activator = scenemanager.get_child(0).get_children().back().find_node("CutsceneActivator")
+#	cutscene_activator = scenemanager.get_child(0).get_children().back().find_node("CutsceneActivator")
 	var current_scene = scenemanager.get_child(0).get_child(0)
 	
 	if not current_scene.name in scenemanager.list_visited_scenes:
 		scenemanager.list_visited_scenes.append(current_scene.name)
 	var save_file = scenemanager.save_file
 	visible = true
-	dialouge_box.connect("priority_to_player", self, "get_priority")
 	animtree.active = true
 	if scenemanager.loading_count == 1:
 		position = save_file.player_pos
 	else:
 		initial_position = position
+	
+	dialog_box.connect("priority_to_player", self, "get_priority")
+	shop_box.connect("priority_to_player", self, "get_priority")
 #	door = get_node(NodePath('..')).find_node('Door')
 #	door.connect('entered_door', self, 'new_scene')
 
 
 func _physics_process(delta):
-	if cutscene_activator:
-		if cutscene_activator.cutscene:
-			cutscene = true
+#	if cutscene_activator:
+#		if cutscene_activator.cutscene:
+#			cutscene = true
 	
 #	if menu.state != 1 or cutscene: #!= MenuState.CLOSE
 	if cutscene:
@@ -216,9 +218,9 @@ func calculate_npcraycast(raycast):
 
 
 func get_priority():
-	if not shop_box.open:
-		cutscene = false
-		player_state = PlayerState.IDLE
+#	if not shop_box.open:
+	cutscene = false
+	player_state = PlayerState.IDLE
 
 
 func set_position(pos):

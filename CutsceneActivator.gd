@@ -38,7 +38,9 @@ func bar_start_scene():
 func start_cutscene():
 	cutscene = not path in scenemanager.ended_cutscenes
 	if cutscene:
+		player.set("cutscene", true)
 		currentscene.find_node(activator).start_cutscene(self)
+		cutscene = false
 		scenemanager.ended_cutscenes.append(path)
 #		match cutscene_code:
 #			0, 1:

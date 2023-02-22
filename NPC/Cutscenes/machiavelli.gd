@@ -16,7 +16,7 @@ func start(character: StaticBody2D, scene: Node2D):
 #	dialog_box.display_dialog(character)
 	
 	scene.start_cutscene_dialog(character)
-	scene.cutscene = false
+#	scene.cutscene = false
 	
 	character.dialog_list = [
 		"Nel mondo tornano i medesimi uomini",

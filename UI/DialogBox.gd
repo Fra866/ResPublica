@@ -85,6 +85,26 @@ func has_obtained(object):
 	emit_signal("priority_to_player")
 
 
+func check_battle() -> void:
+	if !len(menu.slogan_list):
+		visibility(false)
+		emit_signal("priority_to_player")
+		return
+	if start_battle:
+		var b: bool = false
+		for sprite in menu.voter_list:
+			if npc_name == sprite.npc_name:
+				b = true
+		if !b and menu.party:
+			current_npc = current_scene.list_npc[npc_global_id]
+			scenemanager.start_transition(battle_scene_path, Vector2(0,0))
+			emit_signal("send_npc", current_npc)
+			emit_signal("npc_attacks", att_ids_list)
+			emit_signal("next_scene", current_scene.name, player.position)
+			return
+	emit_signal("priority_to_player")
+
+
 func _process(_delta):
 #	print(has_won_battle)
 	player = get_parent().get_child(0).get_child(0).find_node('Player')
@@ -103,31 +123,8 @@ func _process(_delta):
 					open_shop = false
 					shop_box.priority_to_menu()
 				elif len(att_ids_list):
-					if !len(menu.slogan_list):
-#						print("Gets to if !len(menu.slogan_list)")
-						# yield(display_text_line("Non hai slogan per combattere."), "completed")
-						visibility(false)
-						emit_signal("priority_to_player")
-					else:
-#						print("Gets to second else: ")
-						if start_battle:
-#							print("BATTLE START")
-							var b: bool = false
-							for sprite in menu.voter_list:
-								if npc_name == sprite.npc_name:
-									b = true
-#							print(menu.party, " && ", !b)
-							if !b and menu.party:
-								current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_global_id]
-								scenemanager.start_transition(battle_scene_path, Vector2(0,0))
-								emit_signal("send_npc", current_npc)
-								emit_signal("npc_attacks", att_ids_list)
-								emit_signal("next_scene", current_scene.name, player.position)
-							else:
-								emit_signal("priority_to_player")
-						else:
-								emit_signal("priority_to_player")
-				else:
+					check_battle()
+				elif !shop_box.open:
 					emit_signal("priority_to_player")
 
 

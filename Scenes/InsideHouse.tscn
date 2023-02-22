@@ -66,6 +66,7 @@ collision_mask = 7
 
 [node name="Seller" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 0, 128 )
+dialog_list = [ "Benvenuto", "Cosa io potere fare per te?" ]
 is_seller = true
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"
 vf = 3
@@ -74,6 +75,7 @@ f = 2
 [node name="Virgilio" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 144, 80 )
 id = 1
+dialog_list = [ "Io sono Virgilio" ]
 cutscene_src = ExtResource( 10 )
 sprite_path = "res://UI/andreotti ow.png"
 f = 1
