@@ -2,8 +2,9 @@ extends CanvasLayer
 
 #onready var dialouge_box = self
 
-onready var characters = $MarginContainer/Panel/Label.visible_characters
-onready var text_label = $MarginContainer/Panel/Label
+#onready var characters = $MarginContainer/Panel/Label.visible_characters
+#onready var text_label = $MarginContainer/Panel/Label
+onready var text_label = $MarginContainer/Panel/RichTextLabel
 onready var current_npc
 onready var shop_box = get_node(NodePath('/root/SceneManager/ShopBox'))
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))

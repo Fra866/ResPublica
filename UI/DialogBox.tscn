@@ -31,17 +31,15 @@ margin_right = 288.0
 margin_bottom = 64.0
 custom_styles/panel = SubResource( 1 )
 
-[node name="Label" type="Label" parent="MarginContainer/Panel"]
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/Panel"]
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 272.0
 margin_bottom = 48.0
+rect_min_size = Vector2( 256, 32 )
+meta_underlined = false
 text = "Lorem Ipsum"
-valign = 3
-max_lines_visible = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+scroll_active = false
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_left = 0.05
