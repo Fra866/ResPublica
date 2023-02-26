@@ -6,7 +6,7 @@
 script = ExtResource( 2 )
 xp = 30
 political_pos = Vector2( -4, 7 )
-damage_range = 2
+damage_range = 8
 name = "Stalin non era poi così male"
 id = 2
 prize = 50

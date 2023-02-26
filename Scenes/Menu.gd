@@ -41,6 +41,15 @@ onready var player = get_node(NodePath('..')).find_node('Player')
 onready var screentransition = get_node(NodePath('/root/SceneManager'))
 onready var currentscene = get_node(NodePath('/root/SceneManager/CurrentScene'))
 
+onready var party_compass = $MenuLayers/Party/PoliticalCompass
+
+onready var voter_info = $MenuLayers/Party/VoterInfo
+
+onready var voter_info_buttons = [
+	$MenuLayers/Party/VoterInfo/Expell,
+	$MenuLayers/Party/VoterInfo/Promote
+]
+
 onready var n_of_slogans: int
 onready var n_of_objects: int
 onready var n_of_voters: int
@@ -101,7 +110,6 @@ func _process(_delta):
 
 	if menu_main:
 		buttons[i].grab_focus()
-#		visible = true
 		
 		if Input.is_action_just_pressed("ui_down"):
 			if i != 3:
@@ -109,17 +117,15 @@ func _process(_delta):
 		if Input.is_action_just_pressed("ui_up"):
 			if i != 0:
 				i -= 1
-#		if Input.is_action_just_pressed("ui_accept"):
-#			to_menu(menus[i])
-			
+		
 	else:
 		if Input.is_action_just_pressed("ui_end"):
-			if menu_state < 4 and open_obj_id == -1:
+			if voter_info.visible:
+				voter_info.visible = false
+			elif menu_state < 4 and open_obj_id == -1:
 				to_main(menus[menu_state])
 	
 		if menu_state == MENU_STATE.SLOGANS:
-#			slogan_selector.visible = bool(n_of_objects)
-#			no_slog_text.visible = !n_of_objects
 			if n_of_slogans:
 				current_el = slogan_list[index]
 				current_slogan_desc.text = current_el.name
@@ -129,42 +135,28 @@ func _process(_delta):
 				
 				if Input.is_action_just_pressed("ui_accept"):
 					print(current_el.name, current_el.political_pos)
-
-#Remove any object effect still visible while closing the menu
-#		if (get_child(1)):
-#			remove_child(get_child(1))
-
+		
 		if menu_state == MENU_STATE.MAFIA:
 			if n_of_voters:
 				current_el = mafia_container.get_child(index + 1)
 				handle_input(n_of_voters, mafia_selector)
 				current_voter_mafia_desc.text = current_el.npc_name + "\n" + str(current_el.mafia_target)
-		# Test-only function
+		
 				if Input.is_action_just_pressed("ui_accept"):
 					current_el.set_mafia_target(-10)
 
 
 		if menu_state == MENU_STATE.OBJECTS:
-#			no_obj_text.visible = !n_of_objects
-#			objects_selector.visible = bool(n_of_objects)
 			if n_of_objects:
-#				Reading from list so to directly get object's script (line 153)
 				obj_node = object_list[index]
 				current_object_desc.text = obj_node.description
 				handle_input(n_of_objects, objects_selector)
 				
 				if Input.is_action_just_pressed("ui_accept"):
 					if (open_obj_id != obj_node.id):
-#						use_script_obj = obj_node.object.game_object_resource.use_script
 						use_script_obj = obj_node.use_script
 						obj_type = load(use_script_obj.get_path()).new()
 						obj_type._ready()
-					
-					# Standard object's function foo() returns an effect (here, mail wrapper)
-					# May also be null for battle objects or stuff like that
-					# The effect becomes part of the tree node
-#						add_child(obj_type.foo(obj_node.id))
-#Fails since script calls wrapper's 'fore returning it, hence:
 						add_child(obj_type.wrapper)
 						obj_type.foo(obj_node.id)
 						open_obj_id = obj_node.id
@@ -175,6 +167,15 @@ func _process(_delta):
 
 		if menu_state == MENU_STATE.PARTY:
 			handle_input(n_of_voters, voters_selector)
+			
+			# print(voters_container.get_child(index+1).political_pos)
+			var voter_pos = voters_container.get_child(index+1).political_pos
+			
+			party_compass.enemy_pointer_visible(true)
+			party_compass.set_enemy_pointer(voter_pos.x, -voter_pos.y)
+			
+			if Input.is_action_just_pressed("ui_accept") && !voter_info.visible:
+				to_voter_info()
 
 	control.visible = menu_main
 	sprite.visible = menu_main
@@ -191,6 +192,12 @@ func to_main(src: Node):
 	menu_main = true
 	src.visible = false
 	menu_state = 4
+
+
+func to_voter_info():
+	voter_info.visible = true
+	
+	voter_info_buttons[0].grab_focus()
 
 
 func priority_to_menu():
@@ -260,25 +267,21 @@ func new_object(object):
 		objects_container.add_child(new_obj_instance)
 
 
+func reload_menu(voter):
+	voters_container.add_child(voter)
+	mafia_container.add_child(voter.duplicate())
+
+
 func new_voter(voter):
 	if not voter in voter_list:
 		
 		var new_voter_instance = load("res://Scenes/EnemySprite.tscn").instance()
-#		new_voter_instance.init(voter)
-#		new_voter_instance.texture = voter.texture
-#		new_voter_instance.npc_name = voter.npc_name
-#		new_voter_instance.npc_desc = voter.npc_desc
-#		new_voter_instance.lvl = voter.lvl
-#		new_voter_instance.political_pos = voter.political_pos
-#		new_voter_instance.votes = voter.votes
-#		new_voter_instance.popularity = voter.popularity
-#		new_voter_instance.mafia_points = voter.mafia_points
+	
 		new_voter_instance = voter.duplicate()
 		voter_list.append(new_voter_instance)
 		new_voter_instance.position = Vector2(32 * (n_of_voters % 4) + 5, 40 * (n_of_voters / 4) + 18)
 		n_of_voters += 1
-		voters_container.add_child(new_voter_instance)
-		mafia_container.add_child(new_voter_instance.duplicate())
+		reload_menu(new_voter_instance)
 
 # These 4 calls are to be further generalized.
 func _on_SlogBtn_pressed(node):

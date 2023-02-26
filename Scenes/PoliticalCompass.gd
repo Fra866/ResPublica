@@ -69,6 +69,7 @@ func hide_line():
 func enemy_pointer_visible(vis: bool):
 	enemy_pointer.visible = vis
 
+
 func distance_between_pointers(a: Vector2, b: Vector2):
 	return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2))
 

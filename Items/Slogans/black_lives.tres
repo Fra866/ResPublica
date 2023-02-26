@@ -6,7 +6,7 @@
 script = ExtResource( 2 )
 xp = 30
 political_pos = Vector2( -6, -5 )
-damage_range = 6
+damage_range = 10
 name = "#UcrainiViteContano"
 id = 3
 prize = 50

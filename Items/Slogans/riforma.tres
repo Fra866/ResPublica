@@ -6,7 +6,7 @@
 script = ExtResource( 2 )
 xp = 30
 political_pos = Vector2( 0, 0 )
-damage_range = 6
+damage_range = 8
 name = "Serve una riforma economica"
 id = 6
 prize = 50
