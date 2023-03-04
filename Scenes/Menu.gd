@@ -50,6 +50,9 @@ onready var voter_info_buttons = [
 	$MenuLayers/Party/VoterInfo/Promote
 ]
 
+onready var voter_name = $MenuLayers/Party/VoterInfo/Node2D/RichTextLabel
+onready var voter_sprite = $MenuLayers/Party/VoterInfo/Node2D/Sprite
+
 onready var n_of_slogans: int
 onready var n_of_objects: int
 onready var n_of_voters: int
@@ -144,8 +147,8 @@ func _process(_delta):
 		
 				if Input.is_action_just_pressed("ui_accept"):
 					current_el.set_mafia_target(-10)
-
-
+		
+		
 		if menu_state == MENU_STATE.OBJECTS:
 			if n_of_objects:
 				obj_node = object_list[index]
@@ -163,20 +166,27 @@ func _process(_delta):
 					else:
 						remove_child(get_child(1))
 						open_obj_id = -1
-
-
+		
+		
 		if menu_state == MENU_STATE.PARTY:
-			handle_input(n_of_voters, voters_selector)
-			
-			# print(voters_container.get_child(index+1).political_pos)
-			var voter_pos = voters_container.get_child(index+1).political_pos
-			
-			party_compass.enemy_pointer_visible(true)
-			party_compass.set_enemy_pointer(voter_pos.x, -voter_pos.y)
-			
-			if Input.is_action_just_pressed("ui_accept") && !voter_info.visible:
-				to_voter_info()
-
+			n_of_voters = len(voters_container.get_children()) - 1
+			if n_of_voters > 0:
+				handle_input(n_of_voters, voters_selector)
+				
+				# print(voters_container.get_child(index+1).political_pos)
+				var voter = voters_container.get_child(index+1)
+				
+				voter_name.text = voter.npc_name
+				voter_sprite.texture = voter.texture
+				
+				party_compass.enemy_pointer_visible(true)
+				party_compass.set_enemy_pointer(voter.political_pos.x, -voter.political_pos.y)
+				
+				if Input.is_action_just_pressed("ui_accept"):
+					print(voter_list)
+					if !voter_info.visible:
+						to_voter_info()
+	
 	control.visible = menu_main
 	sprite.visible = menu_main
 
@@ -247,7 +257,7 @@ func new_slogan(slogan):
 	
 	slogan_list.append(slogan)
 	ui.add_money(-slogan.prize)
-
+	
 	var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 	new_slog_instance.slogan_res = slogan
 	new_slog_instance.position = Vector2(32 * (n_of_slogans % 6) + 15, 40*(int(n_of_slogans / 6))+ 20)
@@ -280,8 +290,9 @@ func new_voter(voter):
 		new_voter_instance = voter.duplicate()
 		voter_list.append(new_voter_instance)
 		new_voter_instance.position = Vector2(32 * (n_of_voters % 4) + 5, 40 * (n_of_voters / 4) + 18)
-		n_of_voters += 1
+		# n_of_voters += 1
 		reload_menu(new_voter_instance)
+
 
 # These 4 calls are to be further generalized.
 func _on_SlogBtn_pressed(node):
@@ -313,3 +324,23 @@ func _on_MafiaBtn_pressed(node):
 	mafia_displayer.visible = n_of_voters
 	mafiometer.visible = n_of_voters
 	mafia_selector.visible = mafia_displayer.visible
+
+
+func _on_Expell_pressed():
+	n_of_voters -= 1
+	
+	print(voters_container.get_children())
+	
+	var voterToRemove = voters_container.get_child(index+1)
+	
+	party.removeVoter(voterToRemove.political_pos, n_of_voters, voterToRemove.votes)
+	voters_container.remove_child(voters_container.get_child(index+1))
+	
+	print(voters_container.get_children())
+	
+	index = 0
+	voter_info.visible = false
+
+
+func _on_Promote_pressed():
+	pass # Replace with function body.

@@ -324,9 +324,10 @@ func capture_enemy():
 		yield(get_tree().create_timer(1), "timeout")
 		
 		menu.new_voter(enemy_sprite)
-		menu.party.votes += enemy_sprite.votes
+		# menu.party.votes += enemy_sprite.votes
 		ui.loadVotes(menu.party.votes)
-		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
+		
+		menu.party.addVoter(enemy_sprite.political_compass, menu.n_of_voters, enemy_sprite.votes)
 		menu.slide_mafia_line(enemy_sprite.mafia_points)
 		
 		battle_ends(true)

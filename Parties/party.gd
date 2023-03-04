@@ -10,3 +10,13 @@ export(Vector2) var political_pos = Vector2(0, 0)
 
 func _ready():
 	pass
+
+
+func addVoter(pos: Vector2, n: int, new_votes: int):
+	political_pos = (political_pos + pos) / n
+	votes += new_votes
+
+
+func removeVoter(pos: Vector2, n: int, new_votes: int):
+	political_pos = (political_pos - pos) / (n)
+	votes -= new_votes
