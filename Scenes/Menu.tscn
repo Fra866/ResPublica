@@ -273,6 +273,7 @@ visible = false
 position = Vector2( 176, 80 )
 
 [node name="NoPartyText" type="RichTextLabel" parent="MenuLayers/Party"]
+visible = false
 margin_top = 64.0
 margin_right = 192.0
 margin_bottom = 104.0

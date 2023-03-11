@@ -250,6 +250,7 @@ func set_npc(current_npc):
 
 func playerAttack(slogan):
 	if slogan.xp > 0:
+		npcBar.value = 10
 		slogan.xp -= 1
 	
 		attacking = true
@@ -307,10 +308,12 @@ func npcAttack():
 func extra_damage():
 	# If player is also in damage area
 	# Returns extra damage
+	
 	return int(Geometry.is_point_in_polygon(player_pos, political_compass.damage_area.polygon)) * 10
 
 
 func damage(p_pos: Vector2):
+	# npcBar.value = 10
 	npcBar.value -= political_compass.hit(p_pos, enemy_sprite.political_pos)
 
 

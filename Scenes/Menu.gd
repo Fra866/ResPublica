@@ -173,7 +173,6 @@ func _process(_delta):
 			if n_of_voters > 0:
 				handle_input(n_of_voters, voters_selector)
 				
-				# print(voters_container.get_child(index+1).political_pos)
 				var voter = voters_container.get_child(index+1)
 				
 				voter_name.text = voter.npc_name
@@ -183,7 +182,7 @@ func _process(_delta):
 				party_compass.set_enemy_pointer(voter.political_pos.x, -voter.political_pos.y)
 				
 				if Input.is_action_just_pressed("ui_accept"):
-					print(voter_list)
+					# print(voter_list)
 					if !voter_info.visible:
 						to_voter_info()
 	
@@ -277,9 +276,12 @@ func new_object(object):
 		objects_container.add_child(new_obj_instance)
 
 
-func reload_menu(voter):
-	voters_container.add_child(voter)
-	mafia_container.add_child(voter.duplicate())
+func reload_menu(i: int = -1):
+	for v in voters_container.get_children():
+		if (i >= 0):
+			print(v.npc_name, " -> ", v.position)
+			v.position = Vector2(32 * (i % 4) + 5, 40 * (i / 4) + 18)
+		i += 1
 
 
 func new_voter(voter):
@@ -291,7 +293,12 @@ func new_voter(voter):
 		voter_list.append(new_voter_instance)
 		new_voter_instance.position = Vector2(32 * (n_of_voters % 4) + 5, 40 * (n_of_voters / 4) + 18)
 		# n_of_voters += 1
-		reload_menu(new_voter_instance)
+		add_voter_to_menu(new_voter_instance)
+
+
+func add_voter_to_menu(voter):
+	voters_container.add_child(voter)
+	mafia_container.add_child(voter.duplicate())
 
 
 # These 4 calls are to be further generalized.
@@ -326,18 +333,26 @@ func _on_MafiaBtn_pressed(node):
 	mafia_selector.visible = mafia_displayer.visible
 
 
-func _on_Expell_pressed():
+func voter_left_party(voterToRemove):
 	n_of_voters -= 1
 	
-	print(voters_container.get_children())
+	# print("Voter before remove ",  voters_container.get_children())
 	
-	var voterToRemove = voters_container.get_child(index+1)
+	# var voterToRemove = voters_container.get_child(index+1)
+	
+	# reload_menu()
 	
 	party.removeVoter(voterToRemove.political_pos, n_of_voters, voterToRemove.votes)
-	voters_container.remove_child(voters_container.get_child(index+1))
+	voters_container.remove_child(voterToRemove)
 	
-	print(voters_container.get_children())
+	party_compass.set_main_pointer(party.political_pos.x, -party.political_pos.y)
+	print("Voter after remove ",  voters_container.get_children())
 	
+	reload_menu()
+
+
+func _on_Expell_pressed():
+	voter_left_party(voters_container.get_child(index+1))
 	index = 0
 	voter_info.visible = false
 

@@ -1,24 +1,31 @@
-[gd_resource type="Resource" load_steps=5 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
 [ext_resource path="res://Parties/party.gd" type="Script" id=2]
+[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=3]
+[ext_resource path="res://Items/Slogans/cose_buone.tres" type="Resource" id=4]
+[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=5]
 [ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=7]
+[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=8]
+[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=9]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
 party_name = ""
-votes = 0
-political_pos = Vector2( 0, 0 )
+votes = 200
+political_pos = Vector2( 2.5, 3 )
 
 [resource]
 script = ExtResource( 1 )
 name = ""
-slogans = [  ]
+slogans = [ ExtResource( 3 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 9 ) ]
 objects = [  ]
-voters = [  ]
-ended_cutscenes = [  ]
+voters = [ Object(Sprite,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 5, 18 ),"rotation":0.0,"scale":Vector2( 0.830188, 0.774194 ),"z_index":0,"z_as_relative":true,"texture":Resource( "res://Assets/Grass/tall_grass.png" ),"normal_map":null,"centered":false,"offset":Vector2( 0, 0 ),"flip_h":false,"flip_v":false,"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2( 0, 0, 0, 0 ),"region_filter_clip":false,"script":Resource( "res://Scenes/EnemySprite.gd" ),"npc_name":"Machiavelli","npc_desc":"Un politico molto pragmatico.","sex":"","political_pos":Vector2( 5, 6 ),"lvl":1,"votes":200,"max_hp":40,"popularity":10.0,"mafia_points":-30.0,"mafia_target":0.0)
+ ]
+ended_cutscenes = [ NodePath("/root/SceneManager/CurrentScene/Level1/YSort/CutsceneActivator") ]
 current_scene = ExtResource( 6 )
 player_party = SubResource( 1 )
-player_pos = Vector2( 192, 16 )
-money = 1000
-votes = 0
+player_pos = Vector2( 16, 96 )
+money = 700
+votes = 200

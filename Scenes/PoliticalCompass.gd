@@ -76,7 +76,7 @@ func distance_between_pointers(a: Vector2, b: Vector2):
 
 func hit(a: Vector2, b: Vector2):
 	var dist = abs(sqrt(distance_between_pointers(a, b)) * 10)
-	
+
 	if dist < damage_area.shape.radius:
 		return 30 * (1 - (dist / damage_area.shape.radius))
 	elif dist > damage_area.shape.radius:

@@ -58,7 +58,7 @@ margin_right = 100.0
 margin_bottom = 165.0
 rect_min_size = Vector2( 100, 40 )
 custom_fonts/font = SubResource( 1 )
-text = "Italexit"
+text = "UscITA"
 
 [node name="Container2" type="Container" parent="Panel"]
 visible = false

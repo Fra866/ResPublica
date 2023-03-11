@@ -17,6 +17,6 @@ func addVoter(pos: Vector2, n: int, new_votes: int):
 	votes += new_votes
 
 
-func removeVoter(pos: Vector2, n: int, new_votes: int):
-	political_pos = (political_pos - pos) / (n)
-	votes -= new_votes
+func removeVoter(pos: Vector2, n: int, old_votes: int):
+	political_pos = (political_pos - pos) / (n - 1)
+	votes -= old_votes
