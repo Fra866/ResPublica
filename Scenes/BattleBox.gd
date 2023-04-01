@@ -29,18 +29,12 @@ func move_pointer(input_direction: Vector2):
 func _process(_delta):
 	if player_pointer.check_collisions():
 		emit_signal("player_hit", attack[0].damage)
-		# ToDo:
-		# Implement hit() function
-		
-		# Create an invincibility state for the pointer of 
-		# 1 second lenght that activates when is hit.
 
 
 func generate(attacks_list):
 	# Select random attack from the available ones
 	attack_id = attacks_list[randi() % len(attacks_list)]
 	
-	# Dummy check system
 	attack = call(attack_types[attack_id])
 		
 	start_attack(attack[0], attack[1])
@@ -54,7 +48,7 @@ func start_attack(att, time_of_action: float):
 
 
 func bullet():
-	var bullet = load("res://Bullet.tscn").instance()
+	var bullet = load("res://BattleAttacks/Bullet.tscn").instance()
 	bullet.position = Vector2(randi() % 90, -42)
 	bullet.scale = Vector2(1, 1)
 

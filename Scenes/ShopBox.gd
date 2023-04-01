@@ -18,7 +18,7 @@ onready var prize_sign = $PrizeSign
 onready var prize_var = $PrizeSign/Interior/Control/PrizeVar
 onready var text_box = $TextBox
 onready var description = $TextBox/ColorRect/Panel/Description
-onready var political_compass = $PoliticalCompass
+# onready var political_compass = $PoliticalCompass
 
 onready var n_slogans = $Background/SloganBG/Slogans.get_child_count()
 onready var n_objects = $Background/ObjectBG/Objects.get_child_count()
@@ -48,8 +48,8 @@ func priority_to_menu():
 	sloganbg.visible = true
 	objectbg.visible = false
 	text_box.visible = true
-	political_compass.visibility(true)
-	political_compass.show_damage_area(true)
+	#political_compass.visibility(true)
+	#political_compass.show_damage_area(true)
 	open = true
 	first_accept = true
 
@@ -67,8 +67,8 @@ func _process(_delta):
 			id_slogan = handle_input(id_slogan, n_slogans, slog_selector)
 			tmp_slogan = get_instance(slogan_list, id_slogan).slogan_res
 			description.text = tmp_slogan.name
-			political_compass.set_main_pointer(tmp_slogan.political_pos.x / 1.25, -tmp_slogan.political_pos.y / 1.25)
-			political_compass.set_damage_area(tmp_slogan.damage_range)
+			# political_compass.set_main_pointer(tmp_slogan.political_pos.x / 1.25, -tmp_slogan.political_pos.y / 1.25)
+			# political_compass.set_damage_area(tmp_slogan.damage_range)
 			
 			if Input.is_action_just_pressed("ui_accept"):
 				if not first_accept:
@@ -78,7 +78,7 @@ func _process(_delta):
 			if Input.is_action_just_pressed("ui_object"):
 				sloganbg.visible = false
 				objectbg.visible = true
-				political_compass.visibility(false)
+				# political_compass.visibility(false)
 				
 		else:
 			id_object = handle_input(id_object, n_objects, obj_selector)
@@ -93,7 +93,7 @@ func _process(_delta):
 			if Input.is_action_just_pressed("ui_slogan"):
 				sloganbg.visible = true
 				objectbg.visible = false
-				political_compass.visibility(true)
+				#political_compass.visibility(true)
 
 		if Input.is_action_just_pressed("ui_end"):
 				open = false
@@ -105,6 +105,7 @@ func bought(type: String):
 	match type:
 		"slogan":
 			selected_el = get_instance(slogan_list, id_slogan)
+			print(selected_el.slogan_res.ideology1.name)
 			menu.new_slogan(selected_el.slogan_res)
 		"object":
 			selected_el = get_instance(object_list, id_object)
@@ -131,7 +132,7 @@ func handle_input(index, maxv, selector):
 func priority_to_player():
 	background.visible = false
 	text_box.visible = false
-	political_compass.show_damage_area(false)
-	political_compass.visibility(false)
+	# political_compass.show_damage_area(false)
+	# political_compass.visibility(false)
 #	player.get_priority()
 	emit_signal("priority_to_player")

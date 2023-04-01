@@ -22,11 +22,14 @@ export(bool) var start_battle
 export(String) var battle_sprite_path
 export(String) var description = ""
 export(String, "Uomo", "Donna") var sex # See: EnemySprite.gd
+
+export var historical_period = ""
+
 export(Vector2) var political_pos
 export(int) var votes
 export(int) var lvl
 export(int) var max_hp
-export(float, -100, 100, 10) var popularity 
+export(float, -100, 100, 10) var popularity
 export(float, -100, 100, 10) var mafia_points
 export(float, 0, 100, 10) var mafia_target
 
@@ -105,7 +108,6 @@ func process_player_input():
 		is_moving = true
 	else:
 		pass
-		# animstate.travel("Idle")
 
 
 func move(delta):

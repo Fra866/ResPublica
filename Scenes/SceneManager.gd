@@ -3,7 +3,7 @@ extends Node2D
 #var next_scene = null
 
 
-onready var current_scene# = get_child(0).get_child(0)
+onready var current_scene
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var menu = $Menu
 onready var ui = $UI
@@ -22,7 +22,7 @@ signal new_main_scene()
 # signal config
 
 var scene
-var first_scene_path = "res://Scenes/InsideHouse.tscn"
+var first_scene_path = "res://Scenes/GameLocations/InsideHouse.tscn"
 
 
 func _ready():
@@ -73,10 +73,3 @@ func end_transition(player_pos):
 
 func starting_game():
 	scene = load("res://Scenes/InitialCutscene.tscn")
-
-
-#func loadAll():
-#	var loaded = ResourceLoader.load(path)
-#	start_transition(loaded.current_scene, loaded.player_pos)
-#	ui.set("text", str(loaded.money))
-#	menu.slogan_list = loaded.array

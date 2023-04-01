@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/GameLocations/Level1.tscn" type="PackedScene" id=2]
 
 [resource]
 script = ExtResource( 1 )

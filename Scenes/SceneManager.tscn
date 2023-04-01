@@ -5,7 +5,7 @@
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://UI/DialogBox.tscn" type="PackedScene" id=6]
-[ext_resource path="res://SaveMenu.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/SaveMenu.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Animation" id=3]
 resource_name = "FadeToBlack"

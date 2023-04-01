@@ -289,21 +289,6 @@ func npcAttack():
 	turn = TURN.PLAYER
 
 
-#func damageable(slogan: Vector2):
-#	If area will instead be a circle -- [[x0, y0], radius]
-#	var center = Vector2(enemy_area[0][0], enemy_area[0][1])
-#	return abs(slogan - center) < enemy_area[1]
-#	var check_x: bool
-#	var check_y: bool
-	
-#	if slogan.x <= enemy_area[0][1] and slogan.x >= enemy_area[0][0]:
-#		check_x = true
-#	if slogan.y <= enemy_area[1][1] and slogan.y >= enemy_area[1][0]:
-#		check_y = true
-
-#	return check_x and check_y
-
-
 func extra_damage():
 	# If player is also in damage area
 	# Returns extra damage
@@ -369,5 +354,5 @@ func battle_ends(_victory):
 
 
 func end(scene):
-	scenemanager.start_transition("res://Scenes/" + scene + ".tscn", next_pos)
+	scenemanager.start_transition("res://Scenes/GameLocations/" + scene + ".tscn", next_pos)
 	# current_enemy.battle_won = true

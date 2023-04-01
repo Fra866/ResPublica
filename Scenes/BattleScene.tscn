@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/EnemySprite.tscn" type="PackedScene" id=1]
-[ext_resource path="res://BattleBox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/BattleBox.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/BattleScene.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/PoliticalCompass.tscn" type="PackedScene" id=4]
 

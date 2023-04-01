@@ -27,10 +27,6 @@ func _process(_delta):
 		self_close()
 
 
-#func self_load():
-#	container = 
-#	container.add_child(self)
-
 func self_close():
 	self.queue_free()
 
@@ -48,18 +44,7 @@ func split(text: String):
 	words.append(word)
 
 
-func display(content: String):
-	var word = ""
-	for i in len(content):
-		if content[i] != ' ' or '\n':
-			word += content[i]
-		else:
-			word += content[i]
-			words.append(word)
-			word = ""
-
-	words.append(word)
-	
+func display(content: String):	
 	var c = 0
 	var local_label = $MarginContainer/Panel/RichTextLabel
 #	container.visible = true
@@ -72,6 +57,7 @@ func display(content: String):
 			c = 0
 		local_label.add_text(wd)
 		c += len(wd)
+	words.clear()
 	
 #	print(label.text)
 	$MarginContainer.visible = true

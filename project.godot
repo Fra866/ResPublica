@@ -9,10 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Object",
+"class": "Archive",
+"language": "GDScript",
+"path": "res://archive.gd"
+}, {
 "base": "Node",
 "class": "GameObject",
 "language": "GDScript",
 "path": "res://Items/Objects/object.gd"
+}, {
+"base": "Resource",
+"class": "Ideology",
+"language": "GDScript",
+"path": "res://Objects/ideologies.gd"
 }, {
 "base": "Resource",
 "class": "Meta",
@@ -48,22 +58,30 @@ _global_script_classes=[ {
 "class": "Temp",
 "language": "GDScript",
 "path": "res://NPC/tmp.gd"
+}, {
+"base": "Object",
+"class": "histPeriod",
+"language": "GDScript",
+"path": "res://Objects/histPeriod.gd"
 } ]
 _global_script_class_icons={
+"Archive": "",
 "GameObject": "",
+"Ideology": "",
 "Meta": "",
 "ObjectResource": "",
 "PoliticalParty": "",
 "Saved": "",
 "Slogan": "",
 "SloganResource": "",
-"Temp": ""
+"Temp": "",
+"histPeriod": ""
 }
 
 [application]
 
 config/name="ResPublica"
-run/main_scene="res://Start.tscn"
+run/main_scene="res://Scenes/Start.tscn"
 config/icon="res://icon.png"
 
 [display]
