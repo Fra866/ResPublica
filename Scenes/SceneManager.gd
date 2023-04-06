@@ -1,8 +1,5 @@
 extends Node2D
 
-#var next_scene = null
-
-
 onready var current_scene
 onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var menu = $Menu

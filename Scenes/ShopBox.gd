@@ -18,6 +18,7 @@ onready var prize_sign = $PrizeSign
 onready var prize_var = $PrizeSign/Interior/Control/PrizeVar
 onready var text_box = $TextBox
 onready var description = $TextBox/ColorRect/Panel/Description
+onready var ideologicalDesc = $TextBox/ColorRect/Panel/Description2
 # onready var political_compass = $PoliticalCompass
 
 onready var n_slogans = $Background/SloganBG/Slogans.get_child_count()
@@ -48,8 +49,7 @@ func priority_to_menu():
 	sloganbg.visible = true
 	objectbg.visible = false
 	text_box.visible = true
-	#political_compass.visibility(true)
-	#political_compass.show_damage_area(true)
+	
 	open = true
 	first_accept = true
 
@@ -67,7 +67,11 @@ func _process(_delta):
 			id_slogan = handle_input(id_slogan, n_slogans, slog_selector)
 			tmp_slogan = get_instance(slogan_list, id_slogan).slogan_res
 			description.text = tmp_slogan.name
-			# political_compass.set_main_pointer(tmp_slogan.political_pos.x / 1.25, -tmp_slogan.political_pos.y / 1.25)
+			
+			tmp_slogan.ideology1._ready()
+			ideologicalDesc.text = str(tmp_slogan.ideology1.name)
+			
+			# print(Archive.new().ideologies[tmp_slogan.ideology1.id])
 			# political_compass.set_damage_area(tmp_slogan.damage_range)
 			
 			if Input.is_action_just_pressed("ui_accept"):
@@ -111,8 +115,10 @@ func bought(type: String):
 			selected_el = get_instance(object_list, id_object)
 			menu.new_object(selected_el.object_res)
 
+
 func error(slogan: SloganResource):
 	print("Va' che l'hai già comprato, il " + slogan.name)
+
 
 func handle_input(index, maxv, selector):
 	if Input.is_action_just_pressed("ui_left") and index > 0:
@@ -132,7 +138,5 @@ func handle_input(index, maxv, selector):
 func priority_to_player():
 	background.visible = false
 	text_box.visible = false
-	# political_compass.show_damage_area(false)
-	# political_compass.visibility(false)
-#	player.get_priority()
+	
 	emit_signal("priority_to_player")

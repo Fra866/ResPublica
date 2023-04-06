@@ -18,12 +18,12 @@ export(Array, int) var attack_ids
 export(Array) var influence_area = [[],[]]
 export(bool) var is_seller
 export(bool) var start_battle
-
+export(Array, Resource) var ideologies
 export(String) var battle_sprite_path
 export(String) var description = ""
 export(String, "Uomo", "Donna") var sex # See: EnemySprite.gd
 
-export var historical_period = ""
+export(int) var historical_period
 
 export(Vector2) var political_pos
 export(int) var votes

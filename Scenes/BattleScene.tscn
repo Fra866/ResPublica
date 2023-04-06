@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/EnemySprite.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/BattleBox.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/BattleScene.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/PoliticalCompass.tscn" type="PackedScene" id=4]
+[ext_resource path="res://UI/player_stylesheet_16bit.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 1, 0.933333, 0.254902, 1 )
@@ -30,17 +31,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PlayerSprite" type="Sprite" parent="."]
+position = Vector2( 57, 77 )
+scale = Vector2( 0.9, 0.9 )
+texture = ExtResource( 5 )
+hframes = 4
+vframes = 4
+frame = 13
+
 [node name="EnemySprite" parent="." instance=ExtResource( 1 )]
-position = Vector2( 144, 16 )
-scale = Vector2( 0.830188, 0.774194 )
+position = Vector2( 239, 36 )
+scale = Vector2( 1, 1 )
 
 [node name="LifeBars" type="Node2D" parent="."]
 
 [node name="PlayerBar" type="ProgressBar" parent="LifeBars"]
-margin_left = 207.0
-margin_top = 110.0
-margin_right = 257.0
-margin_bottom = 125.0
+margin_left = 17.0
+margin_top = 6.0
+margin_right = 67.0
+margin_bottom = 21.0
 rect_min_size = Vector2( 50, 15 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0.168627, 0.85098, 0.223529, 1 )
@@ -62,11 +71,15 @@ __meta__ = {
 }
 
 [node name="NPCBar" type="ProgressBar" parent="LifeBars"]
-margin_left = 220.0
-margin_right = 320.0
-margin_bottom = 15.0
+margin_left = 218.0
+margin_top = 2.0
+margin_right = 318.0
+margin_bottom = 17.0
 rect_min_size = Vector2( 100, 15 )
 rounded = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Background2" type="ColorRect" parent="."]
 visible = false
@@ -78,10 +91,10 @@ margin_bottom = 180.0
 [node name="BattleMenu" type="Node2D" parent="."]
 
 [node name="Selector" type="Node2D" parent="BattleMenu"]
+visible = false
 position = Vector2( 29, 95 )
 
 [node name="SelectorBackground" type="ColorRect" parent="BattleMenu/Selector"]
-visible = false
 margin_right = 30.0
 margin_bottom = 30.0
 color = Color( 0.992157, 0.0313726, 0.0313726, 1 )
@@ -93,10 +106,13 @@ color = Color( 0.992157, 0.0313726, 0.0313726, 1 )
 [node name="WhatToDo" type="Node2D" parent="BattleMenu"]
 
 [node name="Panel" type="Panel" parent="BattleMenu/WhatToDo"]
-margin_left = 16.0
-margin_top = 130.0
-margin_right = 304.0
-margin_bottom = 180.0
+margin_left = 17.0
+margin_top = 106.0
+margin_right = 305.0
+margin_bottom = 156.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Container" type="Container" parent="BattleMenu/WhatToDo/Panel"]
 anchor_left = 0.5
@@ -169,9 +185,9 @@ __meta__ = {
 }
 
 [node name="BattleBox" parent="." instance=ExtResource( 2 )]
-position = Vector2( 128, 64 )
+visible = false
+position = Vector2( 124, 37 )
 scale = Vector2( 0.42, 0.415 )
 
 [node name="PoliticalCompass" parent="." instance=ExtResource( 4 )]
-position = Vector2( 261, 70 )
-scale = Vector2( 0.7, 0.7 )
+position = Vector2( 155, 57 )

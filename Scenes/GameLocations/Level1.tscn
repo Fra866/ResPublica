@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://NPC/NPC.tscn" type="PackedScene" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Scenes/Door.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/GameLocations/Level1.gd" type="Script" id=6]
 [ext_resource path="res://NPC/Cutscenes/machiavelli.gd" type="Script" id=7]
+[ext_resource path="res://Objects/Ideologies/nationalism.tres" type="Resource" id=8]
+[ext_resource path="res://Objects/Ideologies/egalitarianism.tres" type="Resource" id=9]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 6 )
@@ -20,7 +22,6 @@ attack_ids = [ 0, 1 ]
 influence_area = [ [ 0, 8 ], [ 0, 8 ] ]
 start_battle = true
 battle_sprite_path = "res://UI/andreotti/battle.png"
-historical_period = "Seconda Repvbbliva"
 political_pos = Vector2( 4, -2 )
 lvl = 4
 max_hp = 100
@@ -37,7 +38,6 @@ dialog_list = [ "Questo sprite va buttato" ]
 attack_ids = [ 1 ]
 start_battle = true
 battle_sprite_path = "res://Assets/Grass/grass_step_animation.png"
-historical_period = "Regno d'Italia"
 political_pos = Vector2( -4, -2 )
 lvl = 1
 max_hp = 30
@@ -52,7 +52,6 @@ dialog_list = [ "Rivoluzione Now!" ]
 attack_ids = [ 1, 0 ]
 start_battle = true
 battle_sprite_path = "res://Assets/Grass/stepped_tall_grass.png"
-historical_period = "Regno d'Italia"
 political_pos = Vector2( -6, 6 )
 lvl = 1
 max_hp = 60
@@ -66,9 +65,10 @@ position = Vector2( 0, 80 )
 id = 3
 dialog_list = [ "Crea un partito", "Ma mi raccomando...", "Senza fare mionnome." ]
 start_battle = true
+ideologies = [ ExtResource( 9 ), ExtResource( 8 ) ]
 battle_sprite_path = "res://Assets/Grass/tall_grass.png"
 description = "Un politico molto pragmatico."
-historical_period = "Età dei comvni"
+historical_period = 4
 political_pos = Vector2( 5, 6 )
 votes = 200
 lvl = 1

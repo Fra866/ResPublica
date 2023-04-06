@@ -10,5 +10,4 @@ export(Texture) var texture = load("res://Images/Slogans/costituzione2.png")
 export(int) var id = 0
 export(int) var prize = 50
 
-# ToBeRemoved
-export(Vector2) var political_pos # Y = Auth-Liberal axis, X = Left-Right Axis
+export(Vector2) var political_pos
