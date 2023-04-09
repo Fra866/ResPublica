@@ -25,6 +25,7 @@ var open_shop: bool = false
 var start_battle: bool
 
 var start_dialog: bool = false
+var open: bool = true
 
 var battle_scene_path = 'res://Scenes/BattleScene.tscn'
 
@@ -59,12 +60,12 @@ func display_dialog(npc_id):
 	open_shop = current_npc.is_seller
 	
 	start_battle = current_npc.start_battle
-	
-#	print(menu.voter_list)
+
 
 func visibility(vis: bool):
 	$MarginContainer.visible = vis
 	$TextureRect.visible = vis
+	open = vis
 
 
 func end_dialog_box():
@@ -107,10 +108,8 @@ func check_battle() -> void:
 
 
 func _process(_delta):
-#	print(has_won_battle)
 	player = get_parent().get_child(0).get_child(0).find_node('Player')
 	current_scene = scenemanager.get_child(0).get_child(0)
-
 
 	if player:
 		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialog:
@@ -118,7 +117,7 @@ func _process(_delta):
 			if i < len(d_list):
 				display_text_line(d_list[i])
 				i += 1
-			else:
+			elif open:
 				end_dialog_box()
 				if open_shop:
 					open_shop = false

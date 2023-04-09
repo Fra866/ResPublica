@@ -105,7 +105,7 @@ func bought(type: String):
 	match type:
 		"slogan":
 			selected_el = get_instance(slogan_list, id_slogan)
-			print(selected_el.slogan_res.ideology1.name)
+#			print(selected_el.slogan_res.ideology1.name)
 			menu.new_slogan(selected_el.slogan_res)
 		"object":
 			selected_el = get_instance(object_list, id_object)
