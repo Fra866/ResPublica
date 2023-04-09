@@ -21,7 +21,7 @@ onready var battlemenu = $BattleMenu
 onready var selector = $BattleMenu/Selector/SelectorBackground
 onready var margincontainer = $ActionLog/MarginContainer
 onready var action_log = $ActionLog/MarginContainer/Panel/Label
-onready var political_compass = $PoliticalCompass
+
 onready var enemy_sprite = $EnemySprite
 onready var battlebox = $BattleBox
 
@@ -146,7 +146,7 @@ func _process(_delta):
 			if Input.is_action_just_pressed("ui_accept"):
 				
 				if slogButton.has_focus() == true:
-					political_compass.visibility(true)
+					# political_compass.visibility(true)
 					battle_ui = BATTLE_UI.SLOGANS
 				elif objButton.has_focus():
 					battle_ui = BATTLE_UI.OBJECTS
@@ -158,7 +158,7 @@ func _process(_delta):
 				switch_visibility(false)
 				
 		elif battle_ui == BATTLE_UI.SLOGANS:
-			political_compass.visible = true
+			# political_compass.visible = true
 			battlebox.visible = false
 			sloganlist.visible = true
 			
@@ -166,11 +166,11 @@ func _process(_delta):
 				var slog = menu.slogan_list[id]
 				id = handle_input(id, n_of_slogans, selector)
 				#political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
-				political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
-				political_compass.set_main_pointer(slog.political_pos.x, -slog.political_pos.y)
-				political_compass.set_damage_area(slog.damage_range)
+				#political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
+				#political_compass.set_main_pointer(slog.political_pos.x, -slog.political_pos.y)
+				#political_compass.set_damage_area(slog.damage_range)
 				
-				political_compass.show_damage_area(true)
+				#political_compass.show_damage_area(true)
 				
 				margincontainer.visible = true
 				action_log.text = slog.name
@@ -255,10 +255,10 @@ func playerAttack(slogan):
 		attacking = true
 #		political_compass.visible = false
 #		political_compass.show_damage_area(false)
-		political_compass.visibility(false)
-		political_compass.set_main_pointer(player_pos.x, -player_pos.y)
-		political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
-		political_compass.hide_line()
+		#political_compass.visibility(false)
+		#political_compass.set_main_pointer(player_pos.x, -player_pos.y)
+		#political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
+		#political_compass.hide_line()
 	
 		turn = TURN.ATTACKING
 		action_log.text = "Hai usato " + slogan.name
@@ -266,7 +266,7 @@ func playerAttack(slogan):
 		margincontainer.visible = true
 		yield(get_tree().create_timer(1), "timeout")
 	
-		damage(p_attack)
+		damage(slogan)
 	
 		if npcBar.value:
 			margincontainer.visible = false
@@ -277,7 +277,7 @@ func playerAttack(slogan):
 
 func npcAttack():
 #	political_compass.hide_damage_area()
-	political_compass.show_damage_area(false)
+	#political_compass.show_damage_area(false)
 	turn = TURN.ATTACKING
 	battlebox.reset_pointer()
 	battlebox.visible = true
@@ -288,15 +288,12 @@ func npcAttack():
 	slogButton.grab_focus()
 	turn = TURN.PLAYER
 
+#func extra_damage():
+#	pass
 
-func extra_damage():
-	# If player is also in damage area
-	# Returns extra damage
-	return int(Geometry.is_point_in_polygon(player_pos, political_compass.damage_area.polygon)) * 10
-
-
-func damage(p_pos: Vector2):
-	npcBar.value -= political_compass.hit(p_pos, enemy_sprite.political_pos)
+func damage(slogan):
+	if slogan.ideology1.id == enemy_sprite.ideology1.id:
+		npcBar.value -= 20
 
 
 func capture_enemy():

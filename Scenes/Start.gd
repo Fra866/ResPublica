@@ -10,7 +10,6 @@ var started_game: bool = false
 
 onready var path_save_file: String
 onready var new_game: bool
-# onready var config_file = load("res://Saved/config.tres")
 
 
 func _ready():

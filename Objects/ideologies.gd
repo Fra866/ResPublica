@@ -24,10 +24,12 @@ onready var name: String
 onready var period1
 onready var period2
 
-
 func _ready():
-	name = Archive.ideologies[id]["name"]
-	xOr = Archive.ideologies[id]["x"]
-	yOr = Archive.ideologies[id]["y"]
-	period1 = Archive.ideologies[id]["period1"]
-	period2 = Archive.ideologies[id]["period2"]
+	assign_params(Archive.new())
+
+func assign_params(arch: Archive):
+	name = arch.ideologies[id]["name"]
+	xOr = arch.ideologies[id]["x"]
+	yOr = arch.ideologies[id]["y"]
+	period1 = arch.ideologies[id]["period1"]
+	period2 = arch.ideologies[id]["period2"]
