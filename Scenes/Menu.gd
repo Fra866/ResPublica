@@ -69,7 +69,7 @@ var objects_open = false
 
 onready var slogan_list: Array = []
 onready var object_list: Array = []
-onready var voter_list: Array = []
+onready var voter_list: Dictionary = {}
 
 onready var use_script_obj
 onready var obj_type
@@ -109,7 +109,7 @@ func _ready():
 func _process(_delta):
 	n_of_slogans = len(slogan_list)
 	n_of_objects = len(object_list)
-	n_of_voters = len(voter_list)
+	n_of_voters = voter_list.size()
 
 	if menu_main:
 		buttons[i].grab_focus()
@@ -285,12 +285,11 @@ func reload_menu(i: int = -1):
 
 
 func new_voter(voter):
-	if not voter in voter_list:
+	if not voter_list.has(voter.npc_name):
 		
 		var new_voter_instance = load("res://Scenes/EnemySprite.tscn").instance()
-	
 		new_voter_instance = voter.duplicate()
-		voter_list.append(new_voter_instance)
+		voter_list[voter.npc_name] = new_voter_instance
 		new_voter_instance.position = Vector2(32 * (n_of_voters % 4) + 5, 40 * (n_of_voters / 4) + 18)
 		# n_of_voters += 1
 		add_voter_to_menu(new_voter_instance)

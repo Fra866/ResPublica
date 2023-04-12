@@ -93,11 +93,7 @@ func check_battle() -> void:
 		emit_signal("priority_to_player")
 		return
 	if start_battle:
-		var b: bool = false
-		for sprite in menu.voter_list:
-			if npc_name == sprite.npc_name:
-				b = true
-		if !b and menu.party:
+		if menu.party and not menu.voter_list.has(npc_name):
 			current_npc = current_scene.list_npc[npc_global_id]
 			scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 			emit_signal("send_npc", current_npc)
