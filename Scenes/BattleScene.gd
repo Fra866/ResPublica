@@ -40,9 +40,6 @@ var next_scene = ""
 var next_pos: Vector2
 var player_pos = Vector2(0, 0)
 
-onready var p_attack: Vector2
-onready var e_attack: Vector2
-
 onready var attacking = false
 
 onready var first_attack_player = true
@@ -78,7 +75,7 @@ func _ready():
 
 
 func slogan_setup():
-	for slogan_res in menu.slogan_list:
+	for slogan_res in menu.battleslogs:
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
 		new_slog_instance.slogan_res = slogan_res
@@ -88,7 +85,7 @@ func slogan_setup():
 		
 		var x = 12 + 32 * (n_of_slogans % max_slogans)
 		if x == 12:
-			x += 32 # + (32 * n_of_slogans/max_slogans)
+			x += 32
 		var y = 106 + 40*(int(n_of_slogans / (max_slogans+1)))
 
 		new_slog_instance.position = Vector2(x, y)
@@ -253,16 +250,10 @@ func playerAttack(slogan):
 		slogan.xp -= 1
 	
 		attacking = true
-#		political_compass.visible = false
-#		political_compass.show_damage_area(false)
-		#political_compass.visibility(false)
-		#political_compass.set_main_pointer(player_pos.x, -player_pos.y)
-		#political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
-		#political_compass.hide_line()
 	
 		turn = TURN.ATTACKING
 		action_log.text = "Hai usato " + slogan.name
-		p_attack = slogan.political_pos
+
 		margincontainer.visible = true
 		yield(get_tree().create_timer(1), "timeout")
 	
@@ -293,7 +284,7 @@ func npcAttack():
 
 func damage(slogan):
 	if slogan.ideology1.id == enemy_sprite.ideology1.id:
-		npcBar.value -= 20
+		npcBar.value -= npcBar.value * (1 / 5)
 
 
 func capture_enemy():

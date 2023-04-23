@@ -24,7 +24,8 @@ onready var no_slog_text = $MenuLayers/Slogans/NoSloganText
 onready var no_obj_text = $MenuLayers/Objects/NoObjectText
 onready var no_party_text = $MenuLayers/Party/NoPartyText
 
-onready var political_compass_slog = $MenuLayers/Slogans/PoliticalCompass
+onready var battleslogs_menu = $MenuLayers/Slogans/BattleSlogans/ColorRect/Slogans
+
 onready var political_compass_party = $MenuLayers/Party/PoliticalCompass
 
 onready var slogans_desc_displayer = $MenuLayers/Slogans/DescriptionDisplayer
@@ -67,6 +68,7 @@ var index: int = 0
 
 var objects_open = false
 
+onready var battleslogs: Array = []
 onready var slogan_list: Array = []
 onready var object_list: Array = []
 onready var voter_list: Dictionary = {}
@@ -90,6 +92,8 @@ signal just_bought(slogan)
 
 
 func _ready():
+	menu_main = true;
+	
 	screentransition.connect("new_main_scene", self, "new_p")
 	no_slog_text.visible = false
 	
@@ -114,6 +118,9 @@ func _process(_delta):
 	if menu_main:
 		buttons[i].grab_focus()
 		
+		for m in menus:
+			m.visible=false
+		
 		if Input.is_action_just_pressed("ui_down"):
 			if i != 3:
 				i += 1
@@ -132,12 +139,21 @@ func _process(_delta):
 			if n_of_slogans:
 				current_el = slogan_list[index]
 				current_slogan_desc.text = current_el.name
-				political_compass_slog.set_main_pointer(current_el.political_pos.x, -current_el.political_pos.y)
-				political_compass_slog.set_damage_area(current_el.damage_range)
 				handle_input(n_of_slogans, slogan_selector)
 				
 				if Input.is_action_just_pressed("ui_accept"):
-					print(current_el.name, current_el.political_pos)
+					if not current_el in battleslogs && len(battleslogs) < 4:
+						battleslogs.append(current_el)
+						
+						var new_slog_instance = load(
+							"res://Scenes/UI_Objects/SloganNode.tscn"
+						).instance()
+						new_slog_instance.slogan_res = current_el
+						new_slog_instance.position = Vector2(30 * ((len(battleslogs) -1) % 2) + 35, 40*(int((len(battleslogs) -1) / 2)) + 15)
+						battleslogs_menu.add_child(new_slog_instance)
+					else:
+						print("Is already battleSlog")
+		
 		
 		if menu_state == MENU_STATE.MAFIA:
 			if n_of_voters:
@@ -182,7 +198,6 @@ func _process(_delta):
 				party_compass.set_enemy_pointer(voter.political_pos.x, -voter.political_pos.y)
 				
 				if Input.is_action_just_pressed("ui_accept"):
-					# print(voter_list)
 					if !voter_info.visible:
 						to_voter_info()
 	
@@ -303,14 +318,14 @@ func add_voter_to_menu(voter):
 # These 4 calls are to be further generalized.
 func _on_SlogBtn_pressed(node):
 	to_menu(get_node(node))
-	political_compass_slog.visibility(n_of_slogans)
+#	political_compass_slog.visibility(n_of_slogans)
 	no_slog_text.visible = !n_of_slogans
 	slogan_selector.visible = n_of_slogans
 
 
 func _on_ObjBtn_pressed(node):
 	to_menu(get_node(node))
-	political_compass_slog.visibility(false)
+	#political_compass_slog.visibility(false)
 	no_obj_text.visible = !n_of_objects
 	objects_selector.visible = n_of_objects
 
@@ -326,7 +341,7 @@ func _on_PartyBtn_pressed(node):
 
 func _on_MafiaBtn_pressed(node):
 	to_menu(get_node(node))
-	political_compass_slog.visibility(false)
+
 	mafia_displayer.visible = n_of_voters
 	mafiometer.visible = n_of_voters
 	mafia_selector.visible = mafia_displayer.visible

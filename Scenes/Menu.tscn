@@ -30,6 +30,9 @@ margin_left = -128.0
 margin_top = -80.0
 margin_right = 128.0
 margin_bottom = 80.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="SlogBtn" type="Button" parent="MenuLayers/MainMenu/Control"]
 margin_left = 16.0
@@ -74,7 +77,6 @@ custom_fonts/normal_font = SubResource( 2 )
 text = "toto"
 
 [node name="Slogans" type="Control" parent="MenuLayers"]
-visible = false
 margin_left = -96.0
 margin_top = -80.0
 margin_right = 94.0
@@ -106,18 +108,18 @@ margin_top = 32.0
 margin_right = 176.0
 margin_bottom = 80.0
 text = "Non hai nessuno slogan."
-
-[node name="PoliticalCompass" parent="MenuLayers/Slogans" instance=ExtResource( 4 )]
-position = Vector2( 16, 135 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="DescriptionDisplayer" type="Control" parent="MenuLayers/Slogans"]
 anchor_left = 0.253
 anchor_top = 0.7
 anchor_right = 1.095
 anchor_bottom = 1.1
-margin_left = -0.0700035
+margin_left = 47.93
 margin_top = -12.0
-margin_right = 15.95
+margin_right = 19.95
 margin_bottom = -12.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -139,7 +141,7 @@ __meta__ = {
 [node name="InnerBackground" type="ColorRect" parent="MenuLayers/Slogans/DescriptionDisplayer/Background"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 152.0
+margin_right = 109.0
 margin_bottom = 72.0
 color = Color( 0, 0.537255, 0.133333, 1 )
 __meta__ = {
@@ -151,15 +153,38 @@ anchor_left = 0.028
 anchor_top = 0.111
 anchor_right = 0.958
 anchor_bottom = 0.921
-margin_left = -0.0320001
-margin_top = 0.00599957
-margin_right = 0.0480042
-margin_bottom = 0.265999
+margin_left = 0.172
+margin_top = -0.104
+margin_right = 3.242
+margin_bottom = 0.0559998
 text = "A morte i ghibellini"
 fit_content_height = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="BattleSlogans" type="Control" parent="MenuLayers/Slogans"]
+anchor_left = -0.137
+anchor_top = 0.612
+anchor_right = 0.5
+anchor_bottom = 1.094
+margin_left = 0.0300026
+margin_top = 0.0799942
+margin_bottom = -0.0400085
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="MenuLayers/Slogans/BattleSlogans"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+color = Color( 0.0862745, 0.0745098, 0.0745098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slogans" type="Node2D" parent="MenuLayers/Slogans/BattleSlogans/ColorRect"]
 
 [node name="Objects" type="Control" parent="MenuLayers"]
 visible = false
