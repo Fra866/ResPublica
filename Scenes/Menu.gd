@@ -92,7 +92,7 @@ signal just_bought(slogan)
 
 
 func _ready():
-	menu_main = true;
+#	menu_main = true;
 	
 	screentransition.connect("new_main_scene", self, "new_p")
 	no_slog_text.visible = false
