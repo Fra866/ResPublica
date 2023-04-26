@@ -54,7 +54,7 @@ func bullet():
 
 #	start_attack(bullet, 2)
 	return [bullet, 2]
-	
+
 
 func fascio():
 	var fascio = load("res://BattleAttacks/Fascio.tscn").instance()

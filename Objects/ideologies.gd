@@ -4,13 +4,13 @@ class_name Ideology
 export(int) var id
 
 enum xOrientation {
-	NO_ORIENTATION = -1,
+	NO_ORIENTATION = 2,
 	LEFT = 0,
 	RIGHT = 1,
 }
 
 enum yOrientation {
-	NO_ORIENTATION = -1,
+	NO_ORIENTATION = 2,
 	LIB = 0,
 	AUTH = 1,
 }

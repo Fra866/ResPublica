@@ -68,11 +68,10 @@ func _process(_delta):
 			tmp_slogan = get_instance(slogan_list, id_slogan).slogan_res
 			description.text = tmp_slogan.name
 			
-			tmp_slogan.ideology1._ready()
-			ideologicalDesc.text = str(tmp_slogan.ideology1.name)
+			for id in tmp_slogan.ideologies:
+				id._ready()
+			ideologicalDesc.text = str(tmp_slogan.ideologies[0].name)
 			
-			# print(Archive.new().ideologies[tmp_slogan.ideology1.id])
-			# political_compass.set_damage_area(tmp_slogan.damage_range)
 			
 			if Input.is_action_just_pressed("ui_accept"):
 				if not first_accept:

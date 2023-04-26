@@ -1,14 +1,16 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://Items/Slogans/slogan_resource.gd" type="Script" id=1]
-[ext_resource path="res://Objects/Ideologies/fascism.tres" type="Resource" id=2]
+[ext_resource path="res://Objects/Ideologies/nationalism.tres" type="Resource" id=2]
 
 [resource]
 script = ExtResource( 1 )
 xp = 30
-damage_range = 10
+power = 5
+att = 20
+def = 10
 name = "Aiutiamoli a casa loro"
-ideology1 = ExtResource( 2 )
+ideologies = [ ExtResource( 2 ) ]
 id = 0
 prize = 50
 political_pos = Vector2( 5, 2 )

@@ -3,6 +3,7 @@ class_name Saved
 
 export(String) var name
 export(Array, Resource) var slogans = []
+export(Array, Resource) var battleslogs = []
 export(Array, Resource) var objects = []
 export(Array, Resource) var voters = []
 export(Array, Resource) var ended_cutscenes
@@ -17,6 +18,7 @@ func initialize():
 	name = "???"
 	objects = []
 	slogans = []
+	battleslogs = []
 	voters = []
 	ended_cutscenes = []
 	current_scene = null
