@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/GameLocations/Level1.tscn" type="PackedScene" id=2]
@@ -7,16 +7,25 @@
 [ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=5]
 [ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=6]
 [ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=7]
+[ext_resource path="res://Parties/party.gd" type="Script" id=8]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 8 )
+party_name = ""
+votes = 0
+political_pos = Vector2( 0, 0 )
 
 [resource]
 script = ExtResource( 1 )
 name = "lollo"
 slogans = [ ExtResource( 4 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 3 ) ]
+battleslogs = [ ExtResource( 4 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 6 ) ]
 objects = [  ]
 voters = {
 }
-ended_cutscenes = [  ]
+ended_cutscenes = [ NodePath("/root/SceneManager/CurrentScene/Level1/YSort/CutsceneActivator") ]
 current_scene = ExtResource( 2 )
-player_pos = Vector2( 64, 48 )
+player_party = SubResource( 1 )
+player_pos = Vector2( 112, 80 )
 money = 750
 votes = 0

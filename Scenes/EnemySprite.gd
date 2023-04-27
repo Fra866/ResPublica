@@ -8,12 +8,14 @@ export(String, "Uomo", "Donna") var sex
 # the same sex/gender.
 export(Vector2) var political_pos
 export(int) var lvl
+export(int) var att
+export(int) var def
 export(int) var votes
 export(int) var max_hp
 export(float, -100, 100, 10) var popularity # Extra votes at the elections when appointing the voter as a candidate
 export(float, -100, 100, 10) var mafia_points # How capturing the enemy will influence the Mafiometer
 export(float, 0, 100, 10) var mafia_target
-export(Resource) var ideology1
+export(Array) var ideologies
 
 
 func init(enemy, battle:= false):
@@ -28,12 +30,14 @@ func init(enemy, battle:= false):
 		sex = enemy.sex
 		political_pos = enemy.political_pos
 		lvl = enemy.lvl
+		att = enemy.att
+		def = enemy.def
 		votes = enemy.votes
 		max_hp = enemy.max_hp
 		popularity = enemy.popularity
 		mafia_points = enemy.mafia_points
 		mafia_target = enemy.mafia_target
-		ideology1 = enemy.ideologies[0]
+		ideologies = enemy.ideologies
 		enemy = null
 
 

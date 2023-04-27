@@ -11,6 +11,8 @@ onready var objButton = $BattleMenu/WhatToDo/Panel/Container/Objects
 onready var captureButton = $BattleMenu/WhatToDo/Panel/Container/Capture
 onready var quitButton = $BattleMenu/WhatToDo/Panel/Container/Quit
 
+onready var buttonlist = [slogButton, objButton, captureButton, quitButton]
+
 onready var pBar = $LifeBars/PlayerBar
 onready var npcBar = $LifeBars/NPCBar
 
@@ -58,6 +60,7 @@ func _ready():
 	enemy_sprite.texture = load("res://UI/andreotti/battle.png")
 	
 	pBar.value = int(ui.hp.text)
+	
 	pBar.get_child(0).text = str(pBar.value)
 	battlebox.visible = true
 	
@@ -68,10 +71,12 @@ func _ready():
 	sloganlist.visible = false
 	objectlist.visible = false
 	
-	slogButton.grab_focus()
-	
 	slogan_setup()
 	object_setup()
+	
+	slogButton.grab_focus()
+	
+	print("READY - menu.battleslogans == ", menu.battleslogs)
 
 
 func slogan_setup():
@@ -127,13 +132,9 @@ func _process(_delta):
 			battlebox.move_pointer(Vector2(0, 1))
 		if Input.is_action_pressed("ui_up"):
 			battlebox.move_pointer(Vector2(0, -1))
-		
-		if Input.is_action_just_pressed("ui_accept"):
-			pass
 	
 	else:
 		if battle_ui == BATTLE_UI.MENU:
-			
 			battlebox.visible = false
 			selector.visible = false
 			sloganlist.visible = false
@@ -141,33 +142,32 @@ func _process(_delta):
 			whattodo.visible = true
 			
 			if Input.is_action_just_pressed("ui_accept"):
+				print("ui_accept MENU")
 				
-				if slogButton.has_focus() == true:
-					# political_compass.visibility(true)
+				if !slogButton.has_focus() && !objButton.has_focus() && captureButton.has_focus() && quitButton.has_focus():
+					slogButton.grab_focus()
+				
+				if slogButton.has_focus():
 					battle_ui = BATTLE_UI.SLOGANS
+					#switch_visibility(false)
 				elif objButton.has_focus():
 					battle_ui = BATTLE_UI.OBJECTS
 				elif captureButton.has_focus():
 					capture_enemy()
+					#switch_visibility(false)
 				elif quitButton.has_focus():
 					battle_ui = BATTLE_UI.EXIT
-					
+					#switch_visibility(false)
+				
 				switch_visibility(false)
 				
 		elif battle_ui == BATTLE_UI.SLOGANS:
-			# political_compass.visible = true
 			battlebox.visible = false
 			sloganlist.visible = true
 			
 			if turn == TURN.PLAYER:
 				var slog = menu.slogan_list[id]
 				id = handle_input(id, n_of_slogans, selector)
-				#political_compass.set_line(political_compass.get_main_pointer() ,slog.political_pos.x, -slog.political_pos.y)
-				#political_compass.set_enemy_pointer(enemy_sprite.political_pos.x, -enemy_sprite.political_pos.y)
-				#political_compass.set_main_pointer(slog.political_pos.x, -slog.political_pos.y)
-				#political_compass.set_damage_area(slog.damage_range)
-				
-				#political_compass.show_damage_area(true)
 				
 				margincontainer.visible = true
 				action_log.text = slog.name
@@ -176,7 +176,7 @@ func _process(_delta):
 					playerAttack(menu.slogan_list[id])
 		
 		elif battle_ui == BATTLE_UI.OBJECTS:
-			if n_of_objects:
+			if bool(n_of_objects):
 				id = handle_input(id, n_of_objects, selector)
 				if Input.is_action_just_pressed("ui_accept"):
 					pass
@@ -253,7 +253,7 @@ func playerAttack(slogan):
 	
 		turn = TURN.ATTACKING
 		action_log.text = "Hai usato " + slogan.name
-
+	
 		margincontainer.visible = true
 		yield(get_tree().create_timer(1), "timeout")
 	
@@ -267,8 +267,6 @@ func playerAttack(slogan):
 
 
 func npcAttack():
-#	political_compass.hide_damage_area()
-	#political_compass.show_damage_area(false)
 	turn = TURN.ATTACKING
 	battlebox.reset_pointer()
 	battlebox.visible = true
@@ -279,12 +277,37 @@ func npcAttack():
 	slogButton.grab_focus()
 	turn = TURN.PLAYER
 
-#func extra_damage():
-#	pass
+
+func calc(ideologies1, ideologies2, slogan):
+	var level=1; # To add as an UI parameter.
+	# Power is the move's level basically.
+	# Stab = same-type attack move
+	var stab = int(ideologies1[0] == ideologies2[0]) + 1
+	var id1 = ideologies1[0]
+	var id2 = ideologies2[0]
+	# Define move effectiveness
+	# ToDo: calculate it for each ideology
+	var extra_damage = 1
+	
+	if (id1.xOr == id2.xOr && id1.xOr != 2 && id2.xOr != 2):
+		extra_damage += 0.4
+	if (id1.yOr == id2.yOr && id1.yOr != 2 && id2.yOr != 2):
+		extra_damage += 0.4
+	
+	if (id1.id == id2.id):
+		extra_damage = 2;
+	
+	print("ED: ", extra_damage)
+	
+	return ((((2*level)/5+2)*slogan.power*(slogan.att/enemy_sprite.def))/2)*stab*extra_damage
+
 
 func damage(slogan):
-	if slogan.ideology1.id == enemy_sprite.ideology1.id:
-		npcBar.value -= npcBar.value * (1 / 5)
+	var dam: int = 0;
+	dam = calc(slogan.ideologies, enemy_sprite.ideologies, slogan)
+	print("DAMAGE = ", dam)
+	
+	npcBar.value -= dam;
 
 
 func capture_enemy():

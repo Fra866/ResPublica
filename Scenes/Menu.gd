@@ -92,8 +92,6 @@ signal just_bought(slogan)
 
 
 func _ready():
-#	menu_main = true;
-	
 	screentransition.connect("new_main_scene", self, "new_p")
 	no_slog_text.visible = false
 	
@@ -104,6 +102,8 @@ func _ready():
 	
 	for slogan_res in save_file.slogans:
 		new_slogan(slogan_res)
+	for slogan_res in save_file.battleslogs:
+		new_battleslog(slogan_res)
 	for object_res in save_file.objects:
 		new_object(object_res)
 	for voter in save_file.voters:
@@ -141,16 +141,13 @@ func _process(_delta):
 				current_slogan_desc.text = current_el.name
 				handle_input(n_of_slogans, slogan_selector)
 				
+				if Input.is_action_just_pressed("ui_down"):
+					# ToDo: Add battleslogs menu
+					pass
+				
 				if Input.is_action_just_pressed("ui_accept"):
 					if not current_el in battleslogs && len(battleslogs) < 4:
-						battleslogs.append(current_el)
-						
-						var new_slog_instance = load(
-							"res://Scenes/UI_Objects/SloganNode.tscn"
-						).instance()
-						new_slog_instance.slogan_res = current_el
-						new_slog_instance.position = Vector2(30 * ((len(battleslogs) -1) % 2) + 35, 40*(int((len(battleslogs) -1) / 2)) + 15)
-						battleslogs_menu.add_child(new_slog_instance)
+						new_battleslog(current_el)
 					else:
 						print("Is already battleSlog")
 		
@@ -260,7 +257,6 @@ func handle_input(maxv: int, selector):
 		selector.rect_position = Vector2(32 * (index % 6) + 3, 40 * (index / 6) + 9)
 	else:
 		selector.rect_position = Vector2(32 * (index % 4) + 3, 40 * (index / 4) + 16)
-#	return index
 
 
 func new_slogan(slogan):
@@ -277,6 +273,17 @@ func new_slogan(slogan):
 	new_slog_instance.position = Vector2(32 * (n_of_slogans % 6) + 15, 40*(int(n_of_slogans / 6))+ 20)
 	n_of_slogans += 1
 	slogan_container.add_child(new_slog_instance)
+
+
+func new_battleslog(element):
+	battleslogs.append(element)
+	var new_slog_instance = load(
+		"res://Scenes/UI_Objects/SloganNode.tscn"
+	).instance()
+	
+	new_slog_instance.slogan_res = element
+	new_slog_instance.position = Vector2(30 * ((len(battleslogs) - 1) % 2) + 35, 40*((len(battleslogs) - 1) / 2) + 15)
+	battleslogs_menu.add_child(new_slog_instance)
 
 
 func new_object(object):

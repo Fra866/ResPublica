@@ -1,14 +1,16 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
-[ext_resource path="res://Objects/Ideologies/traditionalism.tres" type="Resource" id=1]
+[ext_resource path="res://Objects/Ideologies/egalitarianism.tres" type="Resource" id=1]
 [ext_resource path="res://Items/Slogans/slogan_resource.gd" type="Script" id=2]
 
 [resource]
 script = ExtResource( 2 )
 xp = 30
-damage_range = 10
+power = 5
+att = 20
+def = 10
 name = "Restiamo humani"
-ideology1 = ExtResource( 1 )
+ideologies = [ ExtResource( 1 ) ]
 id = 4
 prize = 50
 political_pos = Vector2( -4, -2 )

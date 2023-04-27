@@ -24,10 +24,8 @@ func priority_to_menu():
 
 
 func priority_to_player():
-#	print('Priority to P1')
 	self.visible = false
 	return true
-#	state = 1
 
 
 func _process(_delta):
@@ -52,9 +50,9 @@ func save_all():
 		file_save.name = player.p_name
 		file_save.player_pos = player.position
 		file_save.slogans = menu.slogan_list
+		file_save.battleslogs = menu.battleslogs
 		file_save.objects = menu.object_list
 		file_save.voters = menu.voter_list
-	#	file_save.list_npc = scene_manager.list_npc
 		file_save.ended_cutscenes = scene_manager.ended_cutscenes
 		file_save.money = ui.get_money()
 		file_save.votes = ui.get_votes()
