@@ -2,9 +2,9 @@ extends Resource
 class_name SloganResource
 
 export(int) var xp = 30
-export(int) var power
-export(int) var att
-export(int) var def
+export(int) var power = 1
+export(int) var att = 10
+export(int) var def = 10
 export(String) var name
 export(Array, Resource) var ideologies
 export(Texture) var texture = load("res://Images/Slogans/costituzione2.png")

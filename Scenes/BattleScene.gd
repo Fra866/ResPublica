@@ -182,7 +182,7 @@ func _process(_delta):
 					pass
 	
 		elif battle_ui == BATTLE_UI.EXIT:
-			battle_ends(0)
+			battle_ends(false)
 	
 		if Input.is_action_just_pressed("ui_end"):
 			battle_ui = BATTLE_UI.MENU
@@ -299,7 +299,7 @@ func calc(ideologies1, ideologies2, slogan):
 	
 	print("ED: ", extra_damage)
 	
-	return ((((2*level)/5+2)*slogan.power*(slogan.att/enemy_sprite.def))/2)*stab*extra_damage
+	return ((((4*level)/5+2)*slogan.power*(slogan.att/enemy_sprite.def))/2)*stab*extra_damage
 
 
 func damage(slogan):
@@ -316,8 +316,15 @@ func capture_enemy():
 		margincontainer.visible = true
 		battlemenu.visible = false
 		yield(get_tree().create_timer(1), "timeout")
+		
 		action_log.text = "Hai ottenuto " + str(enemy_sprite.votes) + " voti."
+		ui.add_votes(enemy_sprite.votes)
 		yield(get_tree().create_timer(1), "timeout")
+		
+		if ui.lvlUp:
+			action_log.text = "Sei salito di livello!"
+			ui.lvlUp = false
+			yield(get_tree().create_timer(1), "timeout")
 		
 		menu.new_voter(enemy_sprite)
 		menu.party.votes += enemy_sprite.votes
@@ -351,6 +358,7 @@ func battle_ends(_victory):
 	margincontainer.visible = true
 	battlemenu.visible = false
 	
+	
 	var timer = Timer.new()
 	add_child(timer)
 	timer.start(2)
@@ -360,8 +368,7 @@ func battle_ends(_victory):
 	
 	end(next_scene)
 	
-	
-	# scenemanager.start_transition("scene_path", Vector2(0,0))
+	#scenemanager.start_transition("scene_path", Vector2(0,0))
 
 
 func end(scene):

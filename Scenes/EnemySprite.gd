@@ -7,9 +7,9 @@ export(String, "Uomo", "Donna") var sex
 # you need a list with at least 40% of candidates to have 
 # the same sex/gender.
 export(Vector2) var political_pos
-export(int) var lvl
-export(int) var att
-export(int) var def
+export(int) var lvl = 1
+export(int) var att = 10
+export(int) var def = 10
 export(int) var votes
 export(int) var max_hp
 export(float, -100, 100, 10) var popularity # Extra votes at the elections when appointing the voter as a candidate
