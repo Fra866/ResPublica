@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://NPC/NPC.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Objects/Ideologies/nationalism.tres" type="Resource" id=8]
 [ext_resource path="res://Objects/Ideologies/fascism.tres" type="Resource" id=9]
 [ext_resource path="res://Assets/Tilesets/Roma.png" type="Texture" id=10]
+[ext_resource path="res://Objects/Ideologies/communism.tres" type="Resource" id=11]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Roma.png 0"
@@ -109,7 +110,7 @@ start_battle = true
 battle_sprite_path = "res://Assets/Grass/grass_step_animation.png"
 political_pos = Vector2( -4, -2 )
 lvl = 1
-max_hp = 30
+max_hp = 100
 popularity = -20.0
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"
 f = 2
@@ -120,10 +121,13 @@ id = 2
 dialog_list = [ "Rivoluzione Now!" ]
 attack_ids = [ 1, 0 ]
 start_battle = true
+ideologies = [ ExtResource( 11 ) ]
 battle_sprite_path = "res://Assets/Grass/stepped_tall_grass.png"
 political_pos = Vector2( -6, 6 )
 lvl = 1
-max_hp = 60
+att = 10
+def = 10
+max_hp = 100
 popularity = -20.0
 mafia_points = 30.0
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"
