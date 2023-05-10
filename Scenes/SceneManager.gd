@@ -16,15 +16,14 @@ onready var slot: int # Id of file_saved slot (can be 1, 2 or 3)
 onready var loading_count: int = 1
 
 signal new_main_scene()
-# signal config
 
 var scene
-var first_scene_path = "res://Scenes/GameLocations/InsideHouse.tscn"
+var first_scene_path = "res://Scenes/GameLocations/BarScene.tscn"
 
 
 func _ready():
+	print("Ready SceneManager")
 	ended_cutscenes = save_file.ended_cutscenes
-#	scene_container.get_child(0).queue_free()
 	for i in scene_container.get_children():
 		i.queue_free()
 	
@@ -34,7 +33,6 @@ func _ready():
 		starting_game()
 	
 	scene_container.add_child(scene.instance())
-#	list_npc = save_file.list_npc
 	ended_cutscenes = save_file.ended_cutscenes
 	current_scene = get_child(0).get_child(0)
 	transition_animation.play("FadeToTransparent")
@@ -43,7 +41,6 @@ func _ready():
 
 func cutscene_over(id):
 	ended_cutscenes.append(id)
-
 
 
 func start_transition(next_scene: String, player_pos):

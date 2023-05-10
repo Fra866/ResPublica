@@ -54,16 +54,49 @@ tile_data = PoolIntArray( 262142, 1, 0, 262143, 1, 0, 196608, 1, 0, 196609, 1, 0
 [node name="Door" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 144, 192 )
 input_pickable = false
-next_scene_path = "res://Scenes/Level1.tscn"
+next_scene_path = "res://Scenes/GameLocations/Level1.tscn"
 next_player_pos = Vector2( 192, 16 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 4 )]
-position = Vector2( 144, 176 )
+position = Vector2( 32, 96 )
 collision_mask = 7
 
 [node name="BarMan" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 176, 176 )
-dialouge_list = [ "Io sono Virgilio" ]
+position = Vector2( 32, 64 )
+dialog_list = [ "Tu non puoi fondare un partito", "Sei partito di testa?" ]
+cutscene_src = ExtResource( 5 )
+sprite_path = "res://UI/andreotti ow.png"
+f = 1
+
+[node name="Parini" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 80, 128 )
+id = 1
+dialog_list = [ "*Inserire discorso dell'Ortes*" ]
+cutscene_src = ExtResource( 5 )
+sprite_path = "res://UI/andreotti ow.png"
+f = 1
+
+[node name="Caio" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 0, 96 )
+id = 2
+dialog_list = [ "C'ha ragione sai? Ma poi proprio ora?", "Non lo sai che ora in Italia, son tornati gli imperatori?" ]
+cutscene_src = ExtResource( 5 )
+sprite_path = "res://UI/andreotti ow.png"
+f = 1
+
+[node name="Sempronio" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 240, 96 )
+id = 3
+dialog_list = [ "Tu non puoi fondare un partito", "Sei partito di testa?" ]
+cutscene_src = ExtResource( 5 )
+sprite_path = "res://UI/andreotti ow.png"
+f = 1
+
+[node name="Virgilio" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 207, 160 )
+id = 4
+dialog_list = [ "Tu non puoi fondare un partito", "Sei partito di testa?" ]
+cutscene_src = ExtResource( 5 )
 sprite_path = "res://UI/andreotti ow.png"
 f = 1
 
@@ -90,5 +123,5 @@ z_index = 1
 polygon = PoolVector2Array( 16, 0, 16, 0, 16, 128, 16, 144, -160, 144, -160, 128, 0, 128, 0, 0 )
 
 [node name="CutsceneActivator" parent="." instance=ExtResource( 3 )]
-position = Vector2( 144, 176 )
-cutscene_code = 2
+position = Vector2( 32, 96 )
+activator = "BarMan"

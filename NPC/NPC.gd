@@ -1,6 +1,5 @@
 extends StaticBody2D
 
-# onready var player = get_node(NodePath('/root/SceneManager/CurrentScene/Level1/YSort/Player'))
 onready var animplayer = $AnimationPlayer
 onready var animtree = $AnimationTree
 onready var sprite = $Sprite
@@ -61,9 +60,9 @@ export(int) var f
 
 func _ready():
 	setting_up_sprite()
-	# animplayer.play("IdleRight")
 
 
+# This function is as meaningful as a LastHope trailer
 func setting_up_sprite():
 	sprite.texture = load(sprite_path)
 	
@@ -75,45 +74,37 @@ func setting_up_sprite():
 func interaction(player):
 	animtree.set("parameters/blend_position", (player.position - position) / 16)
 	print("Interaction: ", self)
-	dialog_box.display_dialog(id)
+	dialog_box.display_dialog(id, false)
 
 
 func _physics_process(delta):
 	if is_moving == false:
 		process_player_input()
 	elif input_direction != Vector2.ZERO and !cutscene:
-		# animstate.travel("Run")
 		move(delta)
 	else:
-		# animstate.travel("Idle")
 		is_moving = false
 
 
 func start_cutscene(scene: Node2D):
-	load(cutscene_src.get_path()).new().start(self, scene)
+	var cutscene_script = load(cutscene_src.get_path()).new()
+	cutscene_script.start(self, scene)
 
 
 func process_player_input():
-	if input_direction.y == 0:
-		pass
-		# input_direction.x = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
-	
-	if input_direction.x == 0:
-		pass
-	
 	if input_direction != Vector2.ZERO:
-		#animtree.set("parameters/Idle/blend_position", input_direction)
-		#animtree.set("parameters/Run/blend_position", input_direction)
-		#animtree.set("parameters/Turn/blend_position", input_direction)
-		
 		initial_position = position
 		is_moving = true
-	else:
-		pass
+
+
+func turn(dir: String):
+	if (dir == 'R'):
+		sprite.frame = 8
+	elif (dir == 'L'):
+		sprite.frame = 5
 
 
 func move(delta):
-	# print("% to next tile" , percent_to_next_tile)
 	percent_to_next_tile += (walk_speed * delta)
 	
 	if not raycast.is_colliding():

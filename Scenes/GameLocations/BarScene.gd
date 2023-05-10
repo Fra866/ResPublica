@@ -1,15 +1,22 @@
 extends Node2D
 
 onready var list_npc = [
-	$YSort/BarMan
+	$YSort/BarMan,
+	$YSort/Parini,
+	$YSort/Caio,
+	$YSort/Sempronio,
+	$YSort/Virgilio
 ]
 
+signal completed
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func start(character: StaticBody2D, scene: Node2D):
+	var caio = scene.get_parent().find_node("Caio")
+	var parini = scene.get_parent().find_node("Parini")
+	
+	scene.start_cutscene_dialog(character, true)
+	yield(scene.get_tree().create_timer(2), "timeout")
+	scene.start_cutscene_dialog(caio, true)
+	
+	# scene.start_cutscene_dialog(character, true)
+	

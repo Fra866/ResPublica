@@ -142,7 +142,6 @@ func _process(_delta):
 				handle_input(n_of_slogans, slogan_selector)
 				
 				if Input.is_action_just_pressed("ui_down"):
-					# ToDo: Add battleslogs menu
 					pass
 				
 				if Input.is_action_just_pressed("ui_accept"):
@@ -236,7 +235,6 @@ func priority_to_player():
 
 
 func new_p():
-#	currentscene = get_node(NodePath('/root/SceneManager/CurrentScene')).get_children().back()
 	player = currentscene.get_children().back().find_node("Player")
 
 
