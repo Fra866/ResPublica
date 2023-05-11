@@ -104,7 +104,6 @@ func _process(_delta):
 	
 	if player:
 		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialog:
-			print("Dialogo")
 			start_dialog = false
 			if i < len(d_list):
 				display_text_line(d_list[i])
