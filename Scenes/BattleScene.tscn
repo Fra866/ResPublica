@@ -100,8 +100,10 @@ margin_bottom = 30.0
 color = Color( 0.992157, 0.0313726, 0.0313726, 1 )
 
 [node name="Slogans" type="Node2D" parent="BattleMenu"]
+visible = false
 
 [node name="Objects" type="Node2D" parent="BattleMenu"]
+visible = false
 
 [node name="WhatToDo" type="Node2D" parent="BattleMenu"]
 
@@ -191,3 +193,7 @@ scale = Vector2( 0.42, 0.415 )
 
 [node name="PoliticalCompass" parent="." instance=ExtResource( 4 )]
 position = Vector2( 155, 57 )
+
+[connection signal="pressed" from="BattleMenu/WhatToDo/Panel/Container/Slogans" to="." method="_on_Slogans_pressed"]
+[connection signal="pressed" from="BattleMenu/WhatToDo/Panel/Container/Objects" to="." method="_on_Objects_pressed"]
+[connection signal="pressed" from="BattleMenu/WhatToDo/Panel/Container/Capture" to="." method="_on_Capture_pressed"]

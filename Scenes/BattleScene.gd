@@ -23,6 +23,7 @@ onready var battlemenu = $BattleMenu
 onready var selector = $BattleMenu/Selector/SelectorBackground
 onready var margincontainer = $ActionLog/MarginContainer
 onready var action_log = $ActionLog/MarginContainer/Panel/Label
+onready var current_menu = null
 
 onready var enemy_sprite = $EnemySprite
 onready var battlebox = $BattleBox
@@ -62,14 +63,10 @@ func _ready():
 	pBar.value = int(ui.hp.text)
 	
 	pBar.get_child(0).text = str(pBar.value)
-	battlebox.visible = true
 	
 	dialogue_box.connect("npc_attacks", self, "set_attacks")
 	dialogue_box.connect("next_scene", self, "set_next_scene")
 	dialogue_box.connect("send_npc", self, "set_npc")
-	
-	sloganlist.visible = false
-	objectlist.visible = false
 	
 	slogan_setup()
 	object_setup()
@@ -88,15 +85,8 @@ func slogan_setup():
 		
 		n_of_slogans += 1
 		
-		var x = 12 + 32 * (n_of_slogans % max_slogans)
-		if x == 12:
-			x += 32
-		var y = 106 + 40*(int(n_of_slogans / (max_slogans+1)))
-
-		new_slog_instance.position = Vector2(x, y)
-		new_slog_instance.scale = Vector2(1.3, 1.3)
+		instance_pos(new_slog_instance, n_of_slogans, max_slogans)
 		sloganlist.add_child(new_slog_instance)
-
 
 func object_setup():
 	for object_res in menu.object_list:
@@ -107,72 +97,60 @@ func object_setup():
 			
 			n_of_objects += 1
 			
-			var x = 12 + 32 * (n_of_objects % max_objects)
-			if x == 12:
-				x += 32 # + (32 * n_of_slogans/max_slogans)
-			var y = 106 + 40*(int(n_of_objects / (max_objects + 1)))
-
-			new_obj_instance.position = Vector2(x, y)
-			new_obj_instance.scale = Vector2(1.3, 1.3)
+			instance_pos(new_obj_instance, n_of_objects, max_objects)
 			objectlist.add_child(new_obj_instance)
 
 
+func instance_pos(instance: Node, size, max_s):
+	var x = 12 + 32 * (size % max_s)
+	if x == 12:
+		x += 32
+	var y = 106 + 40 * int(size / (max_s + 1))
+	
+	instance.position = Vector2(x, y)
+	instance.scale = Vector2(1.3, 1.3)
+
+
+func change_menu(from: Node, to: Node):
+	from.visible = false
+	to.visible = true
+	selector.visible = to != whattodo
+	current_menu = to
+
+func open_menu():
+	battlebox.visible = false
+	battlemenu.visible = true
+	battle_ui = BATTLE_UI.MENU
+
+func close_menu(to: Node):
+	battlemenu.visible = false
+	change_menu(current_menu, whattodo)
+	to.visible = true
+
 func _process(_delta):
 	if turn == TURN.ATTACKING:
-		whattodo.visible = false
-		selector.visible = false
-		sloganlist.visible = false
-		objectlist.visible = false
-		
-		if Input.is_action_pressed("ui_left"):
-			battlebox.move_pointer(Vector2(-1, 0))
-		if Input.is_action_pressed("ui_right"):
-			battlebox.move_pointer(Vector2(1, 0))
-		if Input.is_action_pressed("ui_down"):
-			battlebox.move_pointer(Vector2(0, 1))
-		if Input.is_action_pressed("ui_up"):
-			battlebox.move_pointer(Vector2(0, -1))
+		battlebox.move_pointer(Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down"))
 	
 	else:
 		if battle_ui == BATTLE_UI.MENU:
-			battlebox.visible = false
-			selector.visible = false
-			sloganlist.visible = false
-			objectlist.visible = false
-			whattodo.visible = true
-			
 			if Input.is_action_just_pressed("ui_accept"):
 				print("ui_accept MENU")
 				
-				if !slogButton.has_focus() && !objButton.has_focus() && captureButton.has_focus() && quitButton.has_focus():
-					slogButton.grab_focus()
-				
-				if slogButton.has_focus():
-					battle_ui = BATTLE_UI.SLOGANS
-					#switch_visibility(false)
-				elif objButton.has_focus():
-					battle_ui = BATTLE_UI.OBJECTS
-				elif captureButton.has_focus():
-					capture_enemy()
-					#switch_visibility(false)
-				elif quitButton.has_focus():
-					battle_ui = BATTLE_UI.EXIT
-					#switch_visibility(false)
-				
-				switch_visibility(false)
+				if !captureButton.has_focus():
+					var id = $BattleMenu/WhatToDo/Panel/Container.get_focus_owner().get_index()
+					for k in BATTLE_UI.keys():
+						if BATTLE_UI[k] == id:
+							battle_ui = BATTLE_UI[k]
 				
 		elif battle_ui == BATTLE_UI.SLOGANS:
-			battlebox.visible = false
-			sloganlist.visible = true
-			
 			if turn == TURN.PLAYER:
 				var slog = menu.slogan_list[id]
 				id = handle_input(id, n_of_slogans, selector)
 				
-				margincontainer.visible = true
 				action_log.text = slog.name
 				
 				if Input.is_action_just_pressed("ui_accept"):
+					close_menu(battlebox)
 					playerAttack(menu.slogan_list[id])
 		
 		elif battle_ui == BATTLE_UI.OBJECTS:
@@ -186,6 +164,7 @@ func _process(_delta):
 	
 		if Input.is_action_just_pressed("ui_end"):
 			battle_ui = BATTLE_UI.MENU
+			change_menu(current_menu, whattodo)
 			margincontainer.visible = false
 			id = 0
 			slogButton.grab_focus()
@@ -205,20 +184,6 @@ func handle_input(index, maxv, select):
 	return index
 
 
-func switch_visibility(slogans: bool):
-	whattodo.visible = !whattodo.visible
-	selector.visible = !selector.visible
-	sloganlist.visible = slogans
-	objectlist.visible = !slogans
-
-
-#func get_rand():
-#	var tmp = ResourceLoader.load("res://NPC/tmp.tres")
-#	var dim = len(tmp.slogans_for_battle)
-#	var n = randi() % dim
-#	return tmp.slogans_for_battle[n]
-
-
 func set_attacks(attack_ids_list):
 	attacks_list = attack_ids_list
 
@@ -231,15 +196,6 @@ func set_next_scene(scene: String, p_pos: Vector2):
 func set_npc(current_npc):
 #	print(current_npc)
 	enemy_sprite.init(current_npc, true)
-	enemy_sprite.npc_name = current_npc.name
-#	enemy_sprite.npc_desc = current_npc.description
-	enemy_sprite.sex = current_npc.sex
-	enemy_sprite.max_hp = current_npc.max_hp
-	enemy_sprite.votes = current_npc.votes
-	enemy_sprite.texture = load(current_npc.battle_sprite_path)
-	enemy_sprite.political_pos = current_npc.political_pos
-	enemy_sprite.mafia_points = current_npc.mafia_points
-	enemy_sprite.mafia_target = current_npc.mafia_target
 	
 	npcBar.value = enemy_sprite.max_hp
 	npcBar.max_value = enemy_sprite.max_hp
@@ -273,7 +229,7 @@ func npcAttack():
 	yield(battlebox.generate(attacks_list), "completed")
 
 	yield(get_tree(), "idle_frame")
-	battle_ui = BATTLE_UI.MENU
+	open_menu()
 	slogButton.grab_focus()
 	turn = TURN.PLAYER
 
@@ -299,7 +255,7 @@ func calc(ideologies1, ideologies2, slogan):
 	
 	print("ED: ", extra_damage)
 	
-	return ((((4*level)/5+2)*slogan.power*(slogan.att/enemy_sprite.def))/2)*stab*extra_damage
+	return slogan.att/enemy_sprite.def * (4*level/5 + 2) * slogan.power / 2 * stab * extra_damage
 
 
 func damage(slogan):
@@ -313,8 +269,6 @@ func damage(slogan):
 func capture_enemy():
 	if npcBar.value <= 15:
 		action_log.text = enemy_sprite.npc_name + " è entrato nel tuo partito."
-		margincontainer.visible = true
-		battlemenu.visible = false
 		yield(get_tree().create_timer(1), "timeout")
 		
 		action_log.text = "Hai ottenuto " + str(enemy_sprite.votes) + " voti."
@@ -335,8 +289,6 @@ func capture_enemy():
 		battle_ends(true)
 	else:
 		action_log.text = enemy_sprite.npc_name + " non è entrato nel tuo partito."
-		margincontainer.visible = true
-		battlemenu.visible = false
 		
 		var timer = Timer.new()
 		add_child(timer)
@@ -344,12 +296,12 @@ func capture_enemy():
 		yield(timer, "timeout")
 		
 		margincontainer.visible = false
-		battlemenu.visible = true
+#		battlemenu.visible = true
 		
 		slogButton.grab_focus()
 		
 		turn = TURN.PLAYER
-		battle_ui = BATTLE_UI.MENU
+		open_menu()
 
 
 func battle_ends(_victory):
@@ -374,3 +326,15 @@ func battle_ends(_victory):
 func end(scene):
 	scenemanager.start_transition("res://Scenes/GameLocations/" + scene + ".tscn", next_pos)
 	# current_enemy.battle_won = true
+
+
+func _on_Slogans_pressed():
+	change_menu(whattodo, sloganlist)
+	margincontainer.visible = true
+
+func _on_Objects_pressed():
+	change_menu(whattodo, objectlist)
+
+func _on_Capture_pressed():
+	close_menu(margincontainer)
+	capture_enemy()
