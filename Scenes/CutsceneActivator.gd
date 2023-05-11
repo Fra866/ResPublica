@@ -14,7 +14,7 @@ onready var path: NodePath
 var i: int = 0
 
 export(String) var activator
-
+signal cd_over
 
 func _ready():
 	path = self.get_path()
@@ -29,7 +29,8 @@ func start_cutscene_dialog(npc, continue_cutscene):
 		yield(get_tree().create_timer(1.5), "timeout")
 		dialog_box.start_dialog = true
 	
-	print("Finish")
+	emit_signal("cd_over")
+#	print("Finish")
 
 
 func start_cutscene():

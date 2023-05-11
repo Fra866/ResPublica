@@ -15,6 +15,9 @@ func start(character: StaticBody2D, scene: Node2D):
 	var parini = scene.get_parent().find_node("Parini")
 	
 	scene.start_cutscene_dialog(character, true)
-	yield(scene.get_tree().create_timer(3), "timeout")
-	scene.start_cutscene_dialog(caio, true)
+	yield(scene, "cd_over")
 	
+	yield(scene.get_tree().create_timer(3), "timeout")
+	
+	scene.start_cutscene_dialog(caio, false)
+	yield(scene, "cd_over")
