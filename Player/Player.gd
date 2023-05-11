@@ -17,7 +17,6 @@ onready var scenemanager = get_node(NodePath('/root/SceneManager'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var saveMenu = get_node(NodePath("/root/SceneManager/Control"))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
-#onready var cutscene_activator
 
 onready var p_name = scenemanager.save_file.name
 
@@ -27,10 +26,6 @@ enum FacingDirection { LEFT, UP, RIGHT, DOWN }
 onready var current_open_menu = null
 onready var cutscene = false
 
-# Lists all doors in the current scene
-# All doors are loaded before ready() starts
-
-#onready var doors = []
 
 var is_moving = false
 var initial_position = Vector2(0, 0)
@@ -42,8 +37,6 @@ var direction = FacingDirection.DOWN
 signal enter_door(door)
 
 func _ready():
-	# doors = [] -> the initialization had to be done in Door.gd
-#	cutscene_activator = scenemanager.get_child(0).get_children().back().find_node("CutsceneActivator")
 	var current_scene = scenemanager.get_child(0).get_child(0)
 	
 	if not current_scene.name in scenemanager.list_visited_scenes:
@@ -58,16 +51,9 @@ func _ready():
 	
 	dialog_box.connect("priority_to_player", self, "get_priority")
 	shop_box.connect("priority_to_player", self, "get_priority")
-#	door = get_node(NodePath('..')).find_node('Door')
-#	door.connect('entered_door', self, 'new_scene')
 
 
 func _physics_process(delta):
-#	if cutscene_activator:
-#		if cutscene_activator.cutscene:
-#			cutscene = true
-	
-#	if menu.state != 1 or cutscene: #!= MenuState.CLOSE
 	if cutscene:
 		player_state = PlayerState.IN_PAUSE
 	if player_state == PlayerState.TURNING:
@@ -125,14 +111,12 @@ func open_menu(m):
 	cutscene = true
 	current_open_menu = m
 	m.priority_to_menu()
-#	m.set("state", 0) #MenuState.OPENED
 
 
 func close_menu():
 	cutscene = false
 	current_open_menu = null
 	player_state = PlayerState.IDLE
-#	m.set("state", 1) # MenuState.CLOSED
 
 
 func collided_with_npc(npc):
@@ -159,7 +143,6 @@ func move(delta):
 	calculate_npcraycast(DoorRayCast)
 	calculate_npcraycast(ObjectRayCast)
 	
-	# print("% to next tile" , percent_to_next_tile)
 	percent_to_next_tile += (walk_speed * delta)
 	
 	if not NPCraycast.is_colliding() and not DoorRayCast.is_colliding() and not ObjectRayCast.is_colliding() and player_state != PlayerState.IN_PAUSE:
@@ -172,7 +155,6 @@ func move(delta):
 	else:
 		percent_to_next_tile = 0.0
 		is_moving = false
-#		if Input.is_action_just_pressed('ui_accept') and menu.state != 0:#MenuState.OPENED:
 		if Input.is_action_just_pressed("ui_accept"):
 			if NPCraycast.is_colliding():
 				cutscene = true
@@ -218,7 +200,6 @@ func calculate_npcraycast(raycast):
 
 
 func get_priority():
-#	if not shop_box.open:
 	cutscene = false
 	player_state = PlayerState.IDLE
 

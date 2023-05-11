@@ -87,5 +87,5 @@ func _process(_delta):
 
 
 func start_game():
-	scene_manager.start_transition(scene_manager.first_scene_path, Vector2(144, 176))
+	scene_manager.start_transition(scene_manager.first_scene_path, Vector2(32, 96))
 	ui.visibility(true)

@@ -28,8 +28,8 @@ onready var current_menu = null
 onready var enemy_sprite = $EnemySprite
 onready var battlebox = $BattleBox
 
-onready var n_of_slogans = 0
-onready var n_of_objects = 0
+onready var n_of_slogans
+onready var n_of_objects
 
 onready var max_slogans = 8
 onready var max_objects = 8
@@ -38,7 +38,7 @@ onready var enemy_area: Array
 
 onready var priority = true
 onready var attacks_list: Array
-var id = 0
+var id = 1
 var next_scene = ""
 var next_pos: Vector2
 var player_pos = Vector2(0, 0)
@@ -57,19 +57,24 @@ onready var battle_ui = BATTLE_UI.MENU
 
 func _ready():
 	randomize()
+	
+	dialogue_box.connect("npc_attacks", self, "set_attacks")
+	dialogue_box.connect("next_scene", self, "set_next_scene")
+	dialogue_box.connect("send_npc", self, "set_npc")
+	
+	
+	slogan_setup()
+	object_setup()
+	
+	sloganlist.visible = false
+	objectlist.visible = false
+	
 	ui.visibility(false)
 	enemy_sprite.texture = load("res://UI/andreotti/battle.png")
 	
 	pBar.value = int(ui.hp.text)
 	
 	pBar.get_child(0).text = str(pBar.value)
-	
-	dialogue_box.connect("npc_attacks", self, "set_attacks")
-	dialogue_box.connect("next_scene", self, "set_next_scene")
-	dialogue_box.connect("send_npc", self, "set_npc")
-	
-	slogan_setup()
-	object_setup()
 	
 	slogButton.grab_focus()
 	
@@ -78,18 +83,20 @@ func _ready():
 
 func slogan_setup():
 	for slogan_res in menu.battleslogs:
+		n_of_slogans += 1
+		
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
 		new_slog_instance.slogan_res = slogan_res
 		new_slog_instance.visible = true
 		
-		n_of_slogans += 1
 		
 		instance_pos(new_slog_instance, n_of_slogans, max_slogans)
 		sloganlist.add_child(new_slog_instance)
 
 func object_setup():
 	for object_res in menu.object_list:
+		n_of_objects += int(object_res.display_on_battle)
 		if object_res.display_on_battle:
 			var new_obj_instance = load("res://Scenes/UI_Objects/ObjectNode.tscn").instance()
 			
@@ -166,7 +173,7 @@ func _process(_delta):
 			battle_ui = BATTLE_UI.MENU
 			change_menu(current_menu, whattodo)
 			margincontainer.visible = false
-			id = 0
+			id = 1
 			slogButton.grab_focus()
 
 
@@ -194,7 +201,6 @@ func set_next_scene(scene: String, p_pos: Vector2):
 
 
 func set_npc(current_npc):
-#	print(current_npc)
 	enemy_sprite.init(current_npc, true)
 	
 	npcBar.value = enemy_sprite.max_hp
@@ -238,20 +244,13 @@ func calc(ideologies1, ideologies2, slogan):
 	var level=1; # To add as an UI parameter.
 	# Power is the move's level basically.
 	# Stab = same-type attack move
-	var stab = int(ideologies1[0] == ideologies2[0]) + 1
-	var id1 = ideologies1[0]
-	var id2 = ideologies2[0]
+	var stab = int(ideologies1[0] == ideologies2[0]) + 1 + int(ideologies1[1] == ideologies2[1]) + 1
 	# Define move effectiveness
-	# ToDo: calculate it for each ideology
 	var extra_damage = 1
 	
-	if (id1.xOr == id2.xOr && id1.xOr != 2 && id2.xOr != 2):
-		extra_damage += 0.4
-	if (id1.yOr == id2.yOr && id1.yOr != 2 && id2.yOr != 2):
-		extra_damage += 0.4
-	
-	if (id1.id == id2.id):
-		extra_damage = 2;
+	for id1 in ideologies1:
+		for id2 in ideologies2:
+			id1.calc_extra_damage(id2)
 	
 	print("ED: ", extra_damage)
 	

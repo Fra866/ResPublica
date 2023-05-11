@@ -1,15 +1,11 @@
 extends CanvasLayer
 
-#onready var dialouge_box = self
-
-#onready var characters = $MarginContainer/Panel/Label.visible_characters
-#onready var text_label = $MarginContainer/Panel/Label
 onready var text_label = $MarginContainer/Panel/RichTextLabel
 onready var current_npc
 onready var shop_box = get_node(NodePath('/root/SceneManager/ShopBox'))
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
-onready var current_scene# = scenemanager.get_child(0).get_child(0)
+onready var current_scene
 
 onready var initiator
 onready var player
@@ -34,25 +30,22 @@ signal send_npc(npc)
 signal npc_attacks(attack_ids_list)
 signal next_scene(scene, p_pos)
 
-#signal next_player_pos(player_pos)
-
 
 func _ready():
 	$MarginContainer.visible = false
 	$TextureRect.visible = false
 
 
-#func activate_dialouge():
-#	return true
-
 var npc_global_id: int
+var continue_cutscene: bool = false
 
 
-func display_dialog(npc_id):
-	npc_global_id = npc_id
-#	print("SceneManager: ", scenemanager.get_child(0).get_child(0))
+func display_dialog(npc_id, continue_cutscene):
 	current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_id]
-#	print("Display Dial: ", current_npc)
+	d_list = current_npc.dialog_list
+	
+	npc_global_id = npc_id
+	current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_id]
 	npc_name = current_npc.name
 	
 	d_list = current_npc.dialog_list
@@ -60,6 +53,9 @@ func display_dialog(npc_id):
 	open_shop = current_npc.is_seller
 	
 	start_battle = current_npc.start_battle
+	
+	self.continue_cutscene = continue_cutscene
+	start_dialog = true
 
 
 func visibility(vis: bool):
@@ -76,7 +72,6 @@ func end_dialog_box():
 
 func has_obtained(object):
 	d_list = ['Hai ottenuto ' + object.name]
-#	s_list = []
 	att_ids_list = []
 	i = 0
 	
@@ -106,9 +101,10 @@ func check_battle() -> void:
 func _process(_delta):
 	player = get_parent().get_child(0).get_child(0).find_node('Player')
 	current_scene = scenemanager.get_child(0).get_child(0)
-
+	
 	if player:
 		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialog:
+			print("Dialogo")
 			start_dialog = false
 			if i < len(d_list):
 				display_text_line(d_list[i])
@@ -121,7 +117,9 @@ func _process(_delta):
 				elif len(att_ids_list):
 					check_battle()
 				elif !shop_box.open:
-					emit_signal("priority_to_player")
+					if !continue_cutscene:
+						emit_signal("priority_to_player")
+					continue_cutscene = false
 
 
 func display_text_line(line):

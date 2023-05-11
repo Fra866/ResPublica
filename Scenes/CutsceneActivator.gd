@@ -14,7 +14,6 @@ onready var path: NodePath
 var i: int = 0
 
 export(String) var activator
-#export(int) var cutscene_code
 
 
 func _ready():
@@ -22,17 +21,12 @@ func _ready():
 	player = scenemanager.get_child(0).get_children().back().find_node("Player")
 
 
-func start_cutscene_dialog(npc):
-	dialog_box.display_dialog(npc.id)
+func start_cutscene_dialog(npc, continue_cutscene):
+	dialog_box.display_dialog(npc.id, continue_cutscene)
 	
 	for _j in range(len(npc.dialog_list) + 1):
 		yield(get_tree().create_timer(1.5), "timeout")
 		dialog_box.start_dialog = true
-
-
-func bar_start_scene():
-#	print("Bar Starting Scene")
-	cutscene = false
 
 
 func start_cutscene():
@@ -42,14 +36,6 @@ func start_cutscene():
 		currentscene.find_node(activator).start_cutscene(self)
 		cutscene = false
 		scenemanager.ended_cutscenes.append(path)
-#		match cutscene_code:
-#			0, 1:
-#				npc_cutscene(cutscene_code)
-#			2:
-#				bar_start_scene()
-	
-#		scenemanager.ended_cutscenes.append(cutscene_code)
-#	print(scenemanager.ended_cutscenes)
 
 
 func _process(_delta):
@@ -58,4 +44,3 @@ func _process(_delta):
 			currentscene = scenecontainer.get_child(0)
 			start_cutscene()
 			i += 1
-			# queue_free()
