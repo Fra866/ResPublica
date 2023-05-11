@@ -22,11 +22,14 @@ func _ready():
 
 
 func start_cutscene_dialog(npc, continue_cutscene):
+	dialog_box.i = 0
 	dialog_box.display_dialog(npc.id, continue_cutscene)
 	
 	for _j in range(len(npc.dialog_list) + 1):
 		yield(get_tree().create_timer(1.5), "timeout")
 		dialog_box.start_dialog = true
+	
+	print("Finish")
 
 
 func start_cutscene():
