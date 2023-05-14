@@ -75,4 +75,3 @@ var ideologies = {
 			"period2": null
 		},
 }
-

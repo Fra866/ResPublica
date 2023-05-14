@@ -175,7 +175,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="MenuLayers/Slogans/BattleSlogans"]
+[node name="Background" type="ColorRect" parent="MenuLayers/Slogans/BattleSlogans"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -1.0
@@ -184,7 +184,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slogans" type="Node2D" parent="MenuLayers/Slogans/BattleSlogans/ColorRect"]
+[node name="Selector" type="ColorRect" parent="MenuLayers/Slogans/BattleSlogans/Background"]
+margin_left = 23.0
+margin_top = 3.0
+margin_right = 65.0
+margin_bottom = 40.0
+rect_scale = Vector2( 0.554779, 0.701806 )
+color = Color( 0.854902, 0.215686, 0.215686, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slogans" type="Node2D" parent="MenuLayers/Slogans/BattleSlogans/Background"]
 
 [node name="Objects" type="Control" parent="MenuLayers"]
 visible = false

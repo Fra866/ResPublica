@@ -37,6 +37,7 @@ func assign_params(arch: Archive):
 
 
 func calc_extra_damage(id: Resource) -> float:
+	# id = ideology
 	var extraX: float
 	var extraY: float
 	

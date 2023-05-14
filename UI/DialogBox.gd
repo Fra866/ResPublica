@@ -83,7 +83,7 @@ func has_obtained(object):
 
 
 func check_battle() -> void:
-	if !len(menu.slogan_list):
+	if !len(menu.battleslogs):
 		visibility(false)
 		emit_signal("priority_to_player")
 		return

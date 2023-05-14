@@ -28,8 +28,8 @@ onready var current_menu = null
 onready var enemy_sprite = $EnemySprite
 onready var battlebox = $BattleBox
 
-onready var n_of_slogans
-onready var n_of_objects
+onready var n_of_slogans = 0
+onready var n_of_objects = 0
 
 onready var max_slogans = 8
 onready var max_objects = 8
@@ -62,7 +62,6 @@ func _ready():
 	dialogue_box.connect("next_scene", self, "set_next_scene")
 	dialogue_box.connect("send_npc", self, "set_npc")
 	
-	
 	slogan_setup()
 	object_setup()
 	
@@ -90,9 +89,9 @@ func slogan_setup():
 		new_slog_instance.slogan_res = slogan_res
 		new_slog_instance.visible = true
 		
-		
 		instance_pos(new_slog_instance, n_of_slogans, max_slogans)
 		sloganlist.add_child(new_slog_instance)
+
 
 func object_setup():
 	for object_res in menu.object_list:
@@ -241,18 +240,19 @@ func npcAttack():
 
 
 func calc(ideologies1, ideologies2, slogan):
-	var level=1; # To add as an UI parameter.
+	var level=1 # To add as an UI parameter.
 	# Power is the move's level basically.
 	# Stab = same-type attack move
-	var stab = int(ideologies1[0] == ideologies2[0]) + 1 + int(ideologies1[1] == ideologies2[1]) + 1
+	var stab = 1
 	# Define move effectiveness
 	var extra_damage = 1
 	
 	for id1 in ideologies1:
 		for id2 in ideologies2:
+			stab += int(id1 == id2)
 			id1.calc_extra_damage(id2)
 	
-	print("ED: ", extra_damage)
+	print("Ex. Dam.: ", extra_damage)
 	
 	return slogan.att/enemy_sprite.def * (4*level/5 + 2) * slogan.power / 2 * stab * extra_damage
 
@@ -271,7 +271,7 @@ func capture_enemy():
 		yield(get_tree().create_timer(1), "timeout")
 		
 		action_log.text = "Hai ottenuto " + str(enemy_sprite.votes) + " voti."
-		ui.add_votes(enemy_sprite.votes)
+		ui.add_votes(enemy_sprite.votes) # Assigns value to ui var "lvlUp"
 		yield(get_tree().create_timer(1), "timeout")
 		
 		if ui.lvlUp:
@@ -324,15 +324,16 @@ func battle_ends(_victory):
 
 func end(scene):
 	scenemanager.start_transition("res://Scenes/GameLocations/" + scene + ".tscn", next_pos)
-	# current_enemy.battle_won = true
 
 
 func _on_Slogans_pressed():
 	change_menu(whattodo, sloganlist)
 	margincontainer.visible = true
 
+
 func _on_Objects_pressed():
 	change_menu(whattodo, objectlist)
+
 
 func _on_Capture_pressed():
 	close_menu(margincontainer)

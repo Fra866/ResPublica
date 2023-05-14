@@ -1,19 +1,33 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=12 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/GameLocations/BarScene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=2]
 [ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=3]
+[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=4]
+[ext_resource path="res://Scenes/GameLocations/Level1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Items/Slogans/cose_buone.tres" type="Resource" id=6]
+[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=7]
+[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=8]
+[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=9]
+[ext_resource path="res://Parties/party.gd" type="Script" id=10]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 10 )
+party_name = ""
+votes = 0
+political_pos = Vector2( 0, 0 )
 
 [resource]
 script = ExtResource( 1 )
 name = "lolo"
-slogans = [  ]
-battleslogs = [  ]
+slogans = [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 2 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 6 ) ]
+battleslogs = [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 2 ), ExtResource( 8 ) ]
 objects = [ ExtResource( 3 ) ]
 voters = {
 }
-ended_cutscenes = [ NodePath("/root/SceneManager/CurrentScene/InsideHouse/CutsceneActivator") ]
-current_scene = ExtResource( 2 )
-player_pos = Vector2( 64, 96 )
-money = 1000
+ended_cutscenes = [ NodePath("/root/SceneManager/CurrentScene/InsideHouse/CutsceneActivator"), NodePath("/root/SceneManager/CurrentScene/Level1/YSort/CutsceneActivator") ]
+current_scene = ExtResource( 5 )
+player_party = SubResource( 1 )
+player_pos = Vector2( 96, 80 )
+money = 700
 votes = 0
