@@ -35,6 +35,11 @@ onready var current_slogan_desc = $MenuLayers/Slogans/DescriptionDisplayer/Backg
 onready var current_object_desc = $MenuLayers/Objects/DescriptionDisplayer/Background/InnerBackground/Text
 onready var current_voter_mafia_desc = $MenuLayers/Mafia/DescriptionDisplayer/Background/InnerBackground/Text
 
+onready var manage_slogans = $MenuLayers/Slogans/ManageSlogans
+onready var manage_slogans_text = manage_slogans.get_child(0).get_child(0)
+onready var manage_yes_btn = manage_slogans.get_child(0).get_child(1).get_child(0)
+onready var manage_no_btn = manage_slogans.get_child(0).get_child(1).get_child(1)
+
 onready var ui = get_node("/root/SceneManager/UI")
 
 onready var player = get_node(NodePath('..')).find_node('Player')
@@ -67,6 +72,9 @@ var menu_state: int = 4
 
 var menu_main: bool = false
 var index: int = 0
+
+var battleslog_last_checked: int = 0
+var slog_last_checked: int = 0
 
 var objects_open = false
 
@@ -138,18 +146,26 @@ func _process(_delta):
 				to_main(menus[menu_state])
 	
 		if menu_state == MENU_STATE.SLOGANS:
+			battleslogs_selector.visible = slogan_state == SLOGAN_STATE.BATTLESLOGS
+			slogan_selector.visible = slogan_state == SLOGAN_STATE.ALL
+			
 			if n_of_slogans and slogan_state == SLOGAN_STATE.ALL:
 				current_el = slogan_list[index]
-				current_slogan_desc.text = current_el.name
-				handle_input(n_of_slogans, slogan_selector)
 				
-				if Input.is_action_just_pressed("ui_down") and len(battleslogs) > 0:
-					slogan_state = SLOGAN_STATE.BATTLESLOGS
-					index = 0
+				if !manage_slogans.visible:
+					handle_input(n_of_slogans, slogan_selector)
+					
+					if Input.is_action_just_pressed("ui_down") and len(battleslogs) > 0:
+						slog_last_checked = index
+						slogan_state = SLOGAN_STATE.BATTLESLOGS
+						index = battleslog_last_checked
 				
 				if Input.is_action_just_pressed("ui_accept"):
 					if not current_el in battleslogs && len(battleslogs) < 4:
-						new_battleslog(current_el)
+						manage_slogans_text.text = "Sia '" + current_el.name + "' slogan di battaglia?"
+						manage_slogans.visible = true
+						manage_yes_btn.grab_focus()
+			
 			
 			elif slogan_state == SLOGAN_STATE.BATTLESLOGS:
 				if len(battleslogs) > 0:
@@ -160,16 +176,20 @@ func _process(_delta):
 				handle_input(len(battleslogs), battleslogs_selector)
 				
 				if Input.is_action_just_pressed("ui_up"):
+					battleslog_last_checked = index
 					slogan_state = SLOGAN_STATE.ALL
-					index = 0
+					index = slog_last_checked
 				
 				if Input.is_action_just_pressed("ui_accept"):
-					battleslogs.remove(index)
-					battleslogs_menu.remove_child(battleslogs_menu.get_child(index))
-					reload_battleslogs_menu()
+					manage_slogans_text.text = "Rimuovere '" + current_el.name + "' ?"
+					manage_slogans.visible = true
+					
+					manage_yes_btn.grab_focus()
 					
 					if (index != 0):
 						index -= 1
+			
+			current_slogan_desc.text = current_el.name
 		
 		if menu_state == MENU_STATE.MAFIA:
 			if n_of_voters:
@@ -402,3 +422,18 @@ func _on_Expell_pressed():
 
 func _on_Promote_pressed():
 	pass
+
+
+func _on_Yes_pressed(index):
+	if slogan_state == SLOGAN_STATE.ALL:
+		new_battleslog(slogan_list[index])
+	else:
+		battleslogs.remove(index)
+		battleslogs_menu.remove_child(battleslogs_menu.get_child(index))
+		reload_battleslogs_menu()
+	
+	manage_slogans.visible = false
+
+
+func _on_No_pressed():
+	manage_slogans.visible = false

@@ -21,7 +21,7 @@ political_pos = Vector2( 0, 0 )
 script = ExtResource( 1 )
 name = "lolo"
 slogans = [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 2 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 6 ) ]
-battleslogs = [ ExtResource( 7 ), ExtResource( 9 ), ExtResource( 2 ), ExtResource( 8 ) ]
+battleslogs = [ ExtResource( 9 ), ExtResource( 2 ), ExtResource( 7 ) ]
 objects = [ ExtResource( 3 ) ]
 voters = {
 }
