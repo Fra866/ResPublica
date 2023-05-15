@@ -8,15 +8,10 @@ onready var control = $MenuLayers/MainMenu/Control
 onready var menus = [$MenuLayers/Slogans, $MenuLayers/Objects, $MenuLayers/Party,  $MenuLayers/Mafia]
 
 onready var slogan_container = $MenuLayers/Slogans/MainContainer
+onready var battleslogs_container = $MenuLayers/Slogans/BattleSlogans/MainContainer
 onready var objects_container = $MenuLayers/Objects/MainContainer
 onready var mafia_container = $MenuLayers/Mafia/MainContainer
 onready var voters_container = $MenuLayers/Party/MainContainer
-
-onready var slogan_selector = $MenuLayers/Slogans/MainContainer/Selector
-onready var battleslogs_selector = $MenuLayers/Slogans/BattleSlogans/Background/Selector
-onready var objects_selector = $MenuLayers/Objects/MainContainer/Selector
-onready var mafia_selector = $MenuLayers/Mafia/MainContainer/Selector
-onready var voters_selector = $MenuLayers/Party/MainContainer/Selector
 
 onready var mafiometer = $MenuLayers/Mafia/Mafiometer
 onready var m_line = $MenuLayers/Mafia/Mafiometer/Line2D
@@ -24,16 +19,11 @@ onready var m_line = $MenuLayers/Mafia/Mafiometer/Line2D
 onready var no_slog_text = $MenuLayers/Slogans/NoSloganText
 onready var no_obj_text = $MenuLayers/Objects/NoObjectText
 onready var no_party_text = $MenuLayers/Party/NoPartyText
-onready var battleslogs_menu = $MenuLayers/Slogans/BattleSlogans/Background/Slogans
 onready var political_compass_party = $MenuLayers/Party/PoliticalCompass
 
 onready var slogans_desc_displayer = $MenuLayers/Slogans/DescriptionDisplayer
 onready var objects_desc_displayer = $MenuLayers/Objects/DescriptionDisplayer
 onready var mafia_displayer = $MenuLayers/Mafia/DescriptionDisplayer
-
-onready var current_slogan_desc = $MenuLayers/Slogans/DescriptionDisplayer/Background/InnerBackground/Text
-onready var current_object_desc = $MenuLayers/Objects/DescriptionDisplayer/Background/InnerBackground/Text
-onready var current_voter_mafia_desc = $MenuLayers/Mafia/DescriptionDisplayer/Background/InnerBackground/Text
 
 onready var manage_slogans = $MenuLayers/Slogans/ManageSlogans
 onready var manage_slogans_text = manage_slogans.get_child(0).get_child(0)
@@ -58,10 +48,6 @@ onready var voter_info_buttons = [
 onready var voter_name = $MenuLayers/Party/VoterInfo/Node2D/RichTextLabel
 onready var voter_sprite = $MenuLayers/Party/VoterInfo/Node2D/Sprite
 
-onready var n_of_slogans: int
-onready var n_of_objects: int
-onready var n_of_voters: int
-
 enum SLOGAN_STATE {ALL, BATTLESLOGS}
 var slogan_state: int = SLOGAN_STATE.ALL
 
@@ -71,7 +57,7 @@ enum MENU_STATE {SLOGANS, OBJECTS, PARTY, MAFIA}
 var menu_state: int = 4
 
 var menu_main: bool = false
-var index: int = 0
+#var index: int = 0
 
 var battleslog_last_checked: int = 0
 var slog_last_checked: int = 0
@@ -114,6 +100,8 @@ func _ready():
 		new_slogan(slogan_res)
 	for slogan_res in save_file.battleslogs:
 		new_battleslog(slogan_res)
+	to_battleslog()
+	
 	for object_res in save_file.objects:
 		new_object(object_res)
 	for voter in save_file.voters:
@@ -121,10 +109,6 @@ func _ready():
 
 
 func _process(_delta):
-	n_of_slogans = len(slogan_list)
-	n_of_objects = len(object_list)
-	n_of_voters = voter_list.size()
-
 	if menu_main:
 		buttons[i].grab_focus()
 		
@@ -146,66 +130,59 @@ func _process(_delta):
 				to_main(menus[menu_state])
 	
 		if menu_state == MENU_STATE.SLOGANS:
-			battleslogs_selector.visible = slogan_state == SLOGAN_STATE.BATTLESLOGS
-			slogan_selector.visible = slogan_state == SLOGAN_STATE.ALL
+			battleslogs_container.shows(slogan_state == SLOGAN_STATE.BATTLESLOGS)
+			slogan_container.shows(slogan_state == SLOGAN_STATE.ALL)
 			
-			if n_of_slogans and slogan_state == SLOGAN_STATE.ALL:
-				current_el = slogan_list[index]
+			if slogan_container.size and slogan_state == SLOGAN_STATE.ALL:
+				current_el = slogan_container.current_el.slogan_res
 				
 				if !manage_slogans.visible:
-					handle_input(n_of_slogans, slogan_selector)
+					handle_input(slogan_container)
 					
-					if Input.is_action_just_pressed("ui_down") and len(battleslogs) > 0:
-						slog_last_checked = index
-						slogan_state = SLOGAN_STATE.BATTLESLOGS
-						index = battleslog_last_checked
+					if Input.is_action_just_pressed("ui_down"):
+						to_battleslog()
 				
-				if Input.is_action_just_pressed("ui_accept"):
-					if not current_el in battleslogs && len(battleslogs) < 4:
-						manage_slogans_text.text = "Sia '" + current_el.name + "' slogan di battaglia?"
-						manage_slogans.visible = true
-						manage_yes_btn.grab_focus()
-			
+					if Input.is_action_just_pressed("ui_accept"):
+						if not current_el in battleslogs && len(battleslogs) < 4:
+							prompt_manage_slogs("Sia '" + current_el.name + "' slogan di battaglia?")
+				
 			
 			elif slogan_state == SLOGAN_STATE.BATTLESLOGS:
 				if len(battleslogs) > 0:
-					current_el = battleslogs[index]
+					current_el = battleslogs_container.current_el.slogan_res
 				else:
 					slogan_state = SLOGAN_STATE.ALL
 				
-				handle_input(len(battleslogs), battleslogs_selector)
-				
-				if Input.is_action_just_pressed("ui_up"):
-					battleslog_last_checked = index
-					slogan_state = SLOGAN_STATE.ALL
-					index = slog_last_checked
-				
-				if Input.is_action_just_pressed("ui_accept"):
-					manage_slogans_text.text = "Rimuovere '" + current_el.name + "' ?"
-					manage_slogans.visible = true
+				if !manage_slogans.visible:
+					handle_input(battleslogs_container)
+						
+					if Input.is_action_just_pressed("ui_up"):
+						battleslog_last_checked = battleslogs_container.index
+						slogan_state = SLOGAN_STATE.ALL
+						battleslogs_container.index = slog_last_checked
 					
-					manage_yes_btn.grab_focus()
-					
-					if (index != 0):
-						index -= 1
+					if Input.is_action_just_pressed("ui_accept"):
+						prompt_manage_slogs("Rimuovere '" + current_el.name + "' ?")
+						if (battleslogs_container.index != 0):
+							battleslogs_container.index -= 1
 			
-			current_slogan_desc.text = current_el.name
+			slogans_desc_displayer.set_text(current_el.name)
 		
 		if menu_state == MENU_STATE.MAFIA:
-			if n_of_voters:
-				current_el = mafia_container.get_child(index + 1)
-				handle_input(n_of_voters, mafia_selector)
-				current_voter_mafia_desc.text = current_el.npc_name + "\n" + str(current_el.mafia_target)
+			if battleslogs_container.size and mafia_container.size:
+				current_el = mafia_container.current_el
+				handle_input(mafia_container)
+				mafia_displayer.set_text(current_el.npc_name + "\n" + str(current_el.mafia_target))
 		
 				if Input.is_action_just_pressed("ui_accept"):
 					current_el.set_mafia_target(-10)
 		
 		
 		if menu_state == MENU_STATE.OBJECTS:
-			if n_of_objects:
-				obj_node = object_list[index]
-				current_object_desc.text = obj_node.description
-				handle_input(n_of_objects, objects_selector)
+			if objects_container.size:
+				obj_node = objects_container.current_el.object_res
+				objects_desc_displayer.set_text(obj_node.description)
+				handle_input(objects_container)
 				
 				if Input.is_action_just_pressed("ui_accept"):
 					if (open_obj_id != obj_node.id):
@@ -221,11 +198,10 @@ func _process(_delta):
 		
 		
 		if menu_state == MENU_STATE.PARTY:
-			n_of_voters = len(voters_container.get_children()) - 1
-			if n_of_voters > 0:
-				handle_input(n_of_voters, voters_selector)
+			if voters_container.size > 0:
+				handle_input(voters_container)
 				
-				var voter = voters_container.get_child(index+1)
+				var voter = voters_container.current_el
 				
 				voter_name.text = voter.npc_name
 				voter_sprite.texture = voter.texture
@@ -241,11 +217,24 @@ func _process(_delta):
 	sprite.visible = menu_main
 
 
+func prompt_manage_slogs(prompt: String):
+	manage_slogans_text.text = prompt
+	manage_slogans.visible = true
+	manage_yes_btn.grab_focus()
+
+
+func to_battleslog():
+	if len(battleslogs):
+		slog_last_checked = slogan_container.index
+		slogan_state = SLOGAN_STATE.BATTLESLOGS
+		battleslogs_container.index = battleslog_last_checked
+
+
 func to_menu(dest: Node):
 	menu_main = false
 	dest.visible = true
 	menu_state = i
-	index = 0
+#	index = 0
 
 
 func to_main(src: Node):
@@ -284,19 +273,16 @@ func slide_mafia_line(mafia_points: float):
 	m_line.points[1][0] += mafia_points
 
 
-func handle_input(maxv: int, selector):
-	if Input.is_action_just_pressed("ui_right"):
-		if index < maxv - 1:
-			index += 1
-	if Input.is_action_just_pressed("ui_left"):
-		if index > 0:
-			index -= 1
-	if selector == slogan_selector or selector == objects_selector:
-		selector.rect_position = Vector2(32 * (index % 6) + 3, 40 * (index / 6) + 9)
-	elif selector == battleslogs_selector:
-		selector.rect_position = Vector2(32 * (index % 2) + 23, 40 * (index / 2) + 3)
+func handle_input(container):
+	var pos: Vector2
+	var index = container.index
+	if container == slogan_container or container == objects_container:
+		pos = Vector2(32 * (index % 6) + 3, 40 * (index / 6) + 9)
+	elif container == battleslogs_container:
+		pos = Vector2(32 * (index % 2) + 23, 40 * (index / 2) + 3)
 	else:
-		selector.rect_position = Vector2(32 * (index % 4) + 3, 40 * (index / 4) + 16)
+		pos = Vector2(32 * (index % 4) + 3, 40 * (index / 4) + 16)
+	container.move(pos)
 
 
 func new_slogan(slogan):
@@ -307,26 +293,28 @@ func new_slogan(slogan):
 	slogan_list.append(slogan)
 	ui.add_money(-slogan.prize)
 	
-	var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
+	var pos = Vector2(
+		32 * (slogan_container.size % 6) + 15,
+		40*int(slogan_container.size / 6)+ 20
+	)
+	var new_slog_instance = slogan_container.new_item(pos)
 	new_slog_instance.slogan_res = slogan
-	new_slog_instance.position = Vector2(32 * (n_of_slogans % 6) + 15, 40*(int(n_of_slogans / 6))+ 20)
-	n_of_slogans += 1
-	slogan_container.add_child(new_slog_instance)
+	slogan_container.add(new_slog_instance)
 
 
 func new_battleslog(element):
 	battleslogs.append(element)
-	var new_slog_instance = load(
-		"res://Scenes/UI_Objects/SloganNode.tscn"
-	).instance()
-	
+	var pos = Vector2(
+		30 * ((len(battleslogs) - 1) % 2) + 35,
+		40*((len(battleslogs) - 1) / 2) + 15
+	)
+	var new_slog_instance = battleslogs_container.new_item(pos)
 	new_slog_instance.slogan_res = element
-	new_slog_instance.position = Vector2(30 * ((len(battleslogs) - 1) % 2) + 35, 40*((len(battleslogs) - 1) / 2) + 15)
-	battleslogs_menu.add_child(new_slog_instance)
+	battleslogs_container.add(new_slog_instance)
 
 
 func remove_battleslog(element, index: int):
-	battleslogs_menu.remove_child(element)
+	battleslogs_container.remove(element)
 	battleslogs.remove(index)
 	reload_battleslogs_menu()
 
@@ -336,15 +324,17 @@ func new_object(object):
 		object_list.append(object)
 		ui.add_money(-object.prize)
 		
-		var new_obj_instance = load("res://Scenes/UI_Objects/ObjectNode.tscn").instance()
+		var pos = Vector2(
+			32 * (objects_container.size % 6) + 15,
+			40*(int(objects_container.size / 6)) + 20
+		)
+		var new_obj_instance = objects_container.new_item(pos)
 		new_obj_instance.object_res = object
-		new_obj_instance.position = Vector2(32 * (n_of_objects % 6) + 15, 40*(int(n_of_objects / 6)) + 20)
-		n_of_objects += 1
-		objects_container.add_child(new_obj_instance)
+		objects_container.add(new_obj_instance)
 
 
 func reload_voters_menu(i: int = -1):
-	for v in voters_container.get_children():
+	for v in voters_container.get_items():
 		if (i >= 0):
 			print(v.npc_name, " -> ", v.position)
 			v.position = Vector2(32 * (i % 4) + 5, 40 * (i / 4) + 18)
@@ -352,37 +342,39 @@ func reload_voters_menu(i: int = -1):
 
 
 func reload_battleslogs_menu(i: int = 0):
-	for battleslog in battleslogs_menu.get_children():
+	for battleslog in battleslogs_container.get_items():
 		battleslog.position = Vector2(30 * (i % 2) + 35, 40*(i / 2) + 15)
 		i += 1
 
 
 func new_voter(voter):
 	if not voter_list.has(voter.npc_name):
-		
-		var new_voter_instance = load("res://Scenes/EnemySprite.tscn").instance()
-		new_voter_instance = voter.duplicate()
-		voter_list[voter.npc_name] = new_voter_instance
-		new_voter_instance.position = Vector2(32 * (n_of_voters % 4) + 5, 40 * (n_of_voters / 4) + 18)
-		add_voter_to_menu(new_voter_instance)
+		var pos = Vector2(
+			32 * (voters_container.size % 4) + 5,
+			40 * (voters_container.size / 4) + 18
+		)
+		var new_voter = voters_container.new_item(pos)
+		new_voter = voter.duplicate()
+		voter_list[voter.npc_name] = new_voter
+		add_voter_to_menu(new_voter)
 
 
 func add_voter_to_menu(voter):
-	voters_container.add_child(voter)
-	mafia_container.add_child(voter.duplicate())
+	voters_container.add(voter)
+	mafia_container.add(voter.duplicate())
 
 
 # These 4 calls are to be further generalized.
 func _on_SlogBtn_pressed(node):
 	to_menu(get_node(node))
-	no_slog_text.visible = !n_of_slogans
-	slogan_selector.visible = n_of_slogans
+	no_slog_text.visible = !slogan_container.size
+	slogan_container.shows(slogan_container.size)
 
 
 func _on_ObjBtn_pressed(node):
 	to_menu(get_node(node))
-	no_obj_text.visible = !n_of_objects
-	objects_selector.visible = n_of_objects
+	no_obj_text.visible = !objects_container.size
+	objects_container.shows(objects_container.size)
 
 
 func _on_PartyBtn_pressed(node):
@@ -397,26 +389,24 @@ func _on_PartyBtn_pressed(node):
 func _on_MafiaBtn_pressed(node):
 	to_menu(get_node(node))
 
-	mafia_displayer.visible = n_of_voters
-	mafiometer.visible = n_of_voters
-	mafia_selector.visible = mafia_displayer.visible
+	mafia_displayer.visible = mafia_container.size
+	mafiometer.visible = mafia_container.size
+	mafia_container.shows(mafia_container.size)
 
 
 func voter_left_party(voterToRemove):
-	n_of_voters -= 1
-	
-	party.removeVoter(voterToRemove.political_pos, n_of_voters, voterToRemove.votes)
-	voters_container.remove_child(voterToRemove)
+	party.removeVoter(voterToRemove.political_pos, voters_container.size, voterToRemove.votes)
+	voters_container.remove(voterToRemove)
 	
 	party_compass.set_main_pointer(party.political_pos.x, -party.political_pos.y)
-	print("Voter after remove ",  voters_container.get_children())
+	print("Voter after remove ",  voters_container.get_items())
 	
 	reload_voters_menu()
 
 
 func _on_Expell_pressed():
-	voter_left_party(voters_container.get_child(index+1))
-	index = 0
+	voter_left_party(voters_container.current_el)
+#	index = 0
 	voter_info.visible = false
 
 
@@ -426,10 +416,10 @@ func _on_Promote_pressed():
 
 func _on_Yes_pressed(index):
 	if slogan_state == SLOGAN_STATE.ALL:
-		new_battleslog(slogan_list[index])
+		new_battleslog(slogan_container.current_el)
 	else:
-		battleslogs.remove(index)
-		battleslogs_menu.remove_child(battleslogs_menu.get_child(index))
+		battleslogs.remove(slogan_container.index)
+		battleslogs_container.remove(battleslogs_container.current_el)
 		reload_battleslogs_menu()
 	
 	manage_slogans.visible = false
