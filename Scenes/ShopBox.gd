@@ -1,8 +1,4 @@
 extends CanvasLayer
-#export(int) var firstTime
-#var file1 = "res://gabibbo.txt"
-#var test = "res://gabibbo.tres"
-#var slogans = []
 
 onready var background = $Background
 onready var sloganbg = $Background/SloganBG

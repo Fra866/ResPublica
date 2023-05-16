@@ -5,7 +5,6 @@ onready var list_npc = [
 	$YSort/Parini,
 	$YSort/Caio,
 	$YSort/Sempronio,
-	$YSort/Virgilio
 ]
 
 signal completed
@@ -17,7 +16,7 @@ func start(character: StaticBody2D, scene: Node2D):
 	scene.start_cutscene_dialog(character, true)
 	yield(scene, "cd_over")
 	
-	yield(scene.get_tree().create_timer(3), "timeout")
+	yield(scene.get_tree().create_timer(0.5), "timeout")
 	
 	scene.start_cutscene_dialog(caio, false)
 	yield(scene, "cd_over")

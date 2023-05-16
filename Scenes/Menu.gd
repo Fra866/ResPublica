@@ -133,40 +133,43 @@ func _process(_delta):
 			battleslogs_container.shows(slogan_state == SLOGAN_STATE.BATTLESLOGS)
 			slogan_container.shows(slogan_state == SLOGAN_STATE.ALL)
 			
-			if slogan_container.size and slogan_state == SLOGAN_STATE.ALL:
-				current_el = slogan_container.current_el.slogan_res
-				
-				if !manage_slogans.visible:
-					handle_input(slogan_container)
+			if slogan_container.size:
+				if slogan_state == SLOGAN_STATE.ALL:
+					current_el = slogan_container.current_el.slogan_res
 					
-					if Input.is_action_just_pressed("ui_down"):
-						to_battleslog()
-				
-					if Input.is_action_just_pressed("ui_accept"):
-						if not current_el in battleslogs && len(battleslogs) < 4:
-							prompt_manage_slogs("Sia '" + current_el.name + "' slogan di battaglia?")
-				
-			
-			elif slogan_state == SLOGAN_STATE.BATTLESLOGS:
-				if len(battleslogs) > 0:
-					current_el = battleslogs_container.current_el.slogan_res
-				else:
-					slogan_state = SLOGAN_STATE.ALL
-				
-				if !manage_slogans.visible:
-					handle_input(battleslogs_container)
+					if !manage_slogans.visible:
+						handle_input(slogan_container)
 						
-					if Input.is_action_just_pressed("ui_up"):
-						battleslog_last_checked = battleslogs_container.index
-						slogan_state = SLOGAN_STATE.ALL
-						battleslogs_container.index = slog_last_checked
+						if Input.is_action_just_pressed("ui_down"):
+							to_battleslog()
 					
-					if Input.is_action_just_pressed("ui_accept"):
-						prompt_manage_slogs("Rimuovere '" + current_el.name + "' ?")
-						if (battleslogs_container.index != 0):
-							battleslogs_container.index -= 1
-			
-			slogans_desc_displayer.set_text(current_el.name)
+						if Input.is_action_just_pressed("ui_accept"):
+							if not current_el in battleslogs && len(battleslogs) < 4:
+								prompt_manage_slogs("Sia '" + current_el.name + "' slogan di battaglia?")
+				
+				
+				elif slogan_state == SLOGAN_STATE.BATTLESLOGS:
+					if len(battleslogs) > 0:
+						current_el = battleslogs_container.current_el.slogan_res
+					else:
+						slogan_state = SLOGAN_STATE.ALL
+					
+					if !manage_slogans.visible:
+						handle_input(battleslogs_container)
+							
+						if Input.is_action_just_pressed("ui_up"):
+							battleslog_last_checked = battleslogs_container.index
+							slogan_state = SLOGAN_STATE.ALL
+							battleslogs_container.index = slog_last_checked
+						
+						if Input.is_action_just_pressed("ui_accept"):
+							prompt_manage_slogs("Rimuovere '" + current_el.name + "' ?")
+							if (battleslogs_container.index != 0):
+								battleslogs_container.index -= 1
+				
+				slogans_desc_displayer.set_text(current_el.name)
+			else:
+				pass
 		
 		if menu_state == MENU_STATE.MAFIA:
 			if battleslogs_container.size and mafia_container.size:
@@ -234,7 +237,6 @@ func to_menu(dest: Node):
 	menu_main = false
 	dest.visible = true
 	menu_state = i
-#	index = 0
 
 
 func to_main(src: Node):

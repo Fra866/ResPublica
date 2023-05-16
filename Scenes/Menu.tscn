@@ -89,7 +89,7 @@ texture = ExtResource( 3 )
 [node name="MainContainer" parent="MenuLayers/Slogans" instance=ExtResource( 8 )]
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
-[node name="Selector" parent="MenuLayers/Slogans/MainContainer" index="1"]
+[node name="Selector" parent="MenuLayers/Slogans/MainContainer" index="0"]
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 39.0
@@ -126,7 +126,7 @@ color = Color( 0.0862745, 0.0745098, 0.0745098, 1 )
 [node name="MainContainer" parent="MenuLayers/Slogans/BattleSlogans" instance=ExtResource( 8 )]
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
-[node name="Selector" parent="MenuLayers/Slogans/BattleSlogans/MainContainer" index="1"]
+[node name="Selector" parent="MenuLayers/Slogans/BattleSlogans/MainContainer" index="0"]
 margin_left = 23.0
 margin_top = 3.0
 margin_right = 65.0
@@ -212,7 +212,7 @@ texture = ExtResource( 3 )
 [node name="MainContainer" parent="MenuLayers/Objects" instance=ExtResource( 8 )]
 res_path = "res://Scenes/UI_Objects/ObjectNode.tscn"
 
-[node name="Selector" parent="MenuLayers/Objects/MainContainer" index="1"]
+[node name="Selector" parent="MenuLayers/Objects/MainContainer" index="0"]
 margin_left = 16.0
 margin_top = 16.0
 margin_right = 39.0
@@ -249,7 +249,7 @@ texture = ExtResource( 3 )
 [node name="MainContainer" parent="MenuLayers/Party" instance=ExtResource( 8 )]
 res_path = "res://Scenes/EnemySprite.tscn"
 
-[node name="Selector" parent="MenuLayers/Party/MainContainer" index="1"]
+[node name="Selector" parent="MenuLayers/Party/MainContainer" index="0"]
 margin_left = -16.0
 margin_top = 16.0
 margin_right = 16.0
@@ -331,7 +331,7 @@ texture = ExtResource( 3 )
 
 [node name="MainContainer" parent="MenuLayers/Mafia" instance=ExtResource( 8 )]
 
-[node name="Selector" parent="MenuLayers/Mafia/MainContainer" index="1"]
+[node name="Selector" parent="MenuLayers/Mafia/MainContainer" index="0"]
 margin_left = -16.0
 margin_top = 16.0
 margin_right = 16.0

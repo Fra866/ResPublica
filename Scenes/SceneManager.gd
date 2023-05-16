@@ -7,12 +7,11 @@ onready var ui = $UI
 onready var transition_animation = $ScreenTransition/AnimationPlayer
 onready var scene_container = $CurrentScene
 
-#onready var list_npc: Array
 onready var list_visited_scenes: Array
 onready var ended_cutscenes: Array
 
-onready var save_file # Saved data File
-onready var slot: int # Id of file_saved slot (can be 1, 2 or 3)
+onready var save_file
+onready var slot: int
 onready var loading_count: int = 1
 
 signal new_main_scene()

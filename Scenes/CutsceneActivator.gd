@@ -30,7 +30,7 @@ func start_cutscene_dialog(npc, continue_cutscene):
 		dialog_box.start_dialog = true
 	
 	emit_signal("cd_over")
-#	print("Finish")
+#	Finish
 
 
 func start_cutscene():
