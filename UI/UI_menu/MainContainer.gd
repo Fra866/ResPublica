@@ -24,8 +24,10 @@ func remove(item: Node):
 	if !size:
 		current_el = null
 
-func new_item(pos: Vector2):
+func new_item(pos: Vector2, element = null):
 	var item = load(res_path).instance()
+	if element:
+		item.res = element
 	item.position = pos
 	return item
 

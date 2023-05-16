@@ -9,7 +9,7 @@
 [ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=7]
 [ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=8]
 [ext_resource path="res://Assets/UI/pkmnfl.ttf" type="DynamicFontData" id=9]
-[ext_resource path="res://Items/Objects/magnet.tres" type="Resource" id=11]
+[ext_resource path="res://Items/Objects/magnet.tres" type="Resource" id=10]
 [ext_resource path="res://Scenes/UI_Objects/ObjectNode.tscn" type="PackedScene" id=12]
 
 [sub_resource type="StyleBoxFlat" id=3]
@@ -62,83 +62,83 @@ __meta__ = {
 
 [node name="SloganNode1" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 20, 20 )
-slogan_res = ExtResource( 4 )
+res = ExtResource( 4 )
 
 [node name="SloganNode2" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 52, 20 )
-slogan_res = ExtResource( 5 )
+res = ExtResource( 5 )
 
 [node name="SloganNode3" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 84, 20 )
-slogan_res = ExtResource( 2 )
+res = ExtResource( 2 )
 
 [node name="SloganNode4" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 116, 20 )
-slogan_res = ExtResource( 7 )
+res = ExtResource( 7 )
 
 [node name="SloganNode5" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 148, 20 )
-slogan_res = ExtResource( 5 )
+res = ExtResource( 5 )
 
 [node name="SloganNode6" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 20, 48 )
-slogan_res = ExtResource( 8 )
+res = ExtResource( 8 )
 
 [node name="SloganNode7" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 52, 48 )
-slogan_res = ExtResource( 5 )
+res = ExtResource( 5 )
 
 [node name="SloganNode8" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 84, 48 )
-slogan_res = ExtResource( 5 )
+res = ExtResource( 5 )
 
 [node name="SloganNode9" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 116, 48 )
-slogan_res = ExtResource( 6 )
+res = ExtResource( 6 )
 
 [node name="SloganNode10" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 148, 48 )
-slogan_res = ExtResource( 6 )
+res = ExtResource( 6 )
 
 [node name="SloganNode11" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 20, 76 )
-slogan_res = ExtResource( 6 )
+res = ExtResource( 6 )
 
 [node name="SloganNode12" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 52, 76 )
-slogan_res = ExtResource( 6 )
+res = ExtResource( 6 )
 
 [node name="SloganNode13" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 84, 76 )
-slogan_res = ExtResource( 7 )
+res = ExtResource( 7 )
 
 [node name="SloganNode14" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 116, 76 )
-slogan_res = ExtResource( 7 )
+res = ExtResource( 7 )
 
 [node name="SloganNode15" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 148, 76 )
-slogan_res = ExtResource( 7 )
+res = ExtResource( 7 )
 
 [node name="SloganNode16" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 20, 104 )
-slogan_res = ExtResource( 7 )
+res = ExtResource( 7 )
 
 [node name="SloganNode17" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 52, 104 )
-slogan_res = ExtResource( 7 )
+res = ExtResource( 7 )
 
 [node name="SloganNode18" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 84, 104 )
-slogan_res = ExtResource( 7 )
+res = ExtResource( 7 )
 
 [node name="SloganNode19" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 116, 104 )
-slogan_res = ExtResource( 7 )
+res = ExtResource( 7 )
 
 [node name="SloganNode20" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 148, 104 )
-slogan_res = ExtResource( 7 )
+res = ExtResource( 7 )
 
 [node name="ObjectBG" type="ColorRect" parent="Background"]
 visible = false
@@ -165,7 +165,7 @@ __meta__ = {
 
 [node name="ObjectsNode1" parent="Background/ObjectBG/Objects" instance=ExtResource( 12 )]
 position = Vector2( 20, 20 )
-object_res = ExtResource( 11 )
+res = ExtResource( 10 )
 
 [node name="PrizeSign" type="ColorRect" parent="."]
 margin_left = 88.0

@@ -1,6 +1,6 @@
 extends Node2D
 
-export(Resource) var slogan_res
+export(Resource) var res
 onready var sprite = $Sprite
 onready var slogan = $Slogan
 onready var xpbar = $XPbar
@@ -10,9 +10,9 @@ onready var xpbar = $XPbar
 
 
 func _ready():
-	slogan.slogan_resource = slogan_res
+	slogan.slogan_resource = res
 #	WHEN THE SPRITES WILL BE READY:
-	sprite.texture = slogan_res.texture
+	sprite.texture = res.texture
 #	sprite.texture = load('res://Images/Slogans/' + path_texture)
 
 
@@ -21,4 +21,4 @@ func _process(_delta):
 
 
 func get_political_pos():
-	return slogan_res.political_pos
+	return res.political_pos

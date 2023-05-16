@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://Items/Slogans/slogan_resource.gd" type="Script" id=1]
 [ext_resource path="res://Objects/Ideologies/protosocialism.tres" type="Resource" id=2]
 [ext_resource path="res://Objects/Ideologies/nationalism.tres" type="Resource" id=3]
+[ext_resource path="res://Images/Slogans/costituzione2.png" type="Texture" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -12,6 +13,7 @@ att = 20
 def = 10
 name = "Impero FrancUEse"
 ideologies = [ ExtResource( 3 ), ExtResource( 2 ) ]
+texture = ExtResource( 4 )
 id = 7
 prize = 50
 political_pos = Vector2( 4, -2 )

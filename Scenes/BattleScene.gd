@@ -86,7 +86,7 @@ func slogan_setup():
 		
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
-		new_slog_instance.slogan_res = slogan_res
+		new_slog_instance.res = slogan_res
 		new_slog_instance.visible = true
 		
 		instance_pos(new_slog_instance, n_of_slogans, max_slogans)
@@ -99,7 +99,7 @@ func object_setup():
 		if object_res.display_on_battle:
 			var new_obj_instance = load("res://Scenes/UI_Objects/ObjectNode.tscn").instance()
 			
-			new_obj_instance.object_res = object_res
+			new_obj_instance.res = object_res
 			
 			n_of_objects += 1
 			

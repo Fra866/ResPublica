@@ -14,6 +14,6 @@ func start(character: StaticBody2D, scene: Node2D):
 	yield(scene.start_cutscene_dialog(character), "completed")
 	scene.dialog_box.has_obtained(character.get_child(5))
 
-	var object = character.get_children().back().object_res
+	var object = character.get_children().back().res
 	scene.menu.new_object(object)
 	character.input_direction = Vector2(0, 0)

@@ -65,7 +65,7 @@ func _process(_delta):
 	if open:
 		if sloganbg.visible:
 			id_slogan = handle_input(id_slogan, n_slogans, slog_selector)
-			tmp_slogan = get_instance(slogan_list, id_slogan).slogan_res
+			tmp_slogan = get_instance(slogan_list, id_slogan).res
 			description.text = tmp_slogan.name
 			
 			for id in tmp_slogan.ideologies:
@@ -85,7 +85,7 @@ func _process(_delta):
 				
 		else:
 			id_object = handle_input(id_object, n_objects, obj_selector)
-			tmp_object = get_instance(object_list, id_object).object_res
+			tmp_object = get_instance(object_list, id_object).res
 			description.text = tmp_object.description
 			
 			if Input.is_action_just_pressed("ui_accept"):
@@ -108,11 +108,11 @@ func bought(type: String):
 	match type:
 		"slogan":
 			selected_el = get_instance(slogan_list, id_slogan)
-#			print(selected_el.slogan_res.ideology1.name)
-			menu.new_slogan(selected_el.slogan_res)
+#			print(selected_el.res.ideology1.name)
+			menu.new_slogan(selected_el.res)
 		"object":
 			selected_el = get_instance(object_list, id_object)
-			menu.new_object(selected_el.object_res)
+			menu.new_object(selected_el.res)
 
 
 func error(slogan: SloganResource):

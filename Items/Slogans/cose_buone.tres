@@ -1,7 +1,8 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://Objects/Ideologies/fascism.tres" type="Resource" id=1]
 [ext_resource path="res://Items/Slogans/slogan_resource.gd" type="Script" id=2]
+[ext_resource path="res://Images/Slogans/costituzione2.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 2 )
@@ -11,6 +12,7 @@ att = 20
 def = 20
 name = "Ha fatto anche cose buone"
 ideologies = [ ExtResource( 1 ) ]
+texture = ExtResource( 3 )
 id = 1
 prize = 50
 political_pos = Vector2( 3, 8 )

@@ -97,7 +97,7 @@ f = 1
 
 [node name="VirgilioMail" parent="YSort/Virgilio" instance=ExtResource( 7 )]
 visible = false
-object_res = ExtResource( 8 )
+res = ExtResource( 8 )
 
 [node name="Walls" type="StaticBody2D" parent="."]
 position = Vector2( -16, 64 )
