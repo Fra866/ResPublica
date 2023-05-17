@@ -37,6 +37,9 @@ margin_top = 0.0799994
 margin_right = 0.0799866
 margin_bottom = 0.0799866
 color = Color( 0.6, 0.0313726, 0.0313726, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="SloganBG" type="ColorRect" parent="Background"]
 anchor_left = 0.038

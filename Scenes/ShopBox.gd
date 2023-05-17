@@ -1,8 +1,4 @@
 extends CanvasLayer
-#export(int) var firstTime
-#var file1 = "res://gabibbo.txt"
-#var test = "res://gabibbo.tres"
-#var slogans = []
 
 onready var background = $Background
 onready var sloganbg = $Background/SloganBG
@@ -19,7 +15,6 @@ onready var prize_var = $PrizeSign/Interior/Control/PrizeVar
 onready var text_box = $TextBox
 onready var description = $TextBox/ColorRect/Panel/Description
 onready var ideologicalDesc = $TextBox/ColorRect/Panel/Description2
-# onready var political_compass = $PoliticalCompass
 
 onready var n_slogans = $Background/SloganBG/Slogans.get_child_count()
 onready var n_objects = $Background/ObjectBG/Objects.get_child_count()

@@ -18,6 +18,7 @@ func add(item: Node):
 		current_el = list.get_child(0)
 	size += 1
 
+
 func remove(item: Node):
 	list.remove_child(item)
 	size -= 1

@@ -74,6 +74,9 @@ func setting_up_sprite():
 func interaction(player):
 	animtree.set("parameters/blend_position", (player.position - position) / 16)
 	print("Interaction: ", self)
+	
+	dialog_box = load("res://UI/DialogBox.tscn").instance()
+	self.add_child(dialog_box)
 	dialog_box.display_dialog(id, false)
 
 
