@@ -22,3 +22,7 @@ func _process(_delta):
 
 func get_political_pos():
 	return res.political_pos
+
+
+func get_slog_name():
+	return res.name

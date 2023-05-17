@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://UI/UI_menu/ObjectMenu.gd" type="Script" id=1]
+[ext_resource path="res://Images/sloganmenu.png" type="Texture" id=3]
+[ext_resource path="res://UI/UI_menu/MainContainer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://UI/UI_menu/DescriptionDisplayer.tscn" type="PackedScene" id=5]
+
+[node name="Objects" type="Control"]
+margin_left = -96.0
+margin_top = -80.0
+margin_right = 94.0
+margin_bottom = 80.0
+script = ExtResource( 1 )
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 96, 54 )
+scale = Vector2( 2, 0.90625 )
+texture = ExtResource( 3 )
+
+[node name="MainContainer" parent="." instance=ExtResource( 4 )]
+res_path = "res://Scenes/UI_Objects/ObjectNode.tscn"
+
+[node name="Selector" parent="MainContainer" index="0"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 39.0
+margin_bottom = 39.0
+color = Color( 0.45, 0.95, 0.2, 1 )
+
+[node name="NoObjectText" type="RichTextLabel" parent="."]
+margin_left = 16.0
+margin_top = 32.0
+margin_right = 176.0
+margin_bottom = 80.0
+text = "Non hai nessun oggetto."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DescriptionDisplayer" parent="." instance=ExtResource( 5 )]
+
+[editable path="MainContainer"]
