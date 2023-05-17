@@ -12,3 +12,6 @@ export(int) var id = 0
 export(int) var prize = 50
 
 export(Vector2) var political_pos
+
+func get_text():
+	return texture

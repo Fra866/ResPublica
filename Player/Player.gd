@@ -11,7 +11,7 @@ onready var camera = $Camera2D
 onready var animtree = $AnimationTree
 onready var animplayer = $AnimationPlayer
 onready var animstate = animtree.get('parameters/playback')
-onready var dialog_box = get_node(NodePath('/root/SceneManager/DialogBox'))
+# onready var dialog_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var shop_box = get_node(NodePath('/root/SceneManager/ShopBox'))
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
@@ -49,7 +49,7 @@ func _ready():
 	else:
 		initial_position = position
 	
-	dialog_box.connect("priority_to_player", self, "get_priority")
+	# dialog_box.connect("priority_to_player", self, "get_priority")
 	shop_box.connect("priority_to_player", self, "get_priority")
 
 

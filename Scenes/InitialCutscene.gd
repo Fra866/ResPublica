@@ -3,7 +3,7 @@ extends Node2D
 export(Array, String) var list_texts = []
 
 onready var scene_manager = get_parent().get_parent()
-onready var ui = scene_manager.get_child(5)
+onready var ui = get_node(NodePath("/root/SceneManager/UI"))
 onready var menu = scene_manager.get_child(1)
 onready var name_label = menu.get_child(0).get_child(0).get_child(1).get_child(4)
 

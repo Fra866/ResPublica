@@ -311,7 +311,7 @@ func new_battleslog(element):
 		40*((len(battleslogs) - 1) / 2) + 15
 	)
 	var new_slog_instance = battleslogs_container.new_item(pos)
-	new_slog_instance.slogan_res = element
+	new_slog_instance.slogan_res = element.slogan_res
 	battleslogs_container.add(new_slog_instance)
 
 

@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var scenemanager = get_node(NodePath('/root/SceneManager'))
-onready var dialog_box = get_node(NodePath('/root/SceneManager/DialogBox'))
+# onready var dialog_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var player
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var collisionshape = $Area2D/CollisionShape2D
@@ -22,6 +22,9 @@ func _ready():
 
 
 func start_cutscene_dialog(npc, continue_cutscene):
+	var dialog_box = load("res://UI/DialogBox.tscn").instance()
+	npc.add_child(dialog_box)
+	
 	dialog_box.i = 0
 	dialog_box.display_dialog(npc.id, continue_cutscene)
 	
@@ -30,7 +33,6 @@ func start_cutscene_dialog(npc, continue_cutscene):
 		dialog_box.start_dialog = true
 	
 	emit_signal("cd_over")
-#	Finish
 
 
 func start_cutscene():

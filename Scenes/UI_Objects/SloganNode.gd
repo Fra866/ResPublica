@@ -12,7 +12,7 @@ onready var xpbar = $XPbar
 func _ready():
 	slogan.slogan_resource = slogan_res
 #	WHEN THE SPRITES WILL BE READY:
-	sprite.texture = slogan_res.texture
+	sprite.texture = slogan_res.get_text()
 #	sprite.texture = load('res://Images/Slogans/' + path_texture)
 
 

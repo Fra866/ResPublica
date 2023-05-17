@@ -18,7 +18,7 @@ func start(character: StaticBody2D, scene: Node2D):
 	virgilio.animplayer.play('RunDown')
 	virgilio.input_direction = Vector2(0, 1)
 	
-	yield(scene.get_tree().create_timer(1), "timeout")
+	yield(scene.get_tree().create_timer(1.5), "timeout")
 	virgilio.animplayer.play('IdleDown')
 	
 	virgilio.input_direction = Vector2(0, 0)
@@ -29,5 +29,6 @@ func start(character: StaticBody2D, scene: Node2D):
 	var object = load("res://Items/Objects/Key Objects/mail.tres")
 	scene.menu.new_object(object)
 	
-	scene.dialog_box.has_obtained(object)
+	print(virgilio.get_children())
+	virgilio.get_child(5).has_obtained(object, false)
 	

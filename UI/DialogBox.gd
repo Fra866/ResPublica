@@ -45,7 +45,6 @@ func display_dialog(npc_id, continue_cutscene):
 	d_list = current_npc.dialog_list
 	
 	npc_global_id = npc_id
-	current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_id]
 	npc_name = current_npc.name
 	
 	d_list = current_npc.dialog_list
@@ -70,7 +69,7 @@ func end_dialog_box():
 	d_list = []
 
 
-func has_obtained(object):
+func has_obtained(object, continue_cutscene):
 	d_list = ['Hai ottenuto ' + object.name]
 	att_ids_list = []
 	i = 0
@@ -79,7 +78,8 @@ func has_obtained(object):
 	yield(get_tree().create_timer(1), "timeout")
 	end_dialog_box()
 	
-	emit_signal("priority_to_player")
+	if (!continue_cutscene):
+		player.get_priority()
 
 
 func check_battle() -> void:
@@ -99,8 +99,8 @@ func check_battle() -> void:
 
 
 func _process(_delta):
-	player = get_parent().get_child(0).get_child(0).find_node('Player')
 	current_scene = scenemanager.get_child(0).get_child(0)
+	player = current_scene.find_node('Player')
 	
 	if player:
 		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialog:
@@ -117,7 +117,7 @@ func _process(_delta):
 					check_battle()
 				elif !shop_box.open:
 					if !continue_cutscene:
-						emit_signal("priority_to_player")
+						player.get_priority()
 					continue_cutscene = false
 
 
