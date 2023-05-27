@@ -82,8 +82,8 @@ margin_right = 94.0
 margin_bottom = 80.0
 
 [node name="Background" type="Sprite" parent="MenuLayers/Slogans"]
-position = Vector2( 96, 46 )
-scale = Vector2( 2, 0.78125 )
+position = Vector2( 96, 38.5 )
+scale = Vector2( 2, 0.664062 )
 texture = ExtResource( 3 )
 
 [node name="MainContainer" parent="MenuLayers/Slogans" instance=ExtResource( 8 )]
@@ -107,6 +107,11 @@ __meta__ = {
 }
 
 [node name="DescriptionDisplayer" parent="MenuLayers/Slogans" instance=ExtResource( 7 )]
+anchor_left = 0.574
+anchor_top = 0.625
+margin_left = -13.06
+margin_top = 0.0
+margin_right = 117.95
 
 [node name="BattleSlogans" type="Control" parent="MenuLayers/Slogans"]
 anchor_left = -0.137
@@ -116,22 +121,76 @@ anchor_bottom = 1.094
 margin_left = 0.0300026
 margin_top = 0.0799942
 margin_bottom = -0.0400085
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Background" type="ColorRect" parent="MenuLayers/Slogans/BattleSlogans"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -1.0
 color = Color( 0.0862745, 0.0745098, 0.0745098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="MainContainer" parent="MenuLayers/Slogans/BattleSlogans" instance=ExtResource( 8 )]
+[node name="RomanEraContainer" parent="MenuLayers/Slogans/BattleSlogans" instance=ExtResource( 8 )]
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
-[node name="Selector" parent="MenuLayers/Slogans/BattleSlogans/MainContainer" index="0"]
+[node name="Selector" parent="MenuLayers/Slogans/BattleSlogans/RomanEraContainer" index="0"]
 margin_left = 23.0
 margin_top = 3.0
 margin_right = 65.0
 rect_scale = Vector2( 0.555, 0.702 )
 color = Color( 0.85, 0.22, 0.22, 1 )
+
+[node name="MiddleAgesContainer" parent="MenuLayers/Slogans/BattleSlogans" instance=ExtResource( 8 )]
+visible = false
+res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
+
+[node name="Selector" parent="MenuLayers/Slogans/BattleSlogans/MiddleAgesContainer" index="0"]
+margin_left = 23.0
+margin_top = 3.0
+margin_right = 65.0
+rect_scale = Vector2( 0.555, 0.702 )
+color = Color( 0.85, 0.22, 0.22, 1 )
+
+[node name="RenaissanceContainer" parent="MenuLayers/Slogans/BattleSlogans" instance=ExtResource( 8 )]
+visible = false
+res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
+
+[node name="Selector" parent="MenuLayers/Slogans/BattleSlogans/RenaissanceContainer" index="0"]
+margin_left = 23.0
+margin_top = 3.0
+margin_right = 65.0
+rect_scale = Vector2( 0.555, 0.702 )
+color = Color( 0.85, 0.22, 0.22, 1 )
+
+[node name="ModernEraContainer" parent="MenuLayers/Slogans/BattleSlogans" instance=ExtResource( 8 )]
+visible = false
+res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
+
+[node name="Selector" parent="MenuLayers/Slogans/BattleSlogans/ModernEraContainer" index="0"]
+margin_left = 23.0
+margin_top = 3.0
+margin_right = 65.0
+rect_scale = Vector2( 0.555, 0.702 )
+color = Color( 0.85, 0.22, 0.22, 1 )
+
+[node name="ColorRect" type="ColorRect" parent="MenuLayers/Slogans/BattleSlogans"]
+margin_top = -19.0
+margin_right = 121.0
+margin_bottom = -1.0
+color = Color( 0.415686, 0.356863, 0.356863, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MenuLayers/Slogans/BattleSlogans/ColorRect"]
+margin_top = 3.0
+margin_right = 120.0
+margin_bottom = 19.0
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ManageSlogans" type="Control" parent="MenuLayers/Slogans"]
 visible = false
@@ -377,7 +436,10 @@ text = "Cuffaro"
 [connection signal="pressed" from="MenuLayers/Party/VoterInfo/Promote" to="." method="_on_Promote_pressed"]
 
 [editable path="MenuLayers/Slogans/MainContainer"]
-[editable path="MenuLayers/Slogans/BattleSlogans/MainContainer"]
+[editable path="MenuLayers/Slogans/BattleSlogans/RomanEraContainer"]
+[editable path="MenuLayers/Slogans/BattleSlogans/MiddleAgesContainer"]
+[editable path="MenuLayers/Slogans/BattleSlogans/RenaissanceContainer"]
+[editable path="MenuLayers/Slogans/BattleSlogans/ModernEraContainer"]
 [editable path="MenuLayers/Objects/MainContainer"]
 [editable path="MenuLayers/Party/MainContainer"]
 [editable path="MenuLayers/Mafia/MainContainer"]

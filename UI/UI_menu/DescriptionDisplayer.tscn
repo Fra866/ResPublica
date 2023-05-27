@@ -7,9 +7,9 @@ anchor_left = 0.253
 anchor_top = 0.7
 anchor_right = 1.095
 anchor_bottom = 1.1
-margin_left = 47.93
+margin_left = 48.04
 margin_top = -12.0
-margin_right = 19.95
+margin_right = 11.6
 margin_bottom = -12.0
 script = ExtResource( 1 )
 __meta__ = {
@@ -18,12 +18,12 @@ __meta__ = {
 
 [node name="Background" type="ColorRect" parent="."]
 anchor_left = 0.045
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 0.0799999
+anchor_right = 0.5
+anchor_bottom = 0.542
+margin_left = 0.134298
 margin_top = -4.0
-margin_right = -8.0
-margin_bottom = 12.0
+margin_right = 0.269981
+margin_bottom = 32.976
 color = Color( 0.647059, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -32,22 +32,22 @@ __meta__ = {
 [node name="InnerBackground" type="ColorRect" parent="Background"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 109.0
-margin_bottom = 72.0
+margin_right = 95.0
+margin_bottom = 69.0
 color = Color( 0, 0.537255, 0.133333, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Text" type="RichTextLabel" parent="Background/InnerBackground"]
-anchor_left = 0.028
-anchor_top = 0.111
-anchor_right = 0.958
-anchor_bottom = 0.921
-margin_left = 0.172
-margin_top = -0.104
-margin_right = 3.242
-margin_bottom = 0.0559998
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -39.39
+margin_top = -26.5
+margin_right = 41.61
+margin_bottom = 35.5
 text = "A morte i ghibellini"
 fit_content_height = true
 __meta__ = {
