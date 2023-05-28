@@ -6,7 +6,7 @@ onready var sprite = $Sprite
 
 const TILE_SIZE = 16
 
-onready var dialog_box = get_node(NodePath('/root/SceneManager/DialogBox'))
+onready var dialog_box: CanvasLayer
 onready var texture
 
 onready var raycast = $RayCast2D

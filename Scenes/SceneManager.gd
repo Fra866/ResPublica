@@ -1,7 +1,6 @@
 extends Node2D
 
 onready var current_scene
-onready var dialouge_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var menu = $Menu
 onready var ui = $UI
 onready var transition_animation = $ScreenTransition/AnimationPlayer

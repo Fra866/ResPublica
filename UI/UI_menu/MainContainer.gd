@@ -33,14 +33,12 @@ func new_item(pos: Vector2, element = null):
 	return item
 
 
-func move(pos: Vector2):
-	if Input.is_action_just_pressed("ui_right"):
+func move(advance: int):
+	if advance:
 		if index < size - 1:
 			index += 1
-	if Input.is_action_just_pressed("ui_left"):
-		if index > 0:
-			index -= 1
-	selector.rect_position = pos
+	elif index:
+		index -= 1
 	current_el = list.get_child(index)
 
 

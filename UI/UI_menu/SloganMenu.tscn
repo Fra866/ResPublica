@@ -40,7 +40,6 @@ __meta__ = {
 [node name="DescriptionDisplayer" parent="." instance=ExtResource( 5 )]
 
 [node name="BattleSlogans" type="Control" parent="."]
-visible = false
 anchor_left = -0.137
 anchor_top = 0.612
 anchor_right = 0.5

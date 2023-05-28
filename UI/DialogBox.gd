@@ -91,9 +91,15 @@ func check_battle() -> void:
 		if menu.party and not menu.voter_list.has(npc_name):
 			current_npc = current_scene.list_npc[npc_global_id]
 			scenemanager.start_transition(battle_scene_path, Vector2(0,0))
-			emit_signal("send_npc", current_npc)
-			emit_signal("npc_attacks", att_ids_list)
-			emit_signal("next_scene", current_scene.name, player.position)
+			# I don't wanna know why, but this shit works for now.
+			yield(scenemanager, "new_main_scene")
+			var battle_scene = scenemanager.current_scene
+			battle_scene.set_npc(current_npc)
+			battle_scene.set_attacks(att_ids_list)
+			battle_scene.set_next_scene(current_scene.name, player.position)
+#			emit_signal("send_npc", current_npc)
+#			emit_signal("npc_attacks", att_ids_list)
+#			emit_signal("next_scene", current_scene.name, player.position)
 			return
 	emit_signal("priority_to_player")
 

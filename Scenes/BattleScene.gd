@@ -2,7 +2,7 @@ extends Node2D
 
 onready var scenemanager = get_node(NodePath('/root/SceneManager/'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
-onready var dialogue_box = get_node(NodePath('/root/SceneManager/DialogBox'))
+#onready var dialogue_box = get_node(NodePath('/root/SceneManager/DialogBox'))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
 
 onready var whattodo = $BattleMenu/WhatToDo/
@@ -58,9 +58,9 @@ onready var battle_ui = BATTLE_UI.MENU
 func _ready():
 	randomize()
 	
-	dialogue_box.connect("npc_attacks", self, "set_attacks")
-	dialogue_box.connect("next_scene", self, "set_next_scene")
-	dialogue_box.connect("send_npc", self, "set_npc")
+#	dialogue_box.connect("npc_attacks", self, "set_attacks")
+#	dialogue_box.connect("next_scene", self, "set_next_scene")
+#	dialogue_box.connect("send_npc", self, "set_npc")
 	
 	slogan_setup()
 	object_setup()
@@ -86,7 +86,7 @@ func slogan_setup():
 		
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
-		new_slog_instance.res = slogan_res
+		new_slog_instance.res = slogan_res.res
 		new_slog_instance.visible = true
 		
 		instance_pos(new_slog_instance, n_of_slogans, max_slogans)
