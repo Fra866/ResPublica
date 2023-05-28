@@ -74,7 +74,7 @@ func _on_Save2_pressed():
 func _on_Save3_pressed():
 	if new_game:
 		path_save_file = "res://Saved/save03.tres"
-		
+	
 		$Panel/Container2.visible = false
 		$Panel/Container3.visible = true
 		$Panel/Container3/No.grab_focus()

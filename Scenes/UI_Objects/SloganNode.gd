@@ -10,6 +10,8 @@ onready var xpbar = $XPbar
 
 
 func _ready():
+	for id in res.ideologies:
+		id.assign_params(Archive.new())
 	slogan.slogan_resource = res
 #	WHEN THE SPRITES WILL BE READY:
 	sprite.texture = res.texture

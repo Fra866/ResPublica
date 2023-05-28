@@ -90,3 +90,4 @@ visible = false
 [connection signal="pressed" from="MenuLayers/MainMenu/Control/ObjBtn" to="." method="_on_ObjBtn_pressed" binds= [ "MenuLayers/Objects" ]]
 [connection signal="pressed" from="MenuLayers/MainMenu/Control/PartyBtn" to="." method="_on_PartyBtn_pressed" binds= [ "MenuLayers/Party" ]]
 [connection signal="pressed" from="MenuLayers/MainMenu/Control/MafiaBtn" to="." method="_on_MafiaBtn_pressed" binds= [ "MenuLayers/Mafia" ]]
+

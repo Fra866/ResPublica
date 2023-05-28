@@ -55,8 +55,8 @@ var ideologies = {
 			"x": 0,
 			"y": -1,
 			"name": "Protosocialism",
-			"period1": histPeriod.MIDDLE_AGES,
-			"period2": histPeriod.ROMAN_ERA
+			"period1": histPeriod.ROMAN_ERA,
+			"period2": histPeriod.MIDDLE_AGES
 		},
 	7:
 		{
@@ -72,6 +72,14 @@ var ideologies = {
 			"y": -1,
 			"name": "Traditionalism",
 			"period1": histPeriod.ALL_INCLUDED,
+			"period2": null
+		},
+	9:
+		{
+			"x": -1,
+			"y": -1,
+			"name": "Cesarism",
+			"period1": histPeriod.ROMAN_ERA,
 			"period2": null
 		},
 }

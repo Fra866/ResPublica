@@ -15,6 +15,7 @@ onready var prize_var = $PrizeSign/Interior/Control/PrizeVar
 onready var text_box = $TextBox
 onready var description = $TextBox/ColorRect/Panel/Description
 onready var ideologicalDesc = $TextBox/ColorRect/Panel/Description2
+onready var histDesc = $TextBox/ColorRect/Panel/Description3
 
 onready var n_slogans = $Background/SloganBG/Slogans.get_child_count()
 onready var n_objects = $Background/ObjectBG/Objects.get_child_count()
@@ -66,6 +67,7 @@ func _process(_delta):
 			for id in tmp_slogan.ideologies:
 				id._ready()
 			ideologicalDesc.text = str(tmp_slogan.ideologies[0].name)
+			histDesc.text = str(tmp_slogan.ideologies[0].period1)
 			
 			
 			if Input.is_action_just_pressed("ui_accept"):

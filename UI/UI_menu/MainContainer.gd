@@ -45,5 +45,12 @@ func move(advance: int):
 func get_items():
 	return list.get_children()
 
+
 func get_i(index: int):
 	return list.get_child(index)
+
+
+func clear():	
+	for i in range(0, list.get_child_count()-1):
+		get_child(i).queue_free()
+	size = 0
