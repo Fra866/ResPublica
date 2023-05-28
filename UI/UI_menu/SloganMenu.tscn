@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UI/UI_menu/SloganMenu.gd" type="Script" id=1]
+[ext_resource path="res://UI/UI_menu/BattleSlogans.gd" type="Script" id=2]
 [ext_resource path="res://Images/sloganmenu.png" type="Texture" id=3]
 [ext_resource path="res://UI/UI_menu/MainContainer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://UI/UI_menu/DescriptionDisplayer.tscn" type="PackedScene" id=5]
@@ -13,8 +14,8 @@ margin_bottom = 80.0
 script = ExtResource( 1 )
 
 [node name="Background" type="Sprite" parent="."]
-position = Vector2( 96, 46 )
-scale = Vector2( 2, 0.78125 )
+position = Vector2( 96, 38.5 )
+scale = Vector2( 2, 0.664 )
 texture = ExtResource( 3 )
 
 [node name="MainContainer" parent="." instance=ExtResource( 4 )]
@@ -38,6 +39,11 @@ __meta__ = {
 }
 
 [node name="DescriptionDisplayer" parent="." instance=ExtResource( 5 )]
+anchor_left = 0.574
+anchor_top = 0.625
+margin_left = -13.0
+margin_top = 0.0
+margin_right = 118.0
 
 [node name="BattleSlogans" type="Control" parent="."]
 anchor_left = -0.137
@@ -47,6 +53,7 @@ anchor_bottom = 1.094
 margin_left = 0.0300026
 margin_top = 0.0799942
 margin_bottom = -0.0400085
+script = ExtResource( 2 )
 
 [node name="Background" type="ColorRect" parent="BattleSlogans"]
 anchor_right = 1.0
@@ -54,15 +61,60 @@ anchor_bottom = 1.0
 margin_top = -1.0
 color = Color( 0.0862745, 0.0745098, 0.0745098, 1 )
 
-[node name="MainContainer" parent="BattleSlogans" instance=ExtResource( 4 )]
+[node name="RomanEraContainer" parent="BattleSlogans" instance=ExtResource( 4 )]
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
-[node name="Selector" parent="BattleSlogans/MainContainer" index="0"]
+[node name="Selector" parent="BattleSlogans/RomanEraContainer" index="0"]
 margin_left = 23.0
 margin_top = 3.0
 margin_right = 65.0
 rect_scale = Vector2( 0.555, 0.702 )
 color = Color( 0.85, 0.22, 0.22, 1 )
+
+[node name="MiddleAgesContainer" parent="BattleSlogans" instance=ExtResource( 4 )]
+visible = false
+res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
+
+[node name="Selector" parent="BattleSlogans/MiddleAgesContainer" index="0"]
+margin_left = 23.0
+margin_top = 3.0
+margin_right = 65.0
+rect_scale = Vector2( 0.555, 0.702 )
+color = Color( 0.85098, 0.219608, 0.219608, 1 )
+
+[node name="RenaissanceContainer" parent="BattleSlogans" instance=ExtResource( 4 )]
+visible = false
+res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
+
+[node name="Selector" parent="BattleSlogans/RenaissanceContainer" index="0"]
+margin_left = 23.0
+margin_top = 3.0
+margin_right = 65.0
+rect_scale = Vector2( 0.555, 0.702 )
+color = Color( 0.85, 0.22, 0.22, 1 )
+
+[node name="ModernEraContainer" parent="BattleSlogans" instance=ExtResource( 4 )]
+visible = false
+res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
+
+[node name="Selector" parent="BattleSlogans/ModernEraContainer" index="0"]
+margin_left = 23.0
+margin_top = 3.0
+margin_right = 65.0
+rect_scale = Vector2( 0.555, 0.702 )
+color = Color( 0.85, 0.22, 0.22, 1 )
+
+[node name="ColorRect" type="ColorRect" parent="BattleSlogans"]
+margin_top = -19.0
+margin_right = 121.0
+margin_bottom = -1.0
+color = Color( 0.419608, 0.360784, 0.360784, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="BattleSlogans/ColorRect"]
+margin_top = 3.0
+margin_right = 120.0
+margin_bottom = 19.0
+text = "0"
 
 [node name="ManageSlogans" type="Control" parent="."]
 visible = false
@@ -126,4 +178,7 @@ __meta__ = {
 }
 
 [editable path="MainContainer"]
-[editable path="BattleSlogans/MainContainer"]
+[editable path="BattleSlogans/RomanEraContainer"]
+[editable path="BattleSlogans/MiddleAgesContainer"]
+[editable path="BattleSlogans/RenaissanceContainer"]
+[editable path="BattleSlogans/ModernEraContainer"]

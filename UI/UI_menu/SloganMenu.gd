@@ -1,7 +1,9 @@
 extends Control
 
 #onready var menu = get_parent().get_parent()
-onready var battle_cont = $BattleSlogans/MainContainer
+#onready var battle_cont = $BattleSlogans/MainContainer
+onready var battle_menu = $BattleSlogans
+onready var battle_cont = battle_menu.container
 onready var slog_cont = $MainContainer
 
 onready var displayer = $DescriptionDisplayer
@@ -15,6 +17,11 @@ enum STATE {ALL, BATTLESLOGS}
 var state = STATE.ALL
 
 
+func _ready():
+	battle_menu.connect("battleslog_text", self, "display_bs_text")
+	battle_menu.connect("switched", self, "refresh_cont")
+
+
 func toggle_battleslog(vis: bool):
 	vis = vis and battle_cont.size
 	state = STATE.BATTLESLOGS if vis else STATE.ALL
@@ -26,8 +33,10 @@ func prompt_manage_slogs():
 	var prompt
 	if state == STATE.ALL:
 		prompt = "Sia '" + slog_cont.current_el.get_slog_name() + "' slogan di battaglia?"
-	else:
+	elif battle_cont.size:
 		prompt = "Rimuovere '" + battle_cont.current_el.get_slog_name() + "'?"
+	else:
+		return
 	
 	manage_slogs_text.text = prompt
 	manage_slogs.visible = true
@@ -35,18 +44,18 @@ func prompt_manage_slogs():
 
 
 func handle_input(val: int) -> void:
+	if manage_slogs.visible:
+		return
+	
 	var container: Node2D
 	match state:
 		STATE.ALL:
-			container = slog_cont
+			slog_cont.move(val)
+			slog_cont.selector.rect_position = get_cont_vector(slog_cont)
+			displayer.set_text(slog_cont.current_el.get_slog_name())
 		STATE.BATTLESLOGS:
 			if !slog_cont.current_el in battle_cont.get_items() and battle_cont.size < 4:
-				container = battle_cont
-			else:
-				return
-	container.move(val)
-	container.selector.rect_position = get_cont_vector(container) # To abstract.
-	displayer.set_text(container.current_el.get_slog_name())
+				battle_menu.move(val)
 
 
 func get_cont_vector(container):
@@ -57,11 +66,6 @@ func get_cont_vector(container):
 				32 * (index % 6) + 3,
 				40 * (index / 6) + 9
 			)
-		battle_cont:
-			return Vector2(
-				32 * (index % 2) + 23,
-				40 * (index / 2) + 3
-			)
 	return null
 
 
@@ -69,3 +73,10 @@ func reload_battleslogs_menu(i: int = 0):
 	for battleslog in battle_cont.get_items():
 		battleslog.position = Vector2(30 * (i % 2) + 35, 40*(i / 2) + 15)
 		i += 1
+
+
+func display_bs_text(slog: Node2D):
+	displayer.set_text(slog.get_slog_name())
+
+func refresh_cont():
+	battle_cont = battle_menu.container
