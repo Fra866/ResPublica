@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/UI_Objects/SloganNode.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Items/Slogans/PRR0.tres" type="Resource" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=8]
 [ext_resource path="res://Assets/UI/pkmnfl.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Items/Slogans/PRR1.tres" type="Resource" id=10]
-[ext_resource path="res://Items/Objects/magnet.tres" type="Resource" id=11]
 [ext_resource path="res://Scenes/UI_Objects/ObjectNode.tscn" type="PackedScene" id=12]
 
 [sub_resource type="StyleBoxFlat" id=3]
@@ -90,7 +89,7 @@ res = ExtResource( 8 )
 
 [node name="SloganNode7" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 52, 48 )
-slogan_res = ExtResource( 10 )
+res = ExtResource( 8 )
 
 [node name="SloganNode8" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 84, 48 )

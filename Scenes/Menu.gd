@@ -86,11 +86,15 @@ func _ready():
 	
 	party = save_file.player_party
 	
-	slogan_state = SLOGAN_STATE.ALL
 	for slogan_res in save_file.slogans:
 		new_slogan(slogan_res)
-	for slogan_res in save_file.battleslogs:
-		new_battleslog(slogan_res)
+	for period in save_file.battleslogs:
+		for slogan in period:
+			new_battleslog(
+				slogan,
+				slogan_menu.battle_cont.size,
+				slogan.res.ideologies[0].period1
+			)
 	slogan_menu.toggle_battleslog(true)
 #	to_battleslog()
 	
@@ -99,7 +103,6 @@ func _ready():
 	for voter in save_file.voters:
 		new_voter(voter)
 	
-	current_battleslog_container = battleslogs_containers[battleslogs_state-1]
 
 	slogan_menu.ms_yes.connect("pressed", self, "_on_Yes_pressed")
 	slogan_menu.ms_no.connect("pressed", self, "_on_No_pressed")
@@ -237,7 +240,7 @@ func new_slogan(slogan: SloganResource):
 	var new_slog_instance = slogan_menu.slog_cont.new_item(pos, slogan)
 	slogan_menu.slog_cont.add(new_slog_instance)
 
-
+# Move to BattleMenu.gd and let period be inferred.
 func new_battleslog(element, i: int, period: int):
 	var list = battleslogs[period]
 	
@@ -274,13 +277,13 @@ func new_object(object):
 			32 * (object_menu.container.size % 6) + 15,
 			40*(int(object_menu.container.size / 6)) + 20
 		)
-		var new_obj_instance = objects_menu.container.new_item(pos)
+		var new_obj_instance = object_menu.container.new_item(pos)
 		new_obj_instance.res = object
-		objects_menu.container.add(new_obj_instance)
+		object_menu.container.add(new_obj_instance)
 
 
 func reload_voters_menu(i: int = -1):
-	for v in voters_menu.container.get_items():
+	for v in party_menu.container.get_items():
 		if (i >= 0):
 			print(v.npc_name, " -> ", v.position)
 			v.position = Vector2(32 * (i % 4) + 5, 40 * (i / 4) + 18)
@@ -359,13 +362,14 @@ func _on_Promote_pressed():
 	pass
 
 
-func _on_Yes_pressed(index):
+func _on_Yes_pressed():
+	# Leave this to BattleMenu's functions.
 	if !slogan_menu.state:
-		var slog_period = slogan_menu.container.current_el.res.ideologies[0].period1
-		new_battleslog(slogan_menu.container.current_el, len(battleslogs[slog_period - 1]) + 1, slog_period - 1)
+		var slog_period = slogan_menu.slog_cont.current_el.res.ideologies[0].period1
+		new_battleslog(slogan_menu.slog_cont.current_el, len(battleslogs[slog_period - 1]) + 1, slog_period - 1)
 	else:
-		slogan_menu.battle_cont.remove(to_remove_bs)
-		battleslogs[battleslogs_state-1].remove(index)
+		slogan_menu.battle_cont.remove(slogan_menu.battle_cont.current_el)
+		battleslogs[slogan_menu.battle_menu.state].remove(slogan_menu.battle_cont.index)
 		reload_battleslogs_pos()
 	
 	slogan_menu.manage_slogs.visible = false
