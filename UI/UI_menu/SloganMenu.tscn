@@ -61,7 +61,18 @@ anchor_bottom = 1.0
 margin_top = -1.0
 color = Color( 0.0862745, 0.0745098, 0.0745098, 1 )
 
+[node name="AllEraContainer" parent="BattleSlogans" instance=ExtResource( 4 )]
+res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
+
+[node name="Selector" parent="BattleSlogans/AllEraContainer" index="0"]
+margin_left = 23.0
+margin_top = 3.0
+margin_right = 65.0
+rect_scale = Vector2( 0.555, 0.702 )
+color = Color( 0.85, 0.22, 0.22, 1 )
+
 [node name="RomanEraContainer" parent="BattleSlogans" instance=ExtResource( 4 )]
+visible = false
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
 [node name="Selector" parent="BattleSlogans/RomanEraContainer" index="0"]
@@ -114,7 +125,6 @@ color = Color( 0.419608, 0.360784, 0.360784, 1 )
 margin_top = 3.0
 margin_right = 120.0
 margin_bottom = 19.0
-text = "0"
 
 [node name="ManageSlogans" type="Control" parent="."]
 visible = false
@@ -178,6 +188,7 @@ __meta__ = {
 }
 
 [editable path="MainContainer"]
+[editable path="BattleSlogans/AllEraContainer"]
 [editable path="BattleSlogans/RomanEraContainer"]
 [editable path="BattleSlogans/MiddleAgesContainer"]
 [editable path="BattleSlogans/RenaissanceContainer"]

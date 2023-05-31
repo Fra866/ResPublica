@@ -4,6 +4,7 @@ export(Resource) var party
 onready var menulayers = $MenuLayers
 onready var main_menu = $MenuLayers/MainMenu
 onready var slogan_menu = $MenuLayers/Slogans
+onready var battle_menu = $MenuLayers/Slogans/BattleSlogans
 onready var object_menu = $MenuLayers/Objects
 onready var party_menu = $MenuLayers/Party
 onready var mafia_menu = $MenuLayers/Mafia
@@ -51,6 +52,7 @@ onready var battleslogs: Array = [
 	[],
 	[],
 	[],
+	[],
 ]
 
 onready var slogan_list: Array = []
@@ -88,12 +90,16 @@ func _ready():
 	
 	for slogan_res in save_file.slogans:
 		new_slogan(slogan_res)
-	for period in save_file.battleslogs:
-		for slogan in period:
-			new_battleslog(
+		
+	for cluster in save_file.battleslogs:
+		for slogan in cluster:
+			var period = slogan.res.ideologies[0].period1
+			battleslogs[period].append(slogan)
+			
+			battle_menu.new_battleslog(
 				slogan,
 				slogan_menu.battle_cont.size,
-				slogan.res.ideologies[0].period1
+				period
 			)
 	slogan_menu.toggle_battleslog(true)
 #	to_battleslog()
@@ -240,27 +246,6 @@ func new_slogan(slogan: SloganResource):
 	var new_slog_instance = slogan_menu.slog_cont.new_item(pos, slogan)
 	slogan_menu.slog_cont.add(new_slog_instance)
 
-# Move to BattleMenu.gd and let period be inferred.
-func new_battleslog(element, i: int, period: int):
-	var list = battleslogs[period]
-	
-	list.append(element)
-	
-	
-	var pos = Vector2 (
-		30 * ((i - 1) % 2) + 35,
-		40 * ((i - 1) / 2) + 15
-	)
-	
-	var new_slog_instance = slogan_menu.battle_cont[period].new_item(pos)
-	
-	new_slog_instance.res = element.res
-	new_slog_instance.visible = true
-	slogan_menu.battle_cont[period].add(new_slog_instance)
-	
-	slogan_menu.battle_cont[period].shows(true)
-	var a000 = slogan_menu.battle_cont[period].get_items()
-
 
 func remove_battleslog(element, index: int):
 	slogan_menu.battle_cont.remove(element)
@@ -366,10 +351,11 @@ func _on_Yes_pressed():
 	# Leave this to BattleMenu's functions.
 	if !slogan_menu.state:
 		var slog_period = slogan_menu.slog_cont.current_el.res.ideologies[0].period1
-		new_battleslog(slogan_menu.slog_cont.current_el, len(battleslogs[slog_period - 1]) + 1, slog_period - 1)
+		battleslogs[slog_period].append(slogan_menu.slog_cont.current_el)
+		battle_menu.new_battleslog(slogan_menu.slog_cont.current_el, len(battleslogs[slog_period]), slog_period)
 	else:
 		slogan_menu.battle_cont.remove(slogan_menu.battle_cont.current_el)
-		battleslogs[slogan_menu.battle_menu.state].remove(slogan_menu.battle_cont.index)
+		battleslogs[battle_menu.state].remove(slogan_menu.battle_cont.index + 1)
 		reload_battleslogs_pos()
 	
 	slogan_menu.manage_slogs.visible = false

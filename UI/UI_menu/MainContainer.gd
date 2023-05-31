@@ -15,6 +15,7 @@ func shows(b: bool):
 func add(item: Node):
 	list.add_child(item)
 	if !size:
+		index = 0
 		current_el = list.get_child(0)
 	size += 1
 
@@ -22,6 +23,7 @@ func add(item: Node):
 func remove(item: Node):
 	list.remove_child(item)
 	size -= 1
+	index -= 1
 	if !size:
 		current_el = null
 
