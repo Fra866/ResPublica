@@ -91,7 +91,6 @@ margin_bottom = 180.0
 [node name="BattleMenu" type="Node2D" parent="."]
 
 [node name="Selector" type="Node2D" parent="BattleMenu"]
-visible = false
 position = Vector2( 29, 95 )
 
 [node name="SelectorBackground" type="ColorRect" parent="BattleMenu/Selector"]

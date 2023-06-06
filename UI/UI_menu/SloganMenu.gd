@@ -23,10 +23,19 @@ func _ready():
 
 
 func toggle_battleslog(vis: bool):
-	vis = vis and battle_cont.size
+	#vis = vis and battle_cont.size
 	state = STATE.BATTLESLOGS if vis else STATE.ALL
+	
 	battle_cont.shows(vis)
+	
+	var txt = battle_cont.current_el.get_slog_name() if battle_cont.current_el != null else "-"
+
+	if (battle_cont.selector.visible):
+		displayer.set_text(txt)
+	
 	slog_cont.shows(!vis)
+	if (slog_cont.selector.visible):
+		displayer.set_text(slog_cont.current_el.get_slog_name())
 	
 
 func prompt_manage_slogs():
@@ -52,7 +61,9 @@ func handle_input(val: int) -> void:
 		STATE.ALL:
 			slog_cont.move(val)
 			slog_cont.selector.rect_position = get_cont_vector(slog_cont)
-			displayer.set_text(slog_cont.current_el.get_slog_name())
+			var d = slog_cont.current_el
+			displayer.set_text(slog_cont.current_el.get_slog_name() + str(slog_cont.current_el.res.ideologies[0].period1)) # SloganNode name
+			print("Current el. ", slog_cont.current_el)
 		STATE.BATTLESLOGS:
 			if !slog_cont.current_el in battle_cont.get_items() and battle_cont.size < 4:
 				battle_menu.move(val)
@@ -75,8 +86,8 @@ func reload_battleslogs_menu(i: int = 0):
 		i += 1
 
 
-func display_bs_text(slog: Node2D):
-	displayer.set_text(slog.get_slog_name())
+func display_bs_text(txt):
+	displayer.set_text(txt)
 
 func refresh_cont():
 	battle_cont = battle_menu.container

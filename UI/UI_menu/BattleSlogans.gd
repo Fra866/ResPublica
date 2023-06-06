@@ -6,6 +6,7 @@ enum STATE {
 	RENAISSANCE,
 	MODERN_ERA
 }
+
 var state: int = STATE.ROMAN_ERA
 
 onready var containers = [
@@ -14,6 +15,7 @@ onready var containers = [
 	$RenaissanceContainer,
 	$ModernEraContainer
 ]
+
 onready var container: Node2D = containers[state-1]
 onready var label = $ColorRect/RichTextLabel
 
@@ -26,7 +28,7 @@ func move(advance: int):
 	or (!advance and container.index)):
 		container.move(advance)
 		container.selector.rect_position = get_vector()
-		emit_signal("battleslog_text", container.current_el)
+		emit_signal("battleslog_text", container.current_el.get_slog_name())
 	else:
 		switch(advance)
 
@@ -40,6 +42,10 @@ func switch(advance: int):
 		state -= 1
 	
 	container = containers[state-1]
+	if container.current_el == null:
+		emit_signal("battleslog_text", "-")
+	else:
+		emit_signal("battleslog_text", container.current_el.get_slog_name())
 	emit_signal("switched")
 	label.text = STATE.keys()[state-1]
 	container.visible = true

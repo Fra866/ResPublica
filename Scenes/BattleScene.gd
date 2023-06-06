@@ -2,10 +2,11 @@ extends Node2D
 
 onready var scenemanager = get_node(NodePath('/root/SceneManager/'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
-#onready var dialogue_box = get_node(NodePath('/root/SceneManager/DialogBox'))
+onready var slogan_menu = get_node(NodePath('/root/SceneManager/Menu/MenuLayers/Slogans'))
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
 
 onready var whattodo = $BattleMenu/WhatToDo/
+onready var whattodo_container = $BattleMenu/WhatToDo/Panel/Container
 onready var slogButton = $BattleMenu/WhatToDo/Panel/Container/Slogans
 onready var objButton = $BattleMenu/WhatToDo/Panel/Container/Objects
 onready var captureButton = $BattleMenu/WhatToDo/Panel/Container/Capture
@@ -23,7 +24,7 @@ onready var battlemenu = $BattleMenu
 onready var selector = $BattleMenu/Selector/SelectorBackground
 onready var margincontainer = $ActionLog/MarginContainer
 onready var action_log = $ActionLog/MarginContainer/Panel/Label
-onready var current_menu = null
+onready var current_menu = whattodo
 
 onready var enemy_sprite = $EnemySprite
 onready var battlebox = $BattleBox
@@ -31,8 +32,8 @@ onready var battlebox = $BattleBox
 onready var n_of_slogans = 0
 onready var n_of_objects = 0
 
-onready var max_slogans = 8
-onready var max_objects = 8
+onready var max_slogans = 4
+onready var max_objects = 4
 
 onready var enemy_area: Array
 
@@ -43,7 +44,6 @@ var next_scene = ""
 var next_pos: Vector2
 var player_pos = Vector2(0, 0)
 
-onready var attacking = false
 
 onready var first_attack_player = true
 onready var first_attack_enemy = true
@@ -62,7 +62,10 @@ func _ready():
 #	dialogue_box.connect("next_scene", self, "set_next_scene")
 #	dialogue_box.connect("send_npc", self, "set_npc")
 	
-	slogan_setup()
+	# By calling slogan_setup() here, it sets up the slogans
+	# BEFORE obtaining the histPeriod of the enemy_sprite
+	# it now sets up the slogs at the end of set_npc() [209]
+	
 	object_setup()
 	
 	sloganlist.visible = false
@@ -77,16 +80,17 @@ func _ready():
 	
 	slogButton.grab_focus()
 	
-	print("READY - menu.battleslogans == ", menu.battleslogs)
 
 
 func slogan_setup():
-	for slogan_res in menu.battleslogs:
+	for slogan_res in menu.battleslogs[enemy_sprite.period - 1]:
 		n_of_slogans += 1
 		
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
 		
 		new_slog_instance.res = slogan_res.res
+		for ideology in new_slog_instance.res.ideologies:
+			ideology.assign_params(Archive.new())
 		new_slog_instance.visible = true
 		
 		instance_pos(new_slog_instance, n_of_slogans, max_slogans)
@@ -128,10 +132,13 @@ func open_menu():
 	battlemenu.visible = true
 	battle_ui = BATTLE_UI.MENU
 
+
 func close_menu(to: Node):
+	# to = BattleBox
 	battlemenu.visible = false
 	change_menu(current_menu, whattodo)
 	to.visible = true
+
 
 func _process(_delta):
 	if turn == TURN.ATTACKING:
@@ -140,24 +147,25 @@ func _process(_delta):
 	else:
 		if battle_ui == BATTLE_UI.MENU:
 			if Input.is_action_just_pressed("ui_accept"):
-				print("ui_accept MENU")
-				
 				if !captureButton.has_focus():
-					var id = $BattleMenu/WhatToDo/Panel/Container.get_focus_owner().get_index()
+					var id = whattodo_container.get_focus_owner().get_index()
 					for k in BATTLE_UI.keys():
 						if BATTLE_UI[k] == id:
 							battle_ui = BATTLE_UI[k]
 				
 		elif battle_ui == BATTLE_UI.SLOGANS:
 			if turn == TURN.PLAYER:
-				var slog = menu.slogan_list[id]
+				current_menu = slogan_menu
+				var slog = menu.battleslogs[enemy_sprite.period - 1][id - 1]
+				selector.visible = true
 				id = handle_input(id, n_of_slogans, selector)
 				
-				action_log.text = slog.name
+				action_log.text = slog.res.name
 				
 				if Input.is_action_just_pressed("ui_accept"):
-					close_menu(battlebox)
-					playerAttack(menu.slogan_list[id])
+					battlemenu.visible = false
+					change_menu(current_menu, whattodo)
+					playerAttack(slog.res)
 		
 		elif battle_ui == BATTLE_UI.OBJECTS:
 			if bool(n_of_objects):
@@ -204,15 +212,14 @@ func set_npc(current_npc):
 	
 	npcBar.value = enemy_sprite.max_hp
 	npcBar.max_value = enemy_sprite.max_hp
+	
+	slogan_setup()
 
 
 func playerAttack(slogan):
 	if slogan.xp > 0:
 		slogan.xp -= 1
 	
-		attacking = true
-	
-		turn = TURN.ATTACKING
 		action_log.text = "Hai usato " + slogan.name
 	
 		margincontainer.visible = true
@@ -228,40 +235,68 @@ func playerAttack(slogan):
 
 
 func npcAttack():
-	turn = TURN.ATTACKING
 	battlebox.reset_pointer()
+	turn = TURN.ATTACKING
 	battlebox.visible = true
 	yield(battlebox.generate(attacks_list), "completed")
-
+	
+	# turn = TURN.ATTACKING
+	
 	yield(get_tree(), "idle_frame")
 	open_menu()
 	slogButton.grab_focus()
+	change_menu(sloganlist, whattodo)
 	turn = TURN.PLAYER
 
 
-func calc(ideologies1, ideologies2, slogan):
-	var level=1 # To add as an UI parameter.
-	# Power is the move's level basically.
-	# Stab = same-type attack move
-	var stab = 1
+func calc():
+	var slogan = menu.battleslogs[enemy_sprite.period - 1][id - 1].res
+	var level=1 # TODO: add as an UI parameter.
+	# Power = the move's level.
+	# STAM = same-type attack move
+	var stam = 1
 	# Define move effectiveness
 	var extra_damage = 1
 	
-	for id1 in ideologies1:
-		for id2 in ideologies2:
-			stab += int(id1 == id2)
-			id1.calc_extra_damage(id2)
+	# id1.calc_extra_damage(slogan.ideologies, enemy_sprite.ideologies)
 	
-	print("Ex. Dam.: ", extra_damage)
+	for id1 in slogan.ideologies:
+		for id2 in enemy_sprite.ideologies:
+			stam += int(id1 == id2)
+			var xOr = id2.xOr
+			var yOr = id2.xOr
+			# TODO: pass the result of calc_extra_damage() to a complex type (such as Player, NPC, BS, ecc.)
+			
+			# This is horrible, I know it, and I could not care less.
+			# I hate yield()
+			var extraX: float
+			var extraY: float
+			
+			extraX = int(id1.xOr == id2.xOr && id1.xOr != 2 && id2.xOr != 2)
+			extraY = int(id1.yOr == id2.yOr && id1.yOr != 2 && id2.yOr != 2)
+			
+			if (extraX == 0):
+				if (id1.xOr + id2.xOr) == 1:
+					extraX = 0.25
+				else:
+					extraX = 0.5
+			
+			if (extraY == 0):
+				if (id1.yOr + id2.yOr) == 1:
+					extraY = 0.25
+				else:
+					extraY = 0.5
+			
+			extra_damage += xOr + yOr
 	
-	return slogan.att/enemy_sprite.def * (4*level/5 + 2) * slogan.power / 2 * stab * extra_damage
+	if (enemy_sprite.def == 0):
+		enemy_sprite.def = 1
+	return slogan.att/enemy_sprite.def * (4*level/5 + 2) * slogan.power / 2 * stam * extra_damage
 
 
 func damage(slogan):
 	var dam: int = 0;
-	dam = calc(slogan.ideologies, enemy_sprite.ideologies, slogan)
-	print("DAMAGE = ", dam)
-	
+	dam = calc()
 	npcBar.value -= dam;
 
 
@@ -318,8 +353,6 @@ func battle_ends(_victory):
 	ui.visibility(true)
 	
 	end(next_scene)
-	
-	#scenemanager.start_transition("scene_path", Vector2(0,0))
 
 
 func end(scene):

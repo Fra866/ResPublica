@@ -20,7 +20,7 @@ var first_scene_path = "res://Scenes/GameLocations/BarScene.tscn"
 
 
 func _ready():
-	print("Ready SceneManager")
+	print(save_file.battleslogs)
 	ended_cutscenes = save_file.ended_cutscenes
 	for i in scene_container.get_children():
 		i.queue_free()
