@@ -28,3 +28,6 @@ func get_political_pos():
 
 func get_slog_name():
 	return res.name
+
+func get_ideology(id: int):
+	return res.ideologies[id]

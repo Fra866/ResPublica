@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var current_scene
+onready var current_scene: Node
 onready var menu = $Menu
 onready var ui = $UI
 onready var transition_animation = $ScreenTransition/AnimationPlayer
@@ -13,7 +13,7 @@ onready var save_file
 onready var slot: int
 onready var loading_count: int = 1
 
-signal new_main_scene()
+signal new_main_scene
 
 var scene
 var first_scene_path = "res://Scenes/GameLocations/BarScene.tscn"
@@ -32,7 +32,7 @@ func _ready():
 	
 	scene_container.add_child(scene.instance())
 	ended_cutscenes = save_file.ended_cutscenes
-	current_scene = get_child(0).get_child(0)
+	current_scene = scene_container.get_child(0)
 	transition_animation.play("FadeToTransparent")
 	menu.new_p()
 
@@ -54,8 +54,9 @@ func start_transition(next_scene: String, player_pos):
 
 func end_transition(player_pos):
 	scene_container.add_child(load(scene).instance())
+	current_scene = scene_container.get_children().back()
 	transition_animation.play("FadeToTransparent")
-	var p = scene_container.get_children().back().find_node("Player")
+	var p = current_scene.find_node("Player")
 	if p:
 		p.position = player_pos
 		p.new_scene()
@@ -65,3 +66,14 @@ func end_transition(player_pos):
 
 func starting_game():
 	scene = load("res://Scenes/InitialCutscene.tscn")
+
+
+func to_battle(path: String, pos: Vector2, npc):
+	var prev = current_scene.name
+	var cur_pos = current_scene.find_node("Player").position
+	
+	start_transition(path, pos)
+	current_scene.set_npc(npc)
+	current_scene.set_attacks(npc.attack_ids)
+	current_scene.set_next_scene(prev, cur_pos)
+ 

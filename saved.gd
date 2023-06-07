@@ -5,7 +5,7 @@ export(String) var name
 export(Array, Resource) var slogans = []
 export(Array, Resource) var battleslogs = []
 export(Array, Resource) var objects = []
-export(Array, Resource) var voters = []
+export(Dictionary) var voters = {}
 export(Array, Resource) var ended_cutscenes
 export(Resource) var current_scene = null
 export(Resource) var player_party
@@ -19,7 +19,7 @@ func initialize():
 	objects = []
 	slogans = []
 	battleslogs = []
-	voters = []
+	voters = {}
 	ended_cutscenes = []
 	current_scene = null
 	player_party = null

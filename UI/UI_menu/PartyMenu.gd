@@ -2,8 +2,9 @@ extends Control
 
 onready var container = $MainContainer
 
-func handle_input() -> void:
-	container.move(get_cont_vector())
+func handle_input(direction: int) -> void:
+	container.move(direction)
+	container.selector.rect_position = get_cont_vector()
 
 
 func get_cont_vector():

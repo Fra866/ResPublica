@@ -42,7 +42,7 @@ func _process(_delta):
 
 func save_all():
 	var player = get_node(NodePath("../CurrentScene")).get_children().back().find_node("Player")
-	var current_scene = scene_manager.get_child(0).get_child(0)
+	var current_scene = scene_manager.current_scene
 	var file_save = game_save_obj.new()
 	file_save.take_over_path(scene_manager.save_file.get_path())
 	

@@ -93,7 +93,7 @@ func _ready():
 		
 	for cluster in save_file.battleslogs:
 		for slogan in cluster:
-			var period = slogan.res.ideologies[0].period1
+			var period = slogan.get_ideology(0).period1
 			battleslogs[period].append(slogan)
 			
 			battle_menu.new_battleslog(
@@ -179,7 +179,10 @@ func _process(_delta):
 		
 		if current_menu == party_menu:
 			if len(voter_list):
-				party_menu.handle_input()
+				if Input.is_action_just_pressed("ui_left"):
+					party_menu.handle_input(0)
+				if Input.is_action_just_pressed("ui_right"):
+					party_menu.handle_input(1)
 				
 				var voter = party_menu.container.current_el
 				
@@ -245,6 +248,13 @@ func new_slogan(slogan: SloganResource):
 	)
 	var new_slog_instance = slogan_menu.slog_cont.new_item(pos, slogan)
 	slogan_menu.slog_cont.add(new_slog_instance)
+
+
+func has_battleslogs():
+	for period in battleslogs:
+		if len(period):
+			return true
+	return false
 
 
 func remove_battleslog(element, index: int):
@@ -350,7 +360,7 @@ func _on_Promote_pressed():
 func _on_Yes_pressed():
 	# Leave this to BattleMenu's functions.
 	if !slogan_menu.state:
-		var slog_period = slogan_menu.slog_cont.current_el.res.ideologies[0].period1
+		var slog_period = slogan_menu.slog_cont.current_el.get_ideology(0).period1
 		battleslogs[slog_period].append(slogan_menu.slog_cont.current_el)
 		battle_menu.new_battleslog(slogan_menu.slog_cont.current_el, len(battleslogs[slog_period]), slog_period)
 	else:

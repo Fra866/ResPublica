@@ -83,20 +83,15 @@ func has_obtained(object, continue_cutscene):
 
 
 func check_battle() -> void:
-	if !len(menu.battleslogs):
+	if !menu.has_battleslogs():
 		visibility(false)
 		emit_signal("priority_to_player")
 		return
 	if start_battle:
 		if menu.party and not menu.voter_list.has(npc_name):
 			current_npc = current_scene.list_npc[npc_global_id]
-			scenemanager.start_transition(battle_scene_path, Vector2(0,0))
-			# I don't wanna know why, but this shit works for now.
-			yield(scenemanager, "new_main_scene")
-			var battle_scene = scenemanager.current_scene
-			battle_scene.set_npc(current_npc)
-			battle_scene.set_attacks(att_ids_list)
-			battle_scene.set_next_scene(current_scene.name, player.position)
+#			scenemanager.start_transition(battle_scene_path, Vector2(0,0))
+			scenemanager.to_battle(battle_scene_path, Vector2(0,0), current_npc)
 #			emit_signal("send_npc", current_npc)
 #			emit_signal("npc_attacks", att_ids_list)
 #			emit_signal("next_scene", current_scene.name, player.position)
@@ -135,3 +130,7 @@ func display_text_line(line):
 		text_label.percent_visible += 1.0/len(line)
 		yield(get_tree().create_timer(0.01), "timeout")
 	yield(get_tree().create_timer(0.5), "timeout")
+#	var timer = Timer.new()
+#	add_child(timer)
+#	timer.start(0.5)
+#	yield(timer, "timeout")

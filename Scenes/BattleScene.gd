@@ -81,16 +81,17 @@ func _ready():
 
 
 func slogan_setup():
-	for slogan_res in menu.battleslogs:
-		n_of_slogans += 1
-		
-		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
-		
-		new_slog_instance.res = slogan_res.res
-		new_slog_instance.visible = true
-		
-		instance_pos(new_slog_instance, n_of_slogans, max_slogans)
-		sloganlist.add_child(new_slog_instance)
+	for cluster in menu.battleslogs:
+		for slogan in cluster:
+			n_of_slogans += 1
+			
+			var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
+			
+			new_slog_instance.res = slogan.res
+			new_slog_instance.visible = true
+			
+			instance_pos(new_slog_instance, n_of_slogans, max_slogans)
+			sloganlist.add_child(new_slog_instance)
 
 
 func object_setup():
