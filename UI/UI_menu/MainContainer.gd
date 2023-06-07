@@ -4,7 +4,7 @@ export(String) var res_path
 onready var list = $List
 onready var selector = $Selector
 var size: int = 0
-var index: int = 0
+onready var index: int = 0
 var current_el
 
 
@@ -26,6 +26,7 @@ func remove(item: Node):
 	index -= 1
 	if !size:
 		current_el = null
+
 
 func new_item(pos: Vector2, element = null):
 	var item = load(res_path).instance()

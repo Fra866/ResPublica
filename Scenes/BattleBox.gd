@@ -52,7 +52,6 @@ func bullet():
 	bullet.position = Vector2(randi() % 90, -42)
 	bullet.scale = Vector2(1, 1)
 
-#	start_attack(bullet, 2)
 	return [bullet, 2]
 
 
@@ -61,5 +60,4 @@ func fascio():
 	fascio.position = Vector2(205, 123)
 	fascio.scale = Vector2(3, 3)
 	
-#	start_attack(fascio, 3)
 	return [fascio, 3]

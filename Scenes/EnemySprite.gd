@@ -16,7 +16,7 @@ export(float, -100, 100, 10) var popularity # Extra votes at the elections when 
 export(float, -100, 100, 10) var mafia_points # How capturing the enemy will influence the Mafiometer
 export(float, 0, 100, 10) var mafia_target
 export(Array) var ideologies
-
+export(int) var period
 
 func init(enemy, battle:= false):
 	if enemy:
@@ -38,6 +38,9 @@ func init(enemy, battle:= false):
 		mafia_points = enemy.mafia_points
 		mafia_target = enemy.mafia_target
 		ideologies = enemy.ideologies
+		for ideology in ideologies:
+			ideology.assign_params(Archive.new())
+		period = enemy.historical_period
 		enemy = null
 
 

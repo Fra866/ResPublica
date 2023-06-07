@@ -49,7 +49,6 @@ func _ready():
 	else:
 		initial_position = position
 	
-	# dialog_box.connect("priority_to_player", self, "get_priority")
 	shop_box.connect("priority_to_player", self, "get_priority")
 
 

@@ -5,17 +5,12 @@ onready var sprite = $Sprite
 onready var slogan = $Slogan
 onready var xpbar = $XPbar
 
-# export(int) var prize
-# export(String) var path_texture
-
 
 func _ready():
 	for id in res.ideologies:
 		id.assign_params(Archive.new())
 	slogan.slogan_resource = res
-#	WHEN THE SPRITES WILL BE READY:
 	sprite.texture = res.texture
-#	sprite.texture = load('res://Images/Slogans/' + path_texture)
 
 
 func _process(_delta):

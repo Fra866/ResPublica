@@ -1,22 +1,22 @@
 extends Control
 
 enum STATE {
-	ALL=0,
-	ROMAN_ERA,
+	ROMAN_ERA=1,
 	MIDDLE_AGES,
 	RENAISSANCE,
 	MODERN_ERA
 }
-var state: int = STATE.ALL
+
+var state: int = STATE.ROMAN_ERA
 
 onready var containers = [
-	$AllEraContainer,
 	$RomanEraContainer,
 	$MiddleAgesContainer,
 	$RenaissanceContainer,
 	$ModernEraContainer
 ]
-onready var container: Node2D = containers[state]
+
+onready var container: Node2D = containers[state-1]
 onready var label = $ColorRect/RichTextLabel
 
 signal battleslog_text
@@ -32,7 +32,7 @@ func move(advance: int):
 	or (!advance and container.index > 0)):
 		container.move(advance)
 		container.selector.rect_position = get_vector()
-		emit_signal("battleslog_text", container.current_el)
+		emit_signal("battleslog_text", container.current_el.get_slog_name())
 	else:
 		switch(advance)
 
@@ -45,7 +45,11 @@ func switch(advance: int):
 	elif state:
 		state -= 1
 	
-	container = containers[state]
+	container = containers[state-1]
+	if container.current_el == null:
+		emit_signal("battleslog_text", "-")
+	else:
+		emit_signal("battleslog_text", container.current_el.get_slog_name())
 	emit_signal("switched")
 	label.text = STATE.keys()[state]
 	container.visible = true
@@ -59,7 +63,7 @@ func new_battleslog(element, i: int, period: int):
 	
 	container = containers[period]
 	state = period
-	label.text = STATE.keys()[state]
+	label.text = STATE.keys()[state-1]
 	
 	var new_slog_instance = container.new_item(pos)
 	new_slog_instance.res = element.res
