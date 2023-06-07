@@ -32,26 +32,12 @@ signal next_scene(scene, p_pos)
 
 
 func _ready():
-	scenemanager.connect("new_main_scene", self, "set_battlescene")
 	$MarginContainer.visible = false
 	$TextureRect.visible = false
 
 
 var npc_global_id: int
 var continue_cutscene: bool = false
-
-
-func set_battlescene():
-	# queue_free() does not work,
-	# and the previous scene remains in the container
-	# So I just got the last one of the array returned from get_children()
-	# This project is becoming bad for my mental health.
-	var battle_scene = scenemanager.scene_container.get_children().back()
-	
-	battle_scene.set_npc(current_npc)
-	battle_scene.set_attacks(att_ids_list)
-	current_scene = scenemanager.get_child(0).get_child(0)
-	battle_scene.set_next_scene(current_scene.name, player.position)
 
 
 func display_dialog(npc_id, continue_cutscene):
@@ -106,15 +92,13 @@ func check_battle() -> void:
 		print(not menu.voter_list.has(npc_name))
 		if menu.party and not menu.voter_list.has(npc_name):
 			current_npc = current_scene.list_npc[npc_global_id]
-#			scenemanager.start_transition(battle_scene_path, Vector2(0,0))
 			scenemanager.to_battle(battle_scene_path, Vector2(0,0), current_npc)
 #			emit_signal("send_npc", current_npc)
 #			emit_signal("npc_attacks", att_ids_list)
 #			emit_signal("next_scene", current_scene.name, player.position)
 			return
-		# Player not receiving the signal
-		player.get_priority()
-	player.get_priority()
+		emit_signal("priority_to_player")
+	emit_signal("priority_to_player")
 
 
 func _process(_delta):

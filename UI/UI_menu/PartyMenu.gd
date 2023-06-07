@@ -9,8 +9,8 @@ func handle_input(direction: int) -> void:
 
 func get_cont_vector():
 	return Vector2(
-		32 * (container.index % 4) + 3,
-		40 * (container.index / 4) + 16
+		32 * (container.index % 4) + 5,
+		40 * (container.index / 4) + 18
 	)
 
 

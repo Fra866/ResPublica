@@ -40,8 +40,8 @@ onready var voter_sprite = $MenuLayers/Party/VoterInfo/Node2D/Sprite
 onready var current_menu = main_menu
 var menu_main: bool = false
 
-var battleslog_last_checked: int = 0
-var slog_last_checked: int = 0
+#var battleslog_last_checked: int = 0
+#var slog_last_checked: int = 0
 
 var objects_open = false
 
@@ -97,10 +97,11 @@ func _ready():
 	var i=0
 	for bs_list in save_file.battleslogs:
 		for slogan in bs_list:
-			battleslogs[period].append(element)
+		
+			battleslogs[i].append(slogan)
 			battle_menu.new_battleslog(
 				slogan, 
-				slogan_menu.battle_menu.containers[i].size + 1, 
+				slogan_menu.battle_menu.containers[i].size + 1,
 				i
 			)
 		i += 1
@@ -291,22 +292,22 @@ func reload_battleslogs_pos(i: int = 0):
 
 func new_voter(voter):
 	if not voter_list.has(voter.npc_name):
-		# Position is broken
 		var pos = Vector2(
-			32 * (party_menu.container.size % 4) + 0,
-			40 * (party_menu.container.size / 4) + 32
+			32 * (party_menu.container.size % 4) + 5,
+			40 * (party_menu.container.size / 4) + 18
 		)
-		print("Voter pos: ", pos)
-
-		var new_voter = party_menu.container.new_item(pos)
-		new_voter = voter.duplicate()
+		
+		voter.position = pos
+		voter.scale = Vector2(0.53, 0.52)
+		
+		party_menu.container.new_item(pos)
+		var new_voter = voter.duplicate()
 		voter_list[voter.npc_name] = new_voter
 		add_voter_to_menu(new_voter)
 
 
 func add_voter_to_menu(voter):
 	party_menu.container.add(voter)
-	print(party_menu.container.get_items())
 	mafia_menu.container.add(voter.duplicate())
 
 
@@ -364,14 +365,16 @@ func _on_Yes_pressed():
 	if !slogan_menu.state:
 		var slog_period = slogan_menu.slog_cont.current_el.get_ideology(0).period1
 		
-		if slog_period == 0:
-			slog_period = slogan_menu.battle_menu.state
+#		if slog_period == 0:
+#			slog_period = slogan_menu.battle_menu.state
 		
-		if (!(slogan_menu.slog_cont.current_el in battleslogs[slog_period - 1])):
-			battle_menu.new_battleslog(slogan_menu.slog_cont.current_el, len(battleslogs[slog_period - 1]) + 1, slog_period - 1)
+		if (!(slogan_menu.slog_cont.current_el in battleslogs[slog_period])):
+			var current_slog = slogan_menu.slog_cont.current_el
+			battleslogs[slog_period].append(current_slog)
+			battle_menu.new_battleslog(current_slog, len(battleslogs[slog_period]), slog_period)
 	else:
 		slogan_menu.battle_cont.remove(slogan_menu.battle_cont.current_el)
-		battleslogs[slogan_menu.battle_menu.state - 1].remove(slogan_menu.battle_cont.index)
+		battleslogs[slogan_menu.battle_menu.state].remove(slogan_menu.battle_cont.index)
 		reload_battleslogs_pos()
 	
 	slogan_menu.manage_slogs.visible = false

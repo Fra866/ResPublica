@@ -83,7 +83,7 @@ func _ready():
 
 
 func slogan_setup():
-	for slogan_res in menu.battleslogs[enemy_sprite.period - 1]:
+	for slogan_res in menu.battleslogs[enemy_sprite.period]:
 		n_of_slogans += 1
 		
 		var new_slog_instance = load("res://Scenes/UI_Objects/SloganNode.tscn").instance()
@@ -156,7 +156,7 @@ func _process(_delta):
 		elif battle_ui == BATTLE_UI.SLOGANS:
 			if turn == TURN.PLAYER:
 				current_menu = slogan_menu
-				var slog = menu.battleslogs[enemy_sprite.period - 1][id - 1]
+				var slog = menu.battleslogs[enemy_sprite.period][id - 1]
 				selector.visible = true
 				id = handle_input(id, n_of_slogans, selector)
 				
@@ -250,7 +250,7 @@ func npcAttack():
 
 
 func calc():
-	var slogan = menu.battleslogs[enemy_sprite.period - 1][id - 1].res
+	var slogan = menu.battleslogs[enemy_sprite.period][id - 1].res
 	var level=1 # TODO: add as an UI parameter.
 	# Power = the move's level.
 	# STAM = same-type attack move
@@ -292,6 +292,7 @@ func calc():
 	
 	if (enemy_sprite.def == 0):
 		enemy_sprite.def = 1
+	
 	return slogan.att/enemy_sprite.def * (4*level/5 + 2) * slogan.power / 2 * stam * extra_damage
 
 

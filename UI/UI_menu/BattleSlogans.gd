@@ -1,7 +1,8 @@
 extends Control
 
 enum STATE {
-	ROMAN_ERA=1,
+	ALL=0,
+	ROMAN_ERA,
 	MIDDLE_AGES,
 	RENAISSANCE,
 	MODERN_ERA
@@ -10,13 +11,14 @@ enum STATE {
 var state: int = STATE.ROMAN_ERA
 
 onready var containers = [
+	$AllEraContainer,
 	$RomanEraContainer,
 	$MiddleAgesContainer,
 	$RenaissanceContainer,
 	$ModernEraContainer
 ]
 
-onready var container: Node2D = containers[state-1]
+onready var container: Node2D = containers[state]
 onready var label = $ColorRect/RichTextLabel
 
 signal battleslog_text
@@ -45,7 +47,7 @@ func switch(advance: int):
 	elif state:
 		state -= 1
 	
-	container = containers[state-1]
+	container = containers[state]
 	if container.current_el == null:
 		emit_signal("battleslog_text", "-")
 	else:
@@ -63,7 +65,7 @@ func new_battleslog(element, i: int, period: int):
 	
 	container = containers[period]
 	state = period
-	label.text = STATE.keys()[state-1]
+	label.text = STATE.keys()[state]
 	
 	var new_slog_instance = container.new_item(pos)
 	new_slog_instance.res = element.res
