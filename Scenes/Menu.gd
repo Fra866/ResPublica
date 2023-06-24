@@ -151,7 +151,10 @@ func _process(_delta):
 		
 		if current_menu == mafia_menu:
 			if len(battleslogs) and len(voter_list):
-				mafia_menu.handle_input()
+				if Input.is_action_just_pressed("ui_left"):
+					mafia_menu.handle_input(0)
+				if Input.is_action_just_pressed("ui_right"):
+					mafia_menu.handle_input(1)
 		
 				if Input.is_action_just_pressed("ui_accept"):
 					mafia_menu.container.current_el.set_mafia_target(-10)

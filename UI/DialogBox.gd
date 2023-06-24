@@ -88,14 +88,9 @@ func check_battle() -> void:
 		emit_signal("priority_to_player")
 		return
 	if start_battle:
-		print(menu.party)
-		print(not menu.voter_list.has(npc_name))
 		if menu.party and not menu.voter_list.has(npc_name):
 			current_npc = current_scene.list_npc[npc_global_id]
 			scenemanager.to_battle(battle_scene_path, Vector2(0,0), current_npc)
-#			emit_signal("send_npc", current_npc)
-#			emit_signal("npc_attacks", att_ids_list)
-#			emit_signal("next_scene", current_scene.name, player.position)
 			return
 		emit_signal("priority_to_player")
 	emit_signal("priority_to_player")

@@ -42,6 +42,8 @@ func move(advance: int):
 			index += 1
 	elif index:
 		index -= 1
+	
+	print(index)
 	current_el = list.get_child(index)
 
 
@@ -53,7 +55,7 @@ func get_i(index: int):
 	return list.get_child(index)
 
 
-func clear():	
+func clear():
 	for i in range(0, list.get_child_count()-1):
 		get_child(i).queue_free()
 	size = 0

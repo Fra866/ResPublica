@@ -18,6 +18,7 @@ signal new_main_scene
 var scene
 var first_scene_path = "res://Scenes/GameLocations/BarScene.tscn"
 
+signal p
 
 func _ready():
 	print(save_file.battleslogs)
@@ -76,4 +77,3 @@ func to_battle(path: String, pos: Vector2, npc):
 	current_scene.set_npc(npc)
 	current_scene.set_attacks(npc.attack_ids)
 	current_scene.set_next_scene(prev, cur_pos)
- 

@@ -92,8 +92,9 @@ func _physics_process(delta):
 
 
 func start_cutscene(scene: Node2D):
-	var cutscene_script = load(cutscene_src.get_path()).new()
-	cutscene_script.start(self, scene)
+	if cutscene_src:
+		var cutscene_script = load(cutscene_src.get_path()).new()
+		cutscene_script.start(self, scene)
 
 
 func process_player_input():

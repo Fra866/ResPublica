@@ -29,13 +29,20 @@ rect_min_size = Vector2( 32, 32 )
 color = Color( 0.95, 0.2, 0.2, 1 )
 
 [node name="DescriptionDisplayer" parent="." instance=ExtResource( 5 )]
+margin_left = 50.412
+margin_top = -29.0
+margin_right = 112.38
+margin_bottom = -22.0
 
 [node name="Mafiometer" type="ColorRect" parent="."]
-margin_left = 48.0
+margin_left = -11.0
 margin_top = 120.0
-margin_right = 148.0
+margin_right = 89.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 100, 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Line2D" type="Line2D" parent="Mafiometer"]
 points = PoolVector2Array( 48, -2, 48, 12 )
@@ -43,17 +50,22 @@ width = 1.5
 default_color = Color( 0.94902, 0.203922, 0.203922, 1 )
 
 [node name="Label" type="Label" parent="Mafiometer"]
-margin_left = -40.0
-margin_bottom = 14.0
+margin_left = -9.0
+margin_top = 1.0
+margin_right = 31.0
+margin_bottom = 15.0
 rect_min_size = Vector2( 40, 0 )
 rect_scale = Vector2( 0.8, 0.8 )
-text = "Falcone"
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label2" type="Label" parent="Mafiometer"]
 margin_left = 100.0
 margin_right = 140.0
 margin_bottom = 14.0
 rect_scale = Vector2( 0.8, 0.8 )
-text = "Cuffaro"
+text = "100"
 
 [editable path="MainContainer"]

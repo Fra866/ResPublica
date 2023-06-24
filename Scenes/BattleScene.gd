@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var finished_battle = false
+
 onready var scenemanager = get_node(NodePath('/root/SceneManager/'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var slogan_menu = get_node(NodePath('/root/SceneManager/Menu/MenuLayers/Slogans'))
@@ -145,7 +147,8 @@ func _process(_delta):
 		battlebox.move_pointer(Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down"))
 	
 	else:
-		if battle_ui == BATTLE_UI.MENU:
+		if battle_ui == BATTLE_UI.MENU and !finished_battle: 
+			# So that the game does not crash if you press accept while capture_enemy() is running
 			if Input.is_action_just_pressed("ui_accept"):
 				if !captureButton.has_focus():
 					var id = whattodo_container.get_focus_owner().get_index()
@@ -239,9 +242,6 @@ func npcAttack():
 	turn = TURN.ATTACKING
 	battlebox.visible = true
 	yield(battlebox.generate(attacks_list), "completed")
-	
-	# turn = TURN.ATTACKING
-	
 	yield(get_tree(), "idle_frame")
 	open_menu()
 	slogButton.grab_focus()
@@ -304,6 +304,7 @@ func damage(slogan):
 
 func capture_enemy():
 	if npcBar.value <= 15:
+		finished_battle = true
 		action_log.text = enemy_sprite.npc_name + " è entrato nel tuo partito."
 		yield(get_tree().create_timer(1), "timeout")
 		
@@ -332,7 +333,6 @@ func capture_enemy():
 		yield(timer, "timeout")
 		
 		margincontainer.visible = false
-#		battlemenu.visible = true
 		
 		slogButton.grab_focus()
 		
@@ -341,11 +341,11 @@ func capture_enemy():
 
 
 func battle_ends(_victory):
+	finished_battle = true
 	ui.hp.text = str(pBar.value)
 	action_log.text = "Battaglia finita."
 	margincontainer.visible = true
 	battlemenu.visible = false
-	
 	
 	var timer = Timer.new()
 	add_child(timer)
