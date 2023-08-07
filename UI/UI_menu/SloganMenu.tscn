@@ -25,10 +25,10 @@ texture = ExtResource( 3 )
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
 [node name="Selector" parent="MainContainer" index="0"]
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 39.0
-margin_bottom = 39.0
+margin_left = 13.0
+margin_top = 13.0
+margin_right = 36.0
+margin_bottom = 36.0
 color = Color( 0.45, 0.95, 0.2, 1 )
 
 [node name="NoSloganText" type="RichTextLabel" parent="."]
@@ -71,6 +71,7 @@ color = Color( 0.0862745, 0.0745098, 0.0745098, 1 )
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
 [node name="Selector" parent="BattleSlogans/AllEraContainer" index="0"]
+visible = false
 margin_left = 23.0
 margin_top = 3.0
 margin_right = 65.0
@@ -82,6 +83,7 @@ visible = false
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
 [node name="Selector" parent="BattleSlogans/RomanEraContainer" index="0"]
+visible = false
 margin_left = 23.0
 margin_top = 3.0
 margin_right = 65.0
@@ -93,6 +95,7 @@ visible = false
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
 [node name="Selector" parent="BattleSlogans/MiddleAgesContainer" index="0"]
+visible = false
 margin_left = 23.0
 margin_top = 3.0
 margin_right = 65.0
@@ -104,6 +107,7 @@ visible = false
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
 [node name="Selector" parent="BattleSlogans/RenaissanceContainer" index="0"]
+visible = false
 margin_left = 23.0
 margin_top = 3.0
 margin_right = 65.0
@@ -115,6 +119,7 @@ visible = false
 res_path = "res://Scenes/UI_Objects/SloganNode.tscn"
 
 [node name="Selector" parent="BattleSlogans/ModernEraContainer" index="0"]
+visible = false
 margin_left = 23.0
 margin_top = 3.0
 margin_right = 65.0

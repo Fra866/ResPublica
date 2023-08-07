@@ -101,7 +101,7 @@ func _ready():
 			battleslogs[i].append(slogan)
 			battle_menu.new_battleslog(
 				slogan, 
-				slogan_menu.battle_menu.containers[i].size + 1,
+				battle_menu.containers[i].size + 1,
 				i
 			)
 		i += 1
@@ -291,6 +291,8 @@ func reload_battleslogs_pos(i: int = 0):
 	for battleslog in slogan_menu.battle_cont.get_items():
 		battleslog.position = Vector2(30 * (i % 2) + 35, 40*(i / 2) + 15)
 		i += 1
+	
+	print(slogan_menu.battle_cont.selector)
 
 
 func new_voter(voter):
@@ -317,7 +319,7 @@ func add_voter_to_menu(voter):
 func _on_SlogBtn_pressed(node):
 	to_menu(main_menu, get_node(node))
 	no_slog_text.visible = !slogan_menu.slog_cont.size
-	slogan_menu.slog_cont.shows(len(slogan_list))
+	slogan_menu.slog_cont.show_selector(len(slogan_list))
 
 
 func _on_ObjBtn_pressed(node):
@@ -368,17 +370,18 @@ func _on_Yes_pressed():
 	if !slogan_menu.state:
 		var slog_period = slogan_menu.slog_cont.current_el.get_ideology(0).period1
 		
-#		if slog_period == 0:
-#			slog_period = slogan_menu.battle_menu.state
-		
 		if (!(slogan_menu.slog_cont.current_el in battleslogs[slog_period])):
 			var current_slog = slogan_menu.slog_cont.current_el
 			battleslogs[slog_period].append(current_slog)
 			battle_menu.new_battleslog(current_slog, len(battleslogs[slog_period]), slog_period)
 	else:
 		slogan_menu.battle_cont.remove(slogan_menu.battle_cont.current_el)
-		battleslogs[slogan_menu.battle_menu.state].remove(slogan_menu.battle_cont.index)
+		battleslogs[battle_menu.state].remove(slogan_menu.battle_cont.index)
 		reload_battleslogs_pos()
+		
+		battle_menu.container.current_el = battleslogs[battle_menu.state][battle_menu.container.index]
+		if battle_menu.container.size > 0:
+			slogan_menu.display_bs_text(battle_menu.container.current_el.get_slog_name())
 	
 	slogan_menu.manage_slogs.visible = false
 

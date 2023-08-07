@@ -8,7 +8,7 @@ onready var index: int = 0
 var current_el
 
 
-func shows(b: bool):
+func show_selector(b: bool):
 	selector.visible = b
 
 
@@ -23,7 +23,8 @@ func add(item: Node):
 func remove(item: Node):
 	list.remove_child(item)
 	size -= 1
-	index -= 1
+	if index != 0:
+		index -= 1
 	if !size:
 		current_el = null
 

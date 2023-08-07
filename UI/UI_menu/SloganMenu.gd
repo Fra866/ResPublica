@@ -20,20 +20,21 @@ var state = STATE.ALL
 func _ready():
 	battle_menu.connect("battleslog_text", self, "display_bs_text")
 	battle_menu.connect("switched", self, "refresh_cont")
+	slog_cont.selector.rect_position = get_vector(slog_cont)
 
 
 func toggle_battleslog(vis: bool):
-	#vis = vis and battle_cont.size
+	# vis = vis and battle_cont.size
 	state = STATE.BATTLESLOGS if vis else STATE.ALL
 	
-	battle_cont.shows(vis)
+	battle_cont.show_selector(vis)
 	
 	var txt = battle_cont.current_el.get_slog_name() if battle_cont.current_el != null else "-"
 
 	if (battle_cont.selector.visible):
 		displayer.set_text(txt)
 	
-	slog_cont.shows(!vis)
+	slog_cont.show_selector(!vis)
 	if (slog_cont.selector.visible):
 		displayer.set_text(slog_cont.current_el.get_slog_name())
 	
@@ -60,8 +61,7 @@ func handle_input(val: int) -> void:
 	match state:
 		STATE.ALL:
 			slog_cont.move(val)
-			slog_cont.selector.rect_position = get_cont_vector(slog_cont)
-			var d = slog_cont.current_el
+			slog_cont.selector.rect_position = get_vector(slog_cont)
 			displayer.set_text(slog_cont.current_el.get_slog_name() + str(slog_cont.current_el.res.ideologies[0].period1)) # SloganNode name
 			print("Current el. ", slog_cont.current_el)
 		STATE.BATTLESLOGS:
@@ -69,15 +69,13 @@ func handle_input(val: int) -> void:
 				battle_menu.move(val)
 
 
-func get_cont_vector(container):
+func get_vector(container):
 	var index = container.index
-	match container:
-		slog_cont:
-			return Vector2(
-				32 * (index % 6) + 3,
-				40 * (index / 6) + 9
-			)
-	return null
+	return Vector2(
+		32 * (index % 6) + 3,
+		40 * (index / 6) + 9
+	)
+	# return null
 
 
 func reload_battleslogs_menu(i: int = 0):

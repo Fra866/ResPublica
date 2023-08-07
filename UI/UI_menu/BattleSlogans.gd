@@ -33,8 +33,10 @@ func move(advance: int):
 	if((advance and container.index < container.size -1)
 	or (!advance and container.index > 0)):
 		container.move(advance)
-		container.selector.rect_position = get_vector()
 		emit_signal("battleslog_text", container.current_el.get_slog_name())
+		
+		container.show_selector(true)
+		container.selector.rect_position = get_vector()
 	else:
 		switch(advance)
 
@@ -54,6 +56,7 @@ func switch(advance: int):
 		emit_signal("battleslog_text", container.current_el.get_slog_name())
 	emit_signal("switched")
 	label.text = STATE.keys()[state]
+	container.selector.rect_position = get_vector()
 	container.visible = true
 
 
@@ -72,7 +75,6 @@ func new_battleslog(element, i: int, period: int):
 	new_slog_instance.visible = true
 	
 	container.add(new_slog_instance)
-	container.shows(true)
 	emit_signal("switched")
 	var a000 = container.get_items()
 
