@@ -2,8 +2,7 @@ extends Node
 
 
 func start(character: StaticBody2D, scene: Node2D):
-	print("CS2")
-	
+	# It starts
 	var player = scene.get_parent().get_child(3)
 	
 	player.get_priority()

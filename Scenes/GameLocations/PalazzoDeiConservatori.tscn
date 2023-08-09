@@ -88,6 +88,7 @@ attack_ids = [ 0, 1 ]
 start_battle = true
 battle_sprite_path = "res://UI/andreotti/battle.png"
 description = "Andrea dell'Orti"
+historical_period = 4
 votes = 3000
 lvl = 2
 att = 20

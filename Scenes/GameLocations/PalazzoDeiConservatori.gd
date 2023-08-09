@@ -17,5 +17,6 @@ func _ready():
 		else:
 			scenemanager.ended_cutscenes.erase(cutscene_activator2.path)
 
+
 # func postcutscene():
 # 	pass

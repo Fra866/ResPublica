@@ -221,13 +221,15 @@ func set_npc(current_npc):
 
 func playerAttack(slogan):
 	if slogan.xp > 0:
+		# turn = TURN.ATTACKING
 		slogan.xp -= 1
+		turn = TURN.ENEMY
 	
 		action_log.text = "Hai usato " + slogan.name
-	
 		margincontainer.visible = true
+		
 		yield(get_tree().create_timer(1), "timeout")
-	
+		
 		damage(slogan)
 	
 		if npcBar.value:
@@ -251,7 +253,7 @@ func npcAttack():
 
 func calc():
 	var slogan = menu.battleslogs[enemy_sprite.period][id - 1].res
-	var level=1 # TODO: add as an UI parameter.
+	var level = 1 # TODO: add as an UI parameter.
 	# Power = the move's level.
 	# STAM = same-type attack move
 	var stam = 1
@@ -266,7 +268,6 @@ func calc():
 			var xOr = id2.xOr
 			var yOr = id2.xOr
 			# TODO: pass the result of calc_extra_damage() to a complex type (such as Player, NPC, BS, ecc.)
-			
 			# This is horrible, I know it, and I could not care less.
 			# I hate yield()
 			# I'd rather have anti-yielders shot - Friedrich Nietzsche
@@ -293,7 +294,11 @@ func calc():
 	if (enemy_sprite.def == 0):
 		enemy_sprite.def = 1
 	
-	return slogan.att/enemy_sprite.def * (4*level/5 + 2) * slogan.power / 2 * stam * extra_damage
+	# We'll have to test this formula with different enemy levels to see how balanced it actually is.
+	# Still, it comes from a Pokemon game so it can't be that bad (hopefully)
+	var res = slogan.att/enemy_sprite.def * (4*level/5 + 2) * slogan.power / 2 * stam * extra_damage
+	
+	return res
 
 
 func damage(slogan):

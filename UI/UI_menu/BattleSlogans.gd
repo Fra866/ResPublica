@@ -75,6 +75,7 @@ func new_battleslog(element, i: int, period: int):
 	new_slog_instance.visible = true
 	
 	container.add(new_slog_instance)
+	
 	emit_signal("switched")
 	var a000 = container.get_items()
 

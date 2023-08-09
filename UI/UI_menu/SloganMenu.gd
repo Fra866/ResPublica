@@ -27,16 +27,19 @@ func toggle_battleslog(vis: bool):
 	# vis = vis and battle_cont.size
 	state = STATE.BATTLESLOGS if vis else STATE.ALL
 	
-	battle_cont.show_selector(vis)
+	slog_cont.show_selector(!vis)
+	if (slog_cont.selector.visible):
+		displayer.set_text(slog_cont.current_el.get_slog_name())
+	
+	if vis:
+		battle_cont.show_selector(battle_cont.size > 0)
+	else:
+		battle_cont.show_selector(vis)
 	
 	var txt = battle_cont.current_el.get_slog_name() if battle_cont.current_el != null else "-"
 
 	if (battle_cont.selector.visible):
 		displayer.set_text(txt)
-	
-	slog_cont.show_selector(!vis)
-	if (slog_cont.selector.visible):
-		displayer.set_text(slog_cont.current_el.get_slog_name())
 	
 
 func prompt_manage_slogs():

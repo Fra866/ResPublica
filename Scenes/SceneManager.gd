@@ -23,6 +23,7 @@ signal p
 func _ready():
 	print(save_file.battleslogs)
 	ended_cutscenes = save_file.ended_cutscenes
+	
 	for i in scene_container.get_children():
 		i.queue_free()
 	

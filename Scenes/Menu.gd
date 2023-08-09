@@ -374,6 +374,7 @@ func _on_Yes_pressed():
 			var current_slog = slogan_menu.slog_cont.current_el
 			battleslogs[slog_period].append(current_slog)
 			battle_menu.new_battleslog(current_slog, len(battleslogs[slog_period]), slog_period)
+			slogan_menu.refresh_cont()
 	else:
 		slogan_menu.battle_cont.remove(slogan_menu.battle_cont.current_el)
 		battleslogs[battle_menu.state].remove(slogan_menu.battle_cont.index)

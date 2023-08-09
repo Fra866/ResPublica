@@ -44,7 +44,6 @@ func move(advance: int):
 	elif index:
 		index -= 1
 	
-	print(index)
 	current_el = list.get_child(index)
 
 
