@@ -12,6 +12,9 @@ margin_top = -80.0
 margin_right = 94.0
 margin_bottom = 80.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Background" type="Sprite" parent="."]
 position = Vector2( 96, 78 )

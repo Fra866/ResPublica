@@ -71,7 +71,7 @@ tile_data = PoolIntArray( 262142, 2, 0, 262143, 2, 0, 196608, 2, 0, 196609, 2, 0
 [node name="Cesare" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 80, 144 )
 id = 1
-dialog_list = [ "Cesare: ..." ]
+dialog_list = [ "..." ]
 cutscene_src = ExtResource( 9 )
 sprite_path = "res://Assets/Player/Male_Spritesheet.png"
 

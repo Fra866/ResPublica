@@ -252,11 +252,8 @@ func new_slogan(slogan: SloganResource):
 	slogan_menu.slog_cont.add(new_slog_instance)
 
 
-func has_battleslogs():
-	for period in battleslogs:
-		if len(period):
-			return true
-	return false
+func has_battleslogs(period: int):
+	return len(battleslogs[period]) > 0
 
 
 func remove_battleslog(element, index: int):
@@ -319,19 +316,19 @@ func add_voter_to_menu(voter):
 func _on_SlogBtn_pressed(node):
 	to_menu(main_menu, get_node(node))
 	no_slog_text.visible = !slogan_menu.slog_cont.size
-	slogan_menu.slog_cont.show_selector(len(slogan_list))
+	slogan_menu.slog_cont.show_selector(len(slogan_list) > 0)
 
 
 func _on_ObjBtn_pressed(node):
 	to_menu(main_menu, get_node(node))
 	no_obj_text.visible = !object_menu.container.size
-	object_menu.container.shows(len(object_list))
+	object_menu.container.show_selector(len(object_list) > 0)
 
 
 func _on_PartyBtn_pressed(node):
 	to_menu(main_menu, get_node(node))
 	no_party_text.visible = !party
-	party_menu.container.shows(len(voter_list))
+	party_menu.container.show_selector(len(voter_list) > 0)
 	political_compass_party.visibility(party!=null)
 	if party:
 		political_compass_party.set_main_pointer(party.political_pos.x, -party.political_pos.y)
@@ -343,7 +340,7 @@ func _on_MafiaBtn_pressed(node):
 
 	mafia_displayer.visible = mafia_menu.container.size
 	mafiometer.visible = mafia_menu.container.size
-	mafia_menu.container.shows(mafia_menu.container.size)
+	mafia_menu.container.show_selector(mafia_menu.container.size)
 
 
 func voter_left_party(voterToRemove):

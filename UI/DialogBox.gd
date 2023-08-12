@@ -37,6 +37,7 @@ func _ready():
 
 
 var npc_global_id: int
+var npc_hist_period: int
 var continue_cutscene: bool = false
 
 
@@ -46,6 +47,7 @@ func display_dialog(npc_id, continue_cutscene):
 	
 	npc_global_id = npc_id
 	npc_name = current_npc.name
+	npc_hist_period = current_npc.historical_period
 	
 	d_list = current_npc.dialog_list
 	att_ids_list = current_npc.attack_ids
@@ -83,7 +85,7 @@ func has_obtained(object, continue_cutscene):
 
 
 func check_battle() -> void:
-	if !menu.has_battleslogs():
+	if !menu.has_battleslogs(npc_hist_period):
 		visibility(false)
 		emit_signal("priority_to_player")
 		return

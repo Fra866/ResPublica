@@ -15,6 +15,8 @@ func _ready():
 		if not cutscene_activator.path in scenemanager.ended_cutscenes:
 			scenemanager.ended_cutscenes.append(cutscene_activator2.path)
 		else:
+			list_npc[0].start_battle = false
+			
 			scenemanager.ended_cutscenes.erase(cutscene_activator2.path)
 
 
