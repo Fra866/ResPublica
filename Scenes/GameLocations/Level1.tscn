@@ -167,10 +167,9 @@ tile_data = PoolIntArray( -1376258, 2, 0, -1048585, 4, 0, -1048584, 4, 4, -10485
 
 [node name="Andreotti" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -96, 32 )
-dialog_list = [ "Lavorare m'è sempre piaciuto.", "È una... utile deformazione." ]
+dialog_list = [ "Lavorare m'è sempre piaciuto.", "È una... utile deformazione.", "CALL_CHOISEBUTTONS", "Sei un mafioso?", "Mi mandano le BR", "6-8", "Il mio avvocato mi informa che lei è un comunista", "END", "E a me il Team Rocket", "Ma vedi che hai re fare, pischello", "END" ]
 attack_ids = [ 0, 1 ]
 influence_area = [ [ 0, 8 ], [ 0, 8 ] ]
-start_battle = true
 battle_sprite_path = "res://UI/andreotti/battle.png"
 political_pos = Vector2( 4, -2 )
 lvl = 4

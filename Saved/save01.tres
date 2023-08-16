@@ -43,6 +43,6 @@ voters = {
 ended_cutscenes = [ NodePath("/root/SceneManager/CurrentScene/BarScene/CutsceneActivator"), NodePath("/root/SceneManager/CurrentScene/BarScene/CutsceneActivator2"), NodePath("/root/SceneManager/CurrentScene/Level1/YSort/CutsceneActivator") ]
 current_scene = ExtResource( 10 )
 player_party = SubResource( 1 )
-player_pos = Vector2( 96, -144 )
+player_pos = Vector2( -64, 48 )
 money = 700
 votes = 0

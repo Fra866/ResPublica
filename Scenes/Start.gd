@@ -86,7 +86,6 @@ func _on_Save3_pressed():
 func _on_Yes_pressed():
 	scene.save_file = load(path_save_file)
 	scene.save_file.initialize()
-#	scene.save_file = load("res://Saved/config.tres")
 	start()
 	print(scene.get_children())
 	scene.get_child(5).save_all() # SaveMenu
