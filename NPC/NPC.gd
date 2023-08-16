@@ -78,8 +78,8 @@ func interaction(player):
 	dialog_box = load("res://UI/DialogBox.tscn").instance()
 	self.add_child(dialog_box)
 	dialog_box.display_dialog(id, false)
-	yield(dialog_box, "priority_to_player")
-	player.get_priority()
+#	yield(dialog_box, "priority_to_player")
+#	player.get_priority()
 
 
 func _physics_process(delta):

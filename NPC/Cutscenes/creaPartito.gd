@@ -11,8 +11,8 @@ func start(character: StaticBody2D, scene: Node2D):
 	#scene.start_cutscene_dialog(pdc.list_npc[1], true) # Cesare
 	#yield(scene, "cd_over")
 	
-	var scenemanager = scene.get_parent().get_parent().scenemanager
-	var cs2 = scenemanager.current_scene.cutscene_activator2
+	var scenemanager = pdc.scenemanager
+	var cs2 = pdc.cutscene_activator2
 	scenemanager.ended_cutscenes.erase(cs2.path)
 	
 	scene.start_cutscene_dialog(pdc.list_npc[0], true) # Andreotti

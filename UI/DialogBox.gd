@@ -25,7 +25,7 @@ var open: bool = true
 
 var battle_scene_path = 'res://Scenes/BattleScene.tscn'
 
-signal priority_to_player
+#signal priority_to_player
 signal send_npc(npc)
 signal npc_attacks(attack_ids_list)
 signal next_scene(scene, p_pos)
@@ -87,15 +87,18 @@ func has_obtained(object, continue_cutscene):
 func check_battle() -> void:
 	if !menu.has_battleslogs(npc_hist_period):
 		visibility(false)
-		emit_signal("priority_to_player")
+		player.get_priority()
+#		emit_signal("priority_to_player")
 		return
 	if start_battle:
 		if menu.party and not menu.voter_list.has(npc_name):
 			current_npc = current_scene.list_npc[npc_global_id]
 			scenemanager.to_battle(battle_scene_path, Vector2(0,0), current_npc)
 			return
-		emit_signal("priority_to_player")
-	emit_signal("priority_to_player")
+		player.get_priority()
+	player.get_priority()
+#		emit_signal("priority_to_player")
+#	emit_signal("priority_to_player")
 
 
 func _process(_delta):
