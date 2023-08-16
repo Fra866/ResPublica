@@ -69,6 +69,7 @@ func end_dialog_box():
 	i = 0
 	visibility(false)
 	d_list = []
+	queue_free()
 
 
 func has_obtained(object, continue_cutscene):
@@ -109,8 +110,15 @@ func _process(_delta):
 		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialog:
 			start_dialog = false
 			if i < len(d_list):
-				display_text_line(d_list[i])
-				i += 1
+				if d_list[i] == "CALL_CHOISEBUTTONS":
+					i += 1
+					call_choisebuttons(i)
+				elif d_list[i] == "END":
+					end_dialog_box()
+					player.get_priority()
+				else:
+					display_text_line(d_list[i])
+					i += 1
 			elif open:
 				end_dialog_box()
 				if open_shop:
@@ -132,7 +140,24 @@ func display_text_line(line):
 		text_label.percent_visible += 1.0/len(line)
 		yield(get_tree().create_timer(0.01), "timeout")
 	yield(get_tree().create_timer(0.5), "timeout")
-#	var timer = Timer.new()
-#	add_child(timer)
-#	timer.start(0.5)
-#	yield(timer, "timeout")
+
+
+func call_choisebuttons(i: int):
+	var choisebuttons = load("res://UI/ChoiseButtons.tscn").instance()
+	
+	get_parent().add_child(choisebuttons)
+	
+	choisebuttons.c1.text = d_list[i]
+	i += 1
+	choisebuttons.c2.text = d_list[i]
+	i += 1
+	
+	choisebuttons.npc_id = npc_global_id
+	
+	# All of this because I can't find how to convert from PostStringArray to
+	# how to convert from PostStringArray to Array
+	var delimiters = d_list[i].split("-")
+	for j in range(len(delimiters)):
+		choisebuttons.next_dialog_delimiters.push_back(delimiters[j])
+	
+	end_dialog_box()
