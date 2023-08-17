@@ -1,33 +1,26 @@
 extends Node2D
 
-onready var c1 = $Control/C1
-onready var c2 = $Control/C2
-onready var c3 = $Control/C3
-
+onready var list = $Control
 onready var d_list: Array
 onready var next_dialog_delimiters: Array
 onready var npc_id: int
 
 
-func _ready():
-	c1.grab_focus()
+func add(text):
+	var b = Button.new()
+	list.add_child(b)
+	b.text = text
+	b.rect_position.y = 30 * b.get_index()
+	if b.get_index() == 0:
+		b.grab_focus()
+	
+	b.connect("pressed", self, "send_response", [b.get_index()])
 
 
-func _on_C1_pressed():
-	send_response(int(next_dialog_delimiters[0]))
-
-
-func _on_C2_pressed():
-	send_response(int(next_dialog_delimiters[1]))
-
-
-func _on_C3_pressed():
-	send_response(int(next_dialog_delimiters[2]))
-
-
-func send_response(delimiter: int):
+func send_response(id_arr):
 	visible = false
 	
+	var delimiter = int(next_dialog_delimiters[id_arr])
 	var dialog_box = load("res://UI/DialogBox.tscn").instance()
 	dialog_box.i = delimiter
 	get_parent().add_child(dialog_box)

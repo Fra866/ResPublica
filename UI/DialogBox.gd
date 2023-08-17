@@ -144,13 +144,14 @@ func display_text_line(line):
 
 func call_choisebuttons(i: int):
 	var choisebuttons = load("res://UI/ChoiseButtons.tscn").instance()
+	var regex = RegEx.new()
+	regex.compile("(\\d+-)*\\d+")
 	
 	get_parent().add_child(choisebuttons)
 	
-	choisebuttons.c1.text = d_list[i]
-	i += 1
-	choisebuttons.c2.text = d_list[i]
-	i += 1
+	while !regex.search(d_list[i]):
+		choisebuttons.add(d_list[i])
+		i += 1
 	
 	choisebuttons.npc_id = npc_global_id
 	
