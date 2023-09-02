@@ -19,7 +19,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 16.0
-margin_top = -68.0
+margin_top = -76.0
 margin_right = -16.0
 margin_bottom = -4.0
 __meta__ = {
@@ -28,26 +28,30 @@ __meta__ = {
 
 [node name="Panel" type="Panel" parent="MarginContainer"]
 margin_right = 288.0
-margin_bottom = 64.0
+margin_bottom = 72.0
 custom_styles/panel = SubResource( 1 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/Panel"]
-margin_left = 16.0
-margin_top = 16.0
-margin_right = 272.0
-margin_bottom = 48.0
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 278.0
+margin_bottom = 65.0
 rect_min_size = Vector2( 256, 32 )
 meta_underlined = false
 text = "Lorem Ipsum"
 scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_left = 0.05
 anchor_top = 0.45
 anchor_right = 0.162
 anchor_bottom = 0.65
+margin_top = -13.0
 margin_right = 84.16
-margin_bottom = 84.0
+margin_bottom = 71.0
 rect_scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 2 )
 __meta__ = {

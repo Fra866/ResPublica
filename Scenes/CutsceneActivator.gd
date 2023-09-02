@@ -11,7 +11,14 @@ onready var currentscene
 onready var cutscene: bool = false
 onready var path: NodePath
 
+onready var npc_id: int
+onready var continue_cutscene: bool
+
+onready var npc
+onready var dialog_box
+
 var i: int = 0
+var j: int = 0
 
 export(String) var activator
 signal cd_over
@@ -21,16 +28,15 @@ func _ready():
 	player = scenemanager.get_child(0).get_children().back().find_node("Player")
 
 
-func start_cutscene_dialog(npc, continue_cutscene):
+func start_cutscene_dialog(local_npc, continue_cutscene):
 	var dialog_box = load("res://UI/DialogBox.tscn").instance()
-	npc.add_child(dialog_box)
+	local_npc.add_child(dialog_box)
+	dialog_box.display_dialog(local_npc.id, continue_cutscene)
+	dialog_box.start_dialog = true
 	
-	dialog_box.i = 0
-	dialog_box.display_dialog(npc.id, continue_cutscene)
+	npc_id = local_npc.id
+	self.continue_cutscene = continue_cutscene
 	
-	for _j in range(len(npc.dialog_list) + 1):
-		yield(get_tree().create_timer(1.5), "timeout")
-		dialog_box.start_dialog = true
 	
 	emit_signal("cd_over")
 
@@ -50,3 +56,13 @@ func _process(_delta):
 			currentscene = scenecontainer.get_child(0)
 			start_cutscene()
 			i += 1
+#		if player.cutscene:
+#			if j == 0:
+#				npc = scenemanager.get_child(0).get_child(0).list_npc[npc_id]
+#				dialog_box = load("res://UI/DialogBox.tscn").instance()
+#				npc.add_child(dialog_box)
+#				dialog_box.display_dialog(npc_id, continue_cutscene)
+#				j += 1
+#			if Input.is_action_just_pressed("ui_accept"):
+#				dialog_box.start_dialog = true
+#				dialog_box.continue_dialog()

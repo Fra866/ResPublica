@@ -73,7 +73,11 @@ func end_dialog_box():
 
 
 func has_obtained(object, continue_cutscene):
-	d_list = ['Hai ottenuto ' + object.name]
+	special_event(['Hai ottenuto ' + object.name], continue_cutscene)
+
+
+func special_event(dialog: Array, continue_cutscene: bool):
+	d_list = dialog
 	att_ids_list = []
 	i = 0
 	
@@ -101,24 +105,27 @@ func check_battle() -> void:
 #		emit_signal("priority_to_player")
 #	emit_signal("priority_to_player")
 
+func continue_dialog():
+	if d_list[i] == "CALL_CHOISEBUTTONS":
+		i += 1
+		call_choisebuttons(i)
+	elif d_list[i] == "END":
+		end_dialog_box()
+		player.get_priority()
+	else:
+		display_text_line(d_list[i])
+		i += 1
+
 
 func _process(_delta):
 	current_scene = scenemanager.get_child(0).get_child(0)
 	player = current_scene.find_node('Player')
 	
 	if player:
-		if (Input.is_action_just_pressed("ui_accept") && player.NPCraycast.is_colliding()) or start_dialog:
+		if Input.is_action_just_pressed("ui_accept") or start_dialog: # && player.NPCraycast.is_colliding())
 			start_dialog = false
 			if i < len(d_list):
-				if d_list[i] == "CALL_CHOISEBUTTONS":
-					i += 1
-					call_choisebuttons(i)
-				elif d_list[i] == "END":
-					end_dialog_box()
-					player.get_priority()
-				else:
-					display_text_line(d_list[i])
-					i += 1
+				continue_dialog()
 			elif open:
 				end_dialog_box()
 				if open_shop:
@@ -155,7 +162,7 @@ func call_choisebuttons(i: int):
 	
 	choisebuttons.npc_id = npc_global_id
 	
-	# All of this because I can't find how to convert from PostStringArray to
+	# All of this because I can't find 
 	# how to convert from PostStringArray to Array
 	var delimiters = d_list[i].split("-")
 	for j in range(len(delimiters)):

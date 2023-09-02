@@ -83,9 +83,8 @@ sprite_path = "res://Assets/Player/Male_Spritesheet.png"
 
 [node name="Andreotti" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 176, 144 )
-dialog_list = [ "Battaglia di insegnamento " ]
+dialog_list = [ "Oh, scusa caro elettore, non ti avevo visto", "Vedo che ti manda Virgilio. Tu devi essere il nuovo arrivato", "Allora, sei pronto a divenire un politicante come niatri?", "CALL_CHOISEBUTTONS", "Certo!", "Non proprio...", "7-7", "Perfetto allora! Possiamo cominciare", "Ti illustrerò l'arte della politica. Ascolta attentamente.", "Prima cosa: ti serve un PARTITO.", "Un PARTITO è un gruppo di persone dedite alla stessa causa. In questo caso la tua.", "Per controllare lo stato del tuo Partito ti basta controllare dal menù", "Lì potrai controllare sia gli iscritti al tuo partito che il tuo COMPASSO POLITICO", "Il COMPASSO POLITICO varierà in base all'orientamento degli iscritti al PARTITO", "Interagendo con politici che troverai per la tua strada, potrai sfidarli ed eventualmente catturarli", "Catturando iscritti ottieni votanti. Ottienendo votanti sali di LIVELLO...", "Una volta raggiunti i 20.000 simpatizzanti, il tuo partito potrà essere registrato all'Uffico Elettorale", "è andata bene sai? Potrai comprare gli SLOGAN in tempo per le elezioni", "Io dovrò andare via per un po'. Roma è bella ma è per vecchi.", "END" ]
 attack_ids = [ 0, 1 ]
-start_battle = true
 battle_sprite_path = "res://UI/andreotti/battle.png"
 description = "Andrea dell'Orti"
 historical_period = 4
