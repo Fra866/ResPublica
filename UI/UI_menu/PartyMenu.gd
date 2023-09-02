@@ -14,9 +14,8 @@ func get_cont_vector():
 	)
 
 
-func reload_voters_menu(i: int = -1):
+func reload_voters_menu(i: int = 0):
 	for v in container.get_items():
-		if (i >= 0):
-			print(v.npc_name, " -> ", v.position)
-			v.position = Vector2(32 * (i % 4) + 5, 40 * (i / 4) + 18)
+		print(v.npc_name, " -> ", v.position)
+		v.position = Vector2(32 * (i % 4) + 5, 40 * (i / 4) + 18)
 		i += 1

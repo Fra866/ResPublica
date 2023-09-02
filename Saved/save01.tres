@@ -1,48 +1,19 @@
-[gd_resource type="Resource" load_steps=12 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://saved.gd" type="Script" id=1]
 [ext_resource path="res://Items/Objects/Key Objects/mail.tres" type="Resource" id=2]
-[ext_resource path="res://Parties/party.gd" type="Script" id=3]
-[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=4]
-[ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=5]
-[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=6]
-[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=7]
-[ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=8]
-[ext_resource path="res://Items/Slogans/PRR1.tres" type="Resource" id=9]
-[ext_resource path="res://Scenes/GameLocations/Level1.tscn" type="PackedScene" id=10]
-
-[sub_resource type="Resource" id=1]
-script = ExtResource( 3 )
-party_name = ""
-votes = 210
-political_pos = Vector2( -1.75, 4.5 )
+[ext_resource path="res://Scenes/GameLocations/Level1.tscn" type="PackedScene" id=3]
 
 [resource]
 script = ExtResource( 1 )
-name = "Nos"
-slogans = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 9 ) ]
-battleslogs = [ [ Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 143, 20 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://Scenes/UI_Objects/SloganNode.gd" ),"res":ExtResource( 7 ),"sprite":null,"slogan":null,"xpbar":null)
-, Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 143, 20 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://Scenes/UI_Objects/SloganNode.gd" ),"res":ExtResource( 7 ),"sprite":null,"slogan":null,"xpbar":null)
- ], [  ], [ Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 111, 20 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://Scenes/UI_Objects/SloganNode.gd" ),"res":ExtResource( 8 ),"sprite":null,"slogan":null,"xpbar":null)
- ], [ Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 79, 20 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://Scenes/UI_Objects/SloganNode.gd" ),"res":ExtResource( 5 ),"sprite":null,"slogan":null,"xpbar":null)
-, Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 143, 20 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://Scenes/UI_Objects/SloganNode.gd" ),"res":ExtResource( 7 ),"sprite":null,"slogan":null,"xpbar":null)
- ], [ Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 79, 20 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://Scenes/UI_Objects/SloganNode.gd" ),"res":ExtResource( 5 ),"sprite":Object(Sprite,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 0, 0 ),"rotation":0.0,"scale":Vector2( 0.05, 0.05 ),"z_index":0,"z_as_relative":true,"texture":Resource( "res://Images/Slogans/costituzione2.png" ),"normal_map":null,"centered":true,"offset":Vector2( 0, 0 ),"flip_h":false,"flip_v":false,"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2( 0, 0, 0, 0 ),"region_filter_clip":false,"script":null)
-,"slogan":Object(Node,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"script":Resource( "res://Items/Slogans/slogan.gd" ),"slogan_resource":ExtResource( 5 ))
-,"xpbar":Object(ProgressBar,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"margin_left":-12.0,"margin_top":9.0,"margin_right":46.0,"margin_bottom":23.0,"grow_horizontal":1,"grow_vertical":1,"rect_min_size":Vector2( 0, 0 ),"rect_rotation":0.0,"rect_scale":Vector2( 0.4, 0.4 ),"rect_pivot_offset":Vector2( 0, 0 ),"rect_clip_content":false,"hint_tooltip":"","focus_neighbour_left":NodePath(""),"focus_neighbour_top":NodePath(""),"focus_neighbour_right":NodePath(""),"focus_neighbour_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_default_cursor_shape":0,"input_pass_on_modal_close_click":true,"size_flags_horizontal":0,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"theme":null,"min_value":0.0,"max_value":30.0,"step":1.0,"page":0.0,"value":30.0,"exp_edit":false,"rounded":true,"allow_greater":false,"allow_lesser":false,"percent_visible":true,"script":null,"__meta__":{
-"_edit_use_anchors_": false
-})
-)
- ] ]
+name = "bbb"
+slogans = [  ]
+battleslogs = [ [  ], [  ], [  ], [  ], [  ] ]
 objects = [ ExtResource( 2 ) ]
 voters = {
-"DummyCommie": Object(Sprite,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 5, 18 ),"rotation":0.0,"scale":Vector2( 0.53, 0.52 ),"z_index":0,"z_as_relative":true,"texture":Resource( "res://Assets/Grass/stepped_tall_grass.png" ),"normal_map":null,"centered":false,"offset":Vector2( 0, 0 ),"flip_h":false,"flip_v":false,"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2( 0, 0, 0, 0 ),"region_filter_clip":false,"script":Resource( "res://Scenes/EnemySprite.gd" ),"npc_name":"DummyCommie","npc_desc":"","sex":"","political_pos":Vector2( -6, 6 ),"lvl":1,"att":10,"def":10,"votes":10,"max_hp":100,"popularity":-20.0,"mafia_points":30.0,"mafia_target":0.0,"ideologies":[ Resource( "res://Objects/Ideologies/communism.tres" ) ],"period":0)
-,
-"Machiavelli": Object(Sprite,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 37, 18 ),"rotation":0.0,"scale":Vector2( 0.53, 0.52 ),"z_index":0,"z_as_relative":true,"texture":Resource( "res://Assets/Grass/tall_grass.png" ),"normal_map":null,"centered":false,"offset":Vector2( 0, 0 ),"flip_h":false,"flip_v":false,"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2( 0, 0, 0, 0 ),"region_filter_clip":false,"script":Resource( "res://Scenes/EnemySprite.gd" ),"npc_name":"Machiavelli","npc_desc":"Un politico molto pragmatico.","sex":"","political_pos":Vector2( 5, 6 ),"lvl":1,"att":10,"def":10,"votes":200,"max_hp":100,"popularity":10.0,"mafia_points":-30.0,"mafia_target":0.0,"ideologies":[ Resource( "res://Objects/Ideologies/fascism.tres" ), Resource( "res://Objects/Ideologies/nationalism.tres" ) ],"period":4)
-
 }
-ended_cutscenes = [ NodePath("/root/SceneManager/CurrentScene/BarScene/CutsceneActivator"), NodePath("/root/SceneManager/CurrentScene/BarScene/CutsceneActivator2"), NodePath("/root/SceneManager/CurrentScene/Level1/YSort/CutsceneActivator") ]
-current_scene = ExtResource( 10 )
-player_party = SubResource( 1 )
-player_pos = Vector2( -64, 48 )
-money = 700
+ended_cutscenes = [ NodePath("/root/SceneManager/CurrentScene/BarScene/CutsceneActivator"), NodePath("/root/SceneManager/CurrentScene/BarScene/CutsceneActivator2") ]
+current_scene = ExtResource( 3 )
+player_pos = Vector2( 96, -160 )
+money = 1000
 votes = 0

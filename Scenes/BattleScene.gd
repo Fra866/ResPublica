@@ -4,7 +4,8 @@ onready var finished_battle = false
 
 onready var scenemanager = get_node(NodePath('/root/SceneManager/'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
-onready var slogan_menu = get_node(NodePath('/root/SceneManager/Menu/MenuLayers/Slogans'))
+#onready var slogan_menu = get_node(NodePath('/root/SceneManager/Menu/MenuLayers/Slogans'))
+onready var slogan_menu = $BattleMenu/Slogans
 onready var ui = get_node(NodePath('/root/SceneManager/UI'))
 
 onready var whattodo = $BattleMenu/WhatToDo/
@@ -41,7 +42,7 @@ onready var enemy_area: Array
 
 onready var priority = true
 onready var attacks_list: Array
-var id = 1
+var id = 0
 var next_scene = ""
 var next_pos: Vector2
 var player_pos = Vector2(0, 0)
@@ -81,7 +82,6 @@ func _ready():
 	pBar.get_child(0).text = str(pBar.value)
 	
 	slogButton.grab_focus()
-	
 
 
 func slogan_setup():
@@ -206,6 +206,8 @@ func set_attacks(attack_ids_list):
 
 
 func set_next_scene(scene: String, p_pos: Vector2):
+	if scene == "PalazzoDeiConservatori":
+		add_child(load("res://UI/Tutorial.tscn").instance())
 	next_scene = scene
 	next_pos = p_pos
 

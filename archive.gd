@@ -14,7 +14,7 @@ var ideologies = {
 		{
 			"x": 1,
 			"y": -1,
-			"name": "Communsim",
+			"name": "Communism",
 			"period1": histPeriod.MODERN_ERA,
 			"period2": null
 		},

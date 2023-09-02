@@ -15,19 +15,20 @@ func show_selector(b: bool):
 func add(item: Node):
 	list.add_child(item)
 	if !size:
-		index = 0
+#		index = 0
 		current_el = list.get_child(0)
+		
 	size += 1
 
 
 func remove(item: Node):
 	list.remove_child(item)
-	size -= 1
-	if index != 0:
+	if index and index == size-1:
 		index -= 1
-	if !size:
-		current_el = null
-
+	
+	size -= 1
+	current_el = list.get_child(index) if size else null
+	
 
 func new_item(pos: Vector2, element = null):
 	var item = load(res_path).instance()

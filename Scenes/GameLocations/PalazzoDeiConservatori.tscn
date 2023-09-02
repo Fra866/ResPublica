@@ -83,7 +83,7 @@ sprite_path = "res://Assets/Player/Male_Spritesheet.png"
 
 [node name="Andreotti" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 176, 144 )
-dialog_list = [ "Battaglia di insegnamento " ]
+dialog_list = [ "Alto là, pezzente", "Hai dimenticato di fondare il partito" ]
 attack_ids = [ 0, 1 ]
 start_battle = true
 battle_sprite_path = "res://UI/andreotti/battle.png"
@@ -113,7 +113,7 @@ position = Vector2( 128, 160 )
 activator = "Cesare"
 
 [node name="CutsceneActivator2" parent="YSort" instance=ExtResource( 8 )]
-position = Vector2( 160, 176 )
+position = Vector2( 144, 176 )
 activator = "Andreotti"
 
 [node name="Walls" type="StaticBody2D" parent="."]

@@ -112,8 +112,9 @@ func _ready():
 		new_voter(save_file.voters[voter])
 	
 
-	slogan_menu.ms_yes.connect("pressed", self, "_on_Yes_pressed")
 	slogan_menu.ms_no.connect("pressed", self, "_on_No_pressed")
+	slogan_menu.ms_yes.connect("pressed", self, "_on_Yes_pressed")
+	voter_info_buttons[0].connect("pressed", self, "_on_Expell_pressed")
 	
 
 func _process(_delta):
@@ -250,6 +251,9 @@ func new_slogan(slogan: SloganResource):
 	)
 	var new_slog_instance = slogan_menu.slog_cont.new_item(pos, slogan)
 	slogan_menu.slog_cont.add(new_slog_instance)
+	
+	if len(slogan_list) == 1:
+		slogan_menu.displayer.set_text(slogan.name + str(slogan.ideologies[0].period1))
 
 
 func has_battleslogs(period: int):
@@ -371,13 +375,13 @@ func _on_Yes_pressed():
 			var current_slog = slogan_menu.slog_cont.current_el
 			battleslogs[slog_period].append(current_slog)
 			battle_menu.new_battleslog(current_slog, len(battleslogs[slog_period]), slog_period)
-			slogan_menu.refresh_cont()
+#			slogan_menu.refresh_cont()
 	else:
 		slogan_menu.battle_cont.remove(slogan_menu.battle_cont.current_el)
 		battleslogs[battle_menu.state].remove(slogan_menu.battle_cont.index)
 		reload_battleslogs_pos()
 		
-		battle_menu.container.current_el = battleslogs[battle_menu.state][battle_menu.container.index]
+#		battle_menu.container.current_el = battleslogs[battle_menu.state][battle_menu.container.index]
 		if battle_menu.container.size > 0:
 			slogan_menu.display_bs_text(battle_menu.container.current_el.get_slog_name())
 	

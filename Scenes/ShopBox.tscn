@@ -222,9 +222,6 @@ margin_top = 58.0
 margin_right = 128.0
 margin_bottom = 144.0
 rect_min_size = Vector2( 100, 30 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="MarginContainer" parent="TextBox"]
 anchor_right = 1.0
