@@ -78,7 +78,7 @@ onready var buttons = [
 onready var name_text = $MenuLayers/MainMenu/Control/Name
 
 signal just_bought(slogan)
-
+signal added_battleslog(battleslogan, period)
 
 func _ready():
 	screentransition.connect("new_main_scene", self, "new_p")
@@ -107,7 +107,7 @@ func _ready():
 		i += 1
 	
 	for object_res in save_file.objects:
-		new_object(object_res)
+		new_object(object_res, false)
 	for voter in save_file.voters:
 		new_voter(save_file.voters[voter])
 	
@@ -262,7 +262,7 @@ func remove_battleslog(element, index: int):
 	reload_battleslogs_pos()
 
 
-func new_object(object):
+func new_object(object, show_line: bool):
 	if not object in object_list:
 		object_list.append(object)
 		ui.add_money(-object.prize)
@@ -274,6 +274,8 @@ func new_object(object):
 		var new_obj_instance = object_menu.container.new_item(pos)
 		new_obj_instance.res = object
 		object_menu.container.add(new_obj_instance)
+		if show_line:
+			ui.new_object_line(new_obj_instance.name)
 
 
 func reload_voters_menu(i: int = -1):
@@ -372,6 +374,7 @@ func _on_Yes_pressed():
 			battleslogs[slog_period].append(current_slog)
 			battle_menu.new_battleslog(current_slog, len(battleslogs[slog_period]), slog_period)
 			slogan_menu.refresh_cont()
+			emit_signal("added_battleslog", current_slog, slog_period)
 	else:
 		slogan_menu.battle_cont.remove(slogan_menu.battle_cont.current_el)
 		battleslogs[battle_menu.state].remove(slogan_menu.battle_cont.index)

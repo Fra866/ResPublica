@@ -46,6 +46,7 @@ var npc_state = NPCState.IDLE
 var direction = FacingDirection.DOWN
 
 onready var cutscene = false
+
 var is_moving = false
 var initial_position = Vector2(0, 0)
 var input_direction = Vector2(0, 0)
@@ -57,6 +58,8 @@ var walk_speed = 4
 export(int) var hf
 export(int) var vf
 export(int) var f
+
+signal dialog_over
 
 func _ready():
 	setting_up_sprite()
@@ -101,6 +104,10 @@ func process_player_input():
 	if input_direction != Vector2.ZERO:
 		initial_position = position
 		is_moving = true
+
+
+func dialog_over():
+	emit_signal("dialog_over")
 
 
 func turn(dir: String):

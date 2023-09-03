@@ -24,11 +24,18 @@ func start(character: StaticBody2D, scene: Node2D):
 	virgilio.input_direction = Vector2(0, 0)
 	
 	barscene.list_npc.append(virgilio)
-	yield(scene.start_cutscene_dialog(virgilio, true), "completed")
+	scene.start_cutscene_dialog(virgilio, true)
+	yield(virgilio, "dialog_over")
 	
 	var object = load("res://Items/Objects/Key Objects/mail.tres")
-	scene.menu.new_object(object)
+	scene.menu.new_object(object, true)
 	
-	print(virgilio.get_children())
-	virgilio.get_child(5).has_obtained(object, false)
+	# By calling 'has_obtained' on the npc the evolution of the functions
+	# starts when the DialogBox is already about to eliminate itself
+	# because of the previous call.
+	# So, to avoid conflicts, I just made the UI generate a separate DialogBox
+	# as its child every time a new object is added to the menu by the
+	# previous function
 	
+	# print(virgilio.get_children())
+	# virgilio.get_child(5).has_obtained(object, false)

@@ -105,7 +105,7 @@ position = Vector2( 144, 160 )
 [node name="Door" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 144, 192 )
 next_scene_path = "res://Scenes/GameLocations/Level1.tscn"
-next_player_pos = Vector2( 96, -168 )
+next_player_pos = Vector2( 95, -160 )
 
 [node name="CutsceneActivator" parent="YSort" instance=ExtResource( 8 )]
 position = Vector2( 128, 160 )

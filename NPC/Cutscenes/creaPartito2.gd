@@ -16,7 +16,6 @@ func start(character: StaticBody2D, scene: Node2D):
 	
 	scene.menu.party = PoliticalParty.new()
 	
-	
 	# player.cutscene is set to false by the DialogBox
 	# If the cutscene does not contain dialogs, it must be
 	# set manually (this is awful but it should work for now) 

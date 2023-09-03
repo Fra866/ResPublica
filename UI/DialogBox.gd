@@ -69,11 +69,12 @@ func end_dialog_box():
 	i = 0
 	visibility(false)
 	d_list = []
+	get_parent().dialog_over()
 	queue_free()
 
 
-func has_obtained(object, continue_cutscene):
-	special_event(['Hai ottenuto ' + object.name], continue_cutscene)
+func has_obtained(obj_name, continue_cutscene):
+	special_event(['Hai ottenuto ' + obj_name], continue_cutscene)
 
 
 func special_event(dialog: Array, continue_cutscene: bool):
@@ -82,11 +83,11 @@ func special_event(dialog: Array, continue_cutscene: bool):
 	i = 0
 	
 	start_dialog = true
-	yield(get_tree().create_timer(1), "timeout")
-	end_dialog_box()
+	# continue_dialog()
+	# yield(get_parent(), "dialog_over")
 	
-	if (!continue_cutscene):
-		player.get_priority()
+	#if (!continue_cutscene):
+	#	player.get_priority()
 
 
 func check_battle() -> void:
@@ -104,6 +105,7 @@ func check_battle() -> void:
 	player.get_priority()
 #		emit_signal("priority_to_player")
 #	emit_signal("priority_to_player")
+
 
 func continue_dialog():
 	if d_list[i] == "CALL_CHOISEBUTTONS":

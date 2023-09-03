@@ -9,6 +9,8 @@ onready var screentransition = get_node(NodePath('/root/SceneManager'))
 onready var menu = get_node(NodePath('/root/SceneManager/Menu'))
 onready var lvlUp: bool = false
 
+signal dialog_over
+
 onready var lvl_table = {
 	1: 200,
 	2: 700,
@@ -49,5 +51,16 @@ func visibility(v: bool):
 	$Votes.visible = v
 	$HP.visible = v
 
+
 func get_votes():
 	return int(votes.text)
+
+
+func new_object_line(obj_name: String):
+	var dialog_box = load("res://UI/DialogBox.tscn").instance()
+	self.add_child(dialog_box)
+	dialog_box.has_obtained(obj_name, false)
+	
+func dialog_over():
+	emit_signal("dialog_over")
+	

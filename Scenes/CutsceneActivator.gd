@@ -37,7 +37,6 @@ func start_cutscene_dialog(local_npc, continue_cutscene):
 	npc_id = local_npc.id
 	self.continue_cutscene = continue_cutscene
 	
-	
 	emit_signal("cd_over")
 
 
