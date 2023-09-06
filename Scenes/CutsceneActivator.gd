@@ -41,6 +41,7 @@ func start_cutscene_dialog(local_npc, continue_cutscene):
 
 
 func start_cutscene():
+	currentscene = scenemanager.current_scene
 	cutscene = not path in scenemanager.ended_cutscenes
 	if cutscene:
 		player.set("cutscene", true)

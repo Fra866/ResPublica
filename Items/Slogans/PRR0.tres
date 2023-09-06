@@ -7,7 +7,7 @@
 script = ExtResource( 1 )
 xp = 30
 power = 1
-att = 10
+att = 20
 def = 10
 name = "PRR0"
 ideologies = [ ExtResource( 2 ) ]

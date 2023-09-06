@@ -1,16 +1,20 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scenes/UI_Objects/SloganNode.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Items/Slogans/PRR0.tres" type="Resource" id=2]
+[ext_resource path="res://Items/Slogans/Roma/consilium_senatus_pax_populi.tres" type="Resource" id=2]
 [ext_resource path="res://Scenes/ShopBox.gd" type="Script" id=3]
-[ext_resource path="res://Items/Slogans/black_lives.tres" type="Resource" id=4]
-[ext_resource path="res://Items/Slogans/humani.tres" type="Resource" id=5]
+[ext_resource path="res://Items/Slogans/Roma/custodes.tres" type="Resource" id=4]
+[ext_resource path="res://Items/Slogans/Roma/suum_cuique.tres" type="Resource" id=5]
 [ext_resource path="res://Items/Slogans/stalin.tres" type="Resource" id=6]
 [ext_resource path="res://Items/Slogans/impero.tres" type="Resource" id=7]
-[ext_resource path="res://Items/Slogans/riforma.tres" type="Resource" id=8]
+[ext_resource path="res://Items/Slogans/Roma/salus_populi.tres" type="Resource" id=8]
 [ext_resource path="res://Assets/UI/pkmnfl.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Items/Slogans/PRR1.tres" type="Resource" id=10]
+[ext_resource path="res://Items/Slogans/Roma/potestas_populo.tres" type="Resource" id=11]
 [ext_resource path="res://Scenes/UI_Objects/ObjectNode.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Items/Slogans/Roma/pax_per_leges.tres" type="Resource" id=13]
+[ext_resource path="res://Items/Slogans/Roma/dura_lex.tres" type="Resource" id=14]
+[ext_resource path="res://Items/Slogans/Roma/pro_patria.tres" type="Resource" id=15]
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.47451, 0.160784, 0.160784, 1 )
@@ -65,27 +69,27 @@ __meta__ = {
 
 [node name="SloganNode1" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 20, 20 )
-res = ExtResource( 4 )
+res = ExtResource( 2 )
 
 [node name="SloganNode2" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 52, 20 )
-res = ExtResource( 5 )
+res = ExtResource( 4 )
 
 [node name="SloganNode3" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 84, 20 )
-res = ExtResource( 2 )
+res = ExtResource( 14 )
 
 [node name="SloganNode4" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 116, 20 )
-res = ExtResource( 7 )
+res = ExtResource( 13 )
 
 [node name="SloganNode5" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 148, 20 )
-res = ExtResource( 5 )
+res = ExtResource( 11 )
 
 [node name="SloganNode6" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 20, 48 )
-res = ExtResource( 8 )
+res = ExtResource( 15 )
 
 [node name="SloganNode7" parent="Background/SloganBG/Slogans" instance=ExtResource( 1 )]
 position = Vector2( 52, 48 )

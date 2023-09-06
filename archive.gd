@@ -1,6 +1,11 @@
 extends Object
 class_name Archive
 
+# x == 1 -> Left
+# x == 0 -> Right
+# y == 1 -> Auth
+# y == 0 -> Lib
+
 var ideologies = {
 	0:
 		{
@@ -79,6 +84,30 @@ var ideologies = {
 			"x": -1,
 			"y": -1,
 			"name": "Cesarism",
+			"period1": histPeriod.ROMAN_ERA,
+			"period2": null
+		},
+	10:
+		{
+			"x": 1,
+			"y": 0,
+			"name": "Populares",
+			"period1": histPeriod.ROMAN_ERA,
+			"period2": null
+		},
+	11:
+		{
+			"x": 0,
+			"y": 1,
+			"name": "Optimates",
+			"period1": histPeriod.ROMAN_ERA,
+			"period2": null
+		},
+	12:
+		{
+			"x": -1,
+			"y": 1,
+			"name": "ProSenate",
 			"period1": histPeriod.ROMAN_ERA,
 			"period2": null
 		},

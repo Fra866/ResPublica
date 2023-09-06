@@ -17,6 +17,7 @@ export(float, -100, 100, 10) var mafia_points # How capturing the enemy will inf
 export(float, 0, 100, 10) var mafia_target
 export(Array) var ideologies
 export(int) var period
+onready var id
 
 func init(enemy, battle:= false):
 	if enemy:
@@ -24,6 +25,7 @@ func init(enemy, battle:= false):
 		if battle:
 			npc_name = enemy.name
 			npc_desc = enemy.description
+			id = enemy.id
 			texture = load(enemy.battle_sprite_path)
 		else:
 			npc_name = enemy.npc_name

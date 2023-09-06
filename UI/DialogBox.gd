@@ -42,7 +42,7 @@ var continue_cutscene: bool = false
 
 
 func display_dialog(npc_id, continue_cutscene):
-	current_npc = scenemanager.get_child(0).get_child(0).list_npc[npc_id]
+	current_npc = scenemanager.current_scene.list_npc[npc_id]
 	d_list = current_npc.dialog_list
 	
 	npc_global_id = npc_id

@@ -7,6 +7,7 @@ func start(character: StaticBody2D, scene: Node2D):
 	character.dialog_list = [
 		"Puoi passare.",
 	]
+	character.start_battle = false
 	
 	scene.start_cutscene_dialog(character, false)
 	

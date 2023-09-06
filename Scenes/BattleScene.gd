@@ -28,6 +28,7 @@ onready var margincontainer = $ActionLog/MarginContainer
 onready var action_log = $ActionLog/MarginContainer/Panel/Label
 onready var current_menu = whattodo
 
+onready var enemyId: int
 onready var enemy_sprite = $EnemySprite
 onready var battlebox = $BattleBox
 
@@ -46,23 +47,25 @@ var next_scene = ""
 var next_pos: Vector2
 var player_pos = Vector2(0, 0)
 
-
 onready var first_attack_player = true
 onready var first_attack_enemy = true
 
 enum TURN {PLAYER, ENEMY, ATTACKING}
 enum BATTLE_UI {SLOGANS, OBJECTS, EXIT, MENU}
+enum BATTLE_RESULT {DEFEAT=0, CONVINCED, VICTORY}
 
+onready var battle_result
 onready var turn = TURN.PLAYER
 onready var battle_ui = BATTLE_UI.MENU
 
+# signal battle_ended(victory, enemyId)
 
 func _ready():
 	randomize()
 	
-#	dialogue_box.connect("npc_attacks", self, "set_attacks")
-#	dialogue_box.connect("next_scene", self, "set_next_scene")
-#	dialogue_box.connect("send_npc", self, "set_npc")
+	# dialogue_box.connect("npc_attacks", self, "set_attacks")
+	# dialogue_box.connect("next_scene", self, "set_next_scene")
+	# dialogue_box.connect("send_npc", self, "set_npc")
 	
 	# By calling slogan_setup() here, it sets up the slogans
 	# BEFORE obtaining the histPeriod of the enemy_sprite
@@ -177,6 +180,7 @@ func _process(_delta):
 					pass
 	
 		elif battle_ui == BATTLE_UI.EXIT:
+			battle_result = BATTLE_RESULT.DEFEAT
 			battle_ends(false)
 	
 		if Input.is_action_just_pressed("ui_end"):
@@ -215,6 +219,7 @@ func set_npc(current_npc):
 	
 	npcBar.value = enemy_sprite.max_hp
 	npcBar.max_value = enemy_sprite.max_hp
+	enemyId = enemy_sprite.id
 	
 	slogan_setup()
 
@@ -236,6 +241,7 @@ func playerAttack(slogan):
 			margincontainer.visible = false
 			npcAttack()
 		else:
+			battle_result = BATTLE_RESULT.VICTORY
 			battle_ends(!npcBar.value)
 
 
@@ -328,6 +334,7 @@ func capture_enemy():
 		menu.party.political_pos = (menu.party.political_pos + enemy_sprite.political_pos)/2
 		menu.slide_mafia_line(enemy_sprite.mafia_points)
 		
+		battle_result = BATTLE_RESULT.CONVINCED
 		battle_ends(true)
 	else:
 		action_log.text = enemy_sprite.npc_name + " non è entrato nel tuo partito."
@@ -363,7 +370,8 @@ func battle_ends(_victory):
 
 
 func end(scene):
-	scenemanager.start_transition("res://Scenes/GameLocations/" + scene + ".tscn", next_pos)
+	# scene.list_npc[enemyId].battle_state = battle_result
+	scenemanager.start_transition("res://Scenes/GameLocations/" + scene + ".tscn", next_pos, enemyId, battle_result)
 
 
 func _on_Slogans_pressed():

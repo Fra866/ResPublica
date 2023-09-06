@@ -43,18 +43,19 @@ func cutscene_over(id):
 	ended_cutscenes.append(id)
 
 
-func start_transition(next_scene: String, player_pos):
+func start_transition(next_scene: String, player_pos, npcId = -1, battle_res = -1):
 	loading_count += 1
 	scene = next_scene
 	transition_animation.play("FadeToBlack")
 	scene_container.get_child(0).queue_free()
 	for i in scene_container.get_children():
 		i.queue_free()
+	
+	end_transition(player_pos, npcId, battle_res)
 
-	end_transition(player_pos)
 
-
-func end_transition(player_pos):
+func end_transition(player_pos, npcId, battle_res): 
+	# npcId and battle_res should be DE FACTO optional parameters
 	scene_container.add_child(load(scene).instance())
 	current_scene = scene_container.get_children().back()
 	transition_animation.play("FadeToTransparent")
@@ -62,6 +63,9 @@ func end_transition(player_pos):
 	if p:
 		p.position = player_pos
 		p.new_scene()
+	
+	if npcId != -1 and battle_res != -1:
+		current_scene.list_npc[npcId].battle_result = battle_res
 	
 	emit_signal("new_main_scene")
 

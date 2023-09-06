@@ -10,6 +10,7 @@ onready var dialog_box: CanvasLayer
 onready var texture
 
 onready var raycast = $RayCast2D
+onready var battle_result: int
 
 export(int) var id
 export(Array, String) var dialog_list
@@ -88,7 +89,7 @@ func interaction(player):
 func _physics_process(delta):
 	if is_moving == false:
 		process_player_input()
-	elif input_direction != Vector2.ZERO and !cutscene:
+	elif input_direction != Vector2.ZERO:
 		move(delta)
 	else:
 		is_moving = false
@@ -119,6 +120,7 @@ func turn(dir: String):
 
 func move(delta):
 	percent_to_next_tile += (walk_speed * delta)
+	raycast.cast_to = input_direction
 	
 	if not raycast.is_colliding():
 		if percent_to_next_tile >= 1.0:
